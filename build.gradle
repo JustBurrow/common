@@ -7,29 +7,33 @@ buildscript {
   }
 
   dependencies {
-    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE"
-    classpath 'io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE'
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE")
+    classpath("io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE")
+    classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+")
   }
 }
 
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+apply plugin: "idea"
+apply plugin: "eclipse"
 
-group 'kr.lul.common'
-version '0.0.1.SNAPSHOT'
-
-subprojects {
-  apply plugin: 'java'
-  apply plugin: 'org.springframework.boot'
-  apply plugin: 'io.spring.dependency-management'
-
-  sourceCompatibility = 13
-  targetCompatibility = 13
+allprojects {
+  group "kr.lul.common"
+  version "0.0.1.SNAPSHOT"
 
   repositories {
     jcenter()
     mavenCentral()
   }
+}
+
+subprojects {
+  apply plugin: "java"
+  apply plugin: "org.springframework.boot"
+  apply plugin: "io.spring.dependency-management"
+  apply plugin: "com.jfrog.bintray"
+
+  sourceCompatibility = 13
+  targetCompatibility = 13
 
   dependencyManagement {
     imports {
@@ -44,5 +48,34 @@ subprojects {
   dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.assertj:assertj-core")
+  }
+
+  jar.enabled = true
+  bootJar.enabled = false
+
+  bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+
+    pkg {
+      repo = project.group
+      println("project.group : ${project.group}")
+      name = project.name
+      println("project.name : ${project.name}")
+
+      licenses = ['Apache-2.0']
+      publicDownloadNumbers = true
+      publish = true
+      configurations = ['archives']
+
+      vcsUrl = "https://github.com/JustBurrow/common.git"
+      githubRepo = 'JustBurrow/kobalttown'
+      githubReleaseNotesFile = 'README.md'
+
+      version {
+        name = project.version
+        println("version.name : ${project.version}")
+      }
+    }
   }
 }
