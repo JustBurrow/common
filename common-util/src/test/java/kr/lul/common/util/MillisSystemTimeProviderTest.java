@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 
 import java.time.Instant;
 
-import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -26,23 +25,11 @@ public class MillisSystemTimeProviderTest {
 
   @Test
   public void test_now() throws Exception {
-    // GIVEN
-    Instant before = Instant.now();
-    log.info("GIVEN - before={}", before);
-
-    int sleep = (1_000_000_000 - before.getNano()) / 1000;
-    log.info("GIVEN - sleep={}", sleep);
-
-    sleep(sleep);
-
     // WHEN
     Instant now = this.provider.now();
     log.info("WHEN - now={}", now);
 
     // THEN
-    assertThat(now)
-        .isNotNull()
-        .isAfter(before);
     assertThat(now.getNano() % 1000000)
         .isEqualTo(0);
   }
