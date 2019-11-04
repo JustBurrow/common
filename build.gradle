@@ -36,10 +36,13 @@ subprojects {
       mavenBom SpringBootPlugin.BOM_COORDINATES
     }
 
-    dependencies {}
+    dependencies {
+      dependency("org.assertj:assertj-core:3.14.0")
+    }
   }
 
   dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.assertj:assertj-core")
   }
 }
