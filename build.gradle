@@ -1,5 +1,3 @@
-import org.springframework.boot.gradle.plugin.SpringBootPlugin
-
 buildscript {
   repositories {
     jcenter()
@@ -18,7 +16,7 @@ apply plugin: "eclipse"
 
 allprojects {
   group "kr.lul.common"
-  version "0.0.1.SNAPSHOT"
+  version "0.0.1"
 
   repositories {
     jcenter()
@@ -37,7 +35,7 @@ subprojects {
 
   dependencyManagement {
     imports {
-      mavenBom SpringBootPlugin.BOM_COORDINATES
+      mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
     }
 
     dependencies {

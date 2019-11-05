@@ -35,7 +35,7 @@ public class ArgumentsTest {
   public void test_notNull_with_null_and_name() throws Exception {
     // GIVEN
     String name = randomAlphabetic(10);
-    log.info("GIVEN - name={}", name);
+    log.debug("GIVEN - name={}", name);
 
     // WHEN & THEN
     assertThatThrownBy(() -> notNull(null, name))
@@ -57,7 +57,7 @@ public class ArgumentsTest {
   public void test_positive_with_negative() throws Exception {
     // GIVEN
     int number = current().nextInt(Integer.MIN_VALUE, 0);
-    log.info("GIVEN - number={}", number);
+    log.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThatThrownBy(() -> positive(number))
@@ -75,7 +75,7 @@ public class ArgumentsTest {
   public void test_positive_with_positive() throws Exception {
     // GIVEN
     int number = current().nextInt(2, Integer.MAX_VALUE);
-    log.info("GIVEN - number={}", number);
+    log.debug("GIVEN - number={}", number);
 
     // WHEN
     positive(number);
@@ -94,7 +94,7 @@ public class ArgumentsTest {
   public void test_positive_with_negative_long() throws Exception {
     // GIVEN
     long number = current().nextLong(Long.MIN_VALUE, 0L);
-    log.info("GIVEN - number={}", number);
+    log.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThatThrownBy(() -> positive(number))
@@ -112,7 +112,7 @@ public class ArgumentsTest {
   public void test_positive_with_positive_long() throws Exception {
     // GIVEN
     long number = current().nextLong(2L, Long.MAX_VALUE);
-    log.info("GIVEN - number={}", number);
+    log.debug("GIVEN - number={}", number);
 
     // WHEN
     positive(number);

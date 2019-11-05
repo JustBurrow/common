@@ -21,7 +21,7 @@ public class TextsTest {
   public void test_single_quote_with_null() throws Exception {
     // WHEN
     String actual = singleQuote(null);
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)
@@ -32,7 +32,7 @@ public class TextsTest {
   public void test_single_quote_with_empty() throws Exception {
     // WHEN
     String actual = singleQuote("");
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)
@@ -43,11 +43,11 @@ public class TextsTest {
   public void test_single_quote_with_random() throws Exception {
     // GIVEN
     String expected = random(current().nextInt(1, 10));
-    log.info("GIVEN - expected={}", expected);
+    log.debug("GIVEN - expected={}", expected);
 
     // WHEN
     String actual = singleQuote(expected);
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)
@@ -61,7 +61,7 @@ public class TextsTest {
   public void test_double_quote_with_null() throws Exception {
     // WHEN
     String actual = doubleQuote(null);
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)
@@ -72,7 +72,7 @@ public class TextsTest {
   public void test_double_quote_with_empty() throws Exception {
     // WHEN
     String actual = doubleQuote("");
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)
@@ -83,11 +83,11 @@ public class TextsTest {
   public void test_double_quote_with_random() throws Exception {
     // GIVEN
     String expected = random(current().nextInt(1, 100));
-    log.info("GIVEN - expected={}", expected);
+    log.debug("GIVEN - expected={}", expected);
 
     // WHEN
     String actual = doubleQuote(expected);
-    log.info("WHEN - actual={}", actual);
+    log.debug("WHEN - actual={}", actual);
 
     // THEN
     assertThat(actual)

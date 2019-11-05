@@ -27,7 +27,7 @@ public class MillisSystemTimeProviderTest {
   public void test_now() throws Exception {
     // WHEN
     Instant now = this.provider.now();
-    log.info("WHEN - now={}", now);
+    log.debug("WHEN - now={}", now);
 
     // THEN
     assertThat(now.getNano() % 1000000)
