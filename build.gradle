@@ -57,7 +57,8 @@ subprojects {
     key = bintrayApiKey
 
     pkg {
-      repo = project.group
+      // see https://dl.bintray.com/justburrow/kr.lul/
+      repo = "kr.lul"
       println("project.group : ${project.group}")
       name = project.name
       println("project.name : ${project.name}")
