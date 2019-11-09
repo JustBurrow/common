@@ -68,7 +68,7 @@ subprojects {
       configurations = ['archives']
 
       vcsUrl = "https://github.com/JustBurrow/common.git"
-      githubRepo = 'JustBurrow/kobalttown'
+      githubRepo = 'JustBurrow/common'
       githubReleaseNotesFile = 'README.md'
 
       version {
