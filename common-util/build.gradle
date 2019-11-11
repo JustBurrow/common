@@ -1,3 +1,2 @@
 dependencies {
-  testImplementation("org.apache.commons:commons-lang3")
 }
