@@ -281,6 +281,22 @@ public abstract class Arguments {
     }
   }
 
+  public static void noWhitespace(String target) throws IllegalArgumentException {
+    noWhitespace(target, DEFAULT_TARGET_NAME);
+  }
+
+  public static void noWhitespace(String target, String name) throws IllegalArgumentException {
+    if (null == target)
+      throw new IllegalArgumentException(name(name) + " is null.");
+    if (null == name)
+      throw new IllegalArgumentException("name is null.");
+    else if (name.isEmpty())
+      throw new IllegalArgumentException("name is empty.");
+
+    if (!target.matches("\\S*"))
+      throw new IllegalArgumentException(format("%s contains whitespace character(s) : '%s'", name(name), target));
+  }
+
   /**
    * 단정 대상 문자열이 지정한 패턴이 아니면 실패.
    *
