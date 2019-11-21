@@ -7,7 +7,7 @@ buildscript {
   dependencies {
     classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE"
     classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
-    classpath "com.novoda:bintray-release:0.8.1"
+    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+"
   }
 }
 
@@ -21,10 +21,6 @@ allprojects {
   repositories {
     jcenter()
     mavenCentral()
-
-    maven {
-      url "https://dl.bintray.com/justburrow/snapshot"
-    }
   }
 }
 
@@ -32,7 +28,7 @@ subprojects {
   apply plugin: "java"
   apply plugin: "org.springframework.boot"
   apply plugin: "io.spring.dependency-management"
-  apply plugin: "com.novoda.bintray-release"
+  apply plugin: "com.jfrog.bintray"
 
   sourceCompatibility = 11
   targetCompatibility = 11
@@ -57,14 +53,27 @@ subprojects {
   jar.enabled = true
   bootJar.enabled = false
 
-  publish {
-    userOrg = "justburrow"
-    groupId = project.group
-    artifactId = project.name
-    publishVersion = project.version
-    desc = project.description ?: ""
-    website = "https://github.com/JustBurrow/common"
-    issueTracker = "https://github.com/JustBurrow/common/issues"
-    repository = "https://github.com/JustBurrow/common.git"
+  bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+
+    pkg {
+      // see https://dl.bintray.com/justburrow/kr.lul/
+      repo = "kr.lul"
+      name = project.name
+
+      licenses = ["Apache-2.0"]
+      publicDownloadNumbers = true
+      publish = true
+      configurations = ["archives"]
+
+      vcsUrl = "https://github.com/JustBurrow/common.git"
+      githubRepo = "JustBurrow/common"
+      githubReleaseNotesFile = "README.md"
+
+      version {
+        name = project.version
+      }
+    }
   }
 }
