@@ -5,9 +5,9 @@ buildscript {
   }
 
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE")
-    classpath("io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE")
-    classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+")
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE"
+    classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
+    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+"
   }
 }
 
@@ -16,7 +16,7 @@ apply plugin: "eclipse"
 
 allprojects {
   group "kr.lul.common"
-  version "0.0.1"
+  version "0.0.1.SNAPSHOT"
 
   repositories {
     jcenter()
@@ -30,8 +30,8 @@ subprojects {
   apply plugin: "io.spring.dependency-management"
   apply plugin: "com.jfrog.bintray"
 
-  sourceCompatibility = 13
-  targetCompatibility = 13
+  sourceCompatibility = 11
+  targetCompatibility = 11
 
   dependencyManagement {
     imports {
@@ -39,15 +39,15 @@ subprojects {
     }
 
     dependencies {
-      dependency("org.assertj:assertj-core:3.14.0")
-      dependency("org.apache.commons:commons-lang3:3.9")
+      dependency "org.assertj:assertj-core:3.14.0"
+      dependency "org.apache.commons:commons-lang3:3.9"
     }
   }
 
   dependencies {
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.assertj:assertj-core")
-    testImplementation("org.apache.commons:commons-lang3")
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.assertj:assertj-core"
+    testImplementation "org.apache.commons:commons-lang3"
   }
 
   jar.enabled = true
@@ -62,14 +62,14 @@ subprojects {
       repo = "kr.lul"
       name = project.name
 
-      licenses = ['Apache-2.0']
+      licenses = ["Apache-2.0"]
       publicDownloadNumbers = true
       publish = true
-      configurations = ['archives']
+      configurations = ["archives"]
 
       vcsUrl = "https://github.com/JustBurrow/common.git"
-      githubRepo = 'JustBurrow/common'
-      githubReleaseNotesFile = 'README.md'
+      githubRepo = "JustBurrow/common"
+      githubReleaseNotesFile = "README.md"
 
       version {
         name = project.version
