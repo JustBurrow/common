@@ -1,3 +1,7 @@
+description """
+Web API 정의용 유틸리티.
+"""
+
 dependencies {
   implementation project(":common-util")
 }

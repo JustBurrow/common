@@ -1,2 +1,6 @@
+description """
+범용 유틸리티.
+"""
+
 dependencies {
 }

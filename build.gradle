@@ -14,13 +14,25 @@ buildscript {
 apply plugin: "idea"
 apply plugin: "eclipse"
 
+group "kr.lul.common"
+version "0.0.1.SNAPSHOT"
+description """
+범용 Java 유틸리티 모음.
+"""
+
 allprojects {
-  group "kr.lul.common"
-  version "0.0.1.SNAPSHOT"
+  group = rootProject.group
+  version = rootProject.version
 
   repositories {
     jcenter()
     mavenCentral()
+    maven {
+      url "https://dl.bintray.com/justburrow/snapshot"
+    }
+    maven {
+      url "https://dl.bintray.com/justburrow/release"
+    }
   }
 }
 
@@ -58,21 +70,28 @@ subprojects {
     key = bintrayApiKey
 
     pkg {
-      // see https://dl.bintray.com/justburrow/kr.lul/
-      repo = "kr.lul"
+      repo = project.version.toString().endsWith("RELEASE")
+          ? "release"
+          : "snapshot"
       name = project.name
+      desc = project.description
 
+      websiteUrl = "https://blog.lul.kr"
+      issueTrackerUrl = "https://github.com/JustBurrow/common/issues"
+      vcsUrl = "https://github.com/JustBurrow/common.git"
       licenses = ["Apache-2.0"]
+
       publicDownloadNumbers = true
       publish = true
+      override = project.version.toString().endsWith("SNAPSHOT")
       configurations = ["archives"]
 
-      vcsUrl = "https://github.com/JustBurrow/common.git"
       githubRepo = "JustBurrow/common"
       githubReleaseNotesFile = "README.md"
 
       version {
         name = project.version
+        desc = project.description
       }
     }
   }
