@@ -2,6 +2,7 @@ buildscript {
   repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
   }
 
   dependencies {
@@ -27,6 +28,7 @@ allprojects {
   repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
     maven {
       url "https://dl.bintray.com/justburrow/snapshot"
     }
@@ -40,6 +42,8 @@ subprojects {
   apply plugin: "java"
   apply plugin: "org.springframework.boot"
   apply plugin: "io.spring.dependency-management"
+
+  apply plugin: "maven-publish"
   apply plugin: "com.jfrog.bintray"
 
   sourceCompatibility = 11
@@ -65,14 +69,44 @@ subprojects {
   jar.enabled = true
   bootJar.enabled = false
 
+  task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+  }
+
+  artifacts {
+    archives sourcesJar, javadocJar
+  }
+
+  publishing {
+    publications {
+      mavenPublication(MavenPublication) {
+        from components.java
+
+        artifact sourcesJar
+        artifact javadocJar
+
+        groupId project.group
+        artifactId project.name
+        version project.version
+      }
+    }
+  }
+
   bintray {
-    user = bintrayUser
-    key = bintrayApiKey
+    user = BINTRAY_USER
+    key = BINTRAY_API_KEY
+
+    def isRelease = project.version.toString().endsWith("RELEASE")
+    def isSnapshot = project.version.toString().endsWith("SNAPSHOT")
 
     pkg {
-      repo = project.version.toString().endsWith("RELEASE")
-          ? "release"
-          : "snapshot"
+      repo = isRelease ? "release" : "snapshot"
       name = project.name
       desc = project.description
 
@@ -83,8 +117,9 @@ subprojects {
 
       publicDownloadNumbers = true
       publish = true
-      override = project.version.toString().endsWith("SNAPSHOT")
+      override = isSnapshot
       configurations = ["archives"]
+      publications = ['mavenPublication']
 
       githubRepo = "JustBurrow/common"
       githubReleaseNotesFile = "README.md"
