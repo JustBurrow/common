@@ -10,7 +10,7 @@ public interface Range<C extends Comparable<C>> {
   /**
    * @param comparee 비교 대상.
    *
-   * @return
+   * @return 비교 대상이 범위에 포함되는지 여부.
    */
   boolean isInclude(C comparee);
 }

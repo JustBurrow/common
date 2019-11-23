@@ -19,7 +19,6 @@ public class GreaterThanOrEqualToValidatorTest {
   private static final Logger log = getLogger(GreaterThanOrEqualToValidatorTest.class);
 
   private Instant lowerBound;
-  ;
   private Validator<Instant> validator;
 
   @Before
@@ -68,6 +67,11 @@ public class GreaterThanOrEqualToValidatorTest {
 
   @Test
   public void test_validate_with_newer_instant() throws Exception {
+    // GIVEN
+    Instant target = this.lowerBound.plusNanos(1L);
+    log.info("GIVEN - target={}", target);
 
+    // WHEN
+    this.validator.validate(target);
   }
 }

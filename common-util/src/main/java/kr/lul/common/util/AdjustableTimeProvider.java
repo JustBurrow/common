@@ -33,7 +33,7 @@ public class AdjustableTimeProvider implements TimeProvider {
    *
    * @param instant 고정할 시각.
    *
-   * @return
+   * @return 인작로 받은 시각으로 고정할 수 있는 옵션.
    */
   public static Option fixed(Instant instant) {
     return new Option() {
@@ -82,7 +82,7 @@ public class AdjustableTimeProvider implements TimeProvider {
    *
    * @param seconds 초단위 차이.
    *
-   * @return
+   * @return 지정한 시간만큼 차이를 낼 수 있는 옵션.
    */
   public static Option diff(final long seconds) {
     return new Option() {
@@ -104,7 +104,7 @@ public class AdjustableTimeProvider implements TimeProvider {
    *
    * @param duration 차이
    *
-   * @return
+   * @return 지정한 시간만큼 차이를 낼 수 있는 옵션.
    */
   public static Option diff(Duration duration) {
     return new Option() {

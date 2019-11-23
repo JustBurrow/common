@@ -15,7 +15,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @author justburrow
  * @since 2018. 9. 24.
  */
-@SuppressWarnings("Duplicates")
 public class PeriodComposerTest {
   private static final Logger log = getLogger(PeriodComposerTest.class);
   public static final int LOOP_COUNT = 100;

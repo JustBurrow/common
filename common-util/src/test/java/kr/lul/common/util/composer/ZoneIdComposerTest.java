@@ -23,10 +23,6 @@ public class ZoneIdComposerTest {
 
   /**
    * TODO 공용 클래스로 이동.
-   *
-   * @param length
-   *
-   * @return
    */
   public static ZoneId[] zoneIds(int length) {
     ThreadLocalRandom random = ThreadLocalRandom.current();

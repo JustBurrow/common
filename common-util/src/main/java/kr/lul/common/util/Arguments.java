@@ -355,8 +355,8 @@ public abstract class Arguments {
   /**
    * {@code after or equal to}
    *
-   * @param target
-   * @param comp
+   * @param target 검증 대상.
+   * @param comp   검증 기준
    */
   public static void ae(Instant target, Instant comp) {
     ae(target, comp, DEFAULT_TARGET_NAME);
@@ -365,9 +365,9 @@ public abstract class Arguments {
   /**
    * {@code after or equal to}
    *
-   * @param target
-   * @param comp
-   * @param targetName
+   * @param target     검증 대상.
+   * @param comp       검증 기준
+   * @param targetName 검증 대상의 이름.
    */
   public static void ae(Instant target, Instant comp, String targetName) {
     if (null == target) {
