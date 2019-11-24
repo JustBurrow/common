@@ -9,15 +9,22 @@ import static kr.lul.common.util.Arguments.notNull;
  * @since 2019/11/09
  */
 public class Api {
+  private final Action action;
   private final String namespace;
   private final String name;
 
-  public Api(String namespace, String name) {
+  public Api(Action action, String namespace, String name) {
+    notNull(action, "action");
     notNull(namespace, "namespace");
     notNull(name, "name");
 
+    this.action = action;
     this.namespace = namespace;
     this.name = name;
+  }
+
+  public Action getAction() {
+    return this.action;
   }
 
   public String getNamespace() {
@@ -33,16 +40,18 @@ public class Api {
     if (this == o) return true;
     if (!(o instanceof Api)) return false;
     Api that = (Api) o;
-    return this.namespace.equals(that.namespace) && this.name.equals(that.name);
+    return this.action == that.action
+        && this.namespace.equals(that.namespace)
+        && this.name.equals(that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.namespace, this.name);
+    return Objects.hash(this.action, this.namespace, this.name);
   }
 
   @Override
   public String toString() {
-    return this.namespace + this.name;
+    return String.format("%s %s%s", this.action, this.namespace, this.name);
   }
 }
