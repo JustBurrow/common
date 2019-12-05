@@ -15,6 +15,10 @@ public class UuidContext implements Context<UUID> {
   private UUID id;
   private final Map<String, Serializable> properties;
 
+  public UuidContext() {
+    this(UUID.randomUUID());
+  }
+
   public UuidContext(UUID id) {
     notNull(id, "id");
     this.id = id;
