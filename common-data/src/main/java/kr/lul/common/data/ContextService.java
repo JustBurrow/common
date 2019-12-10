@@ -6,22 +6,20 @@ package kr.lul.common.data;
  * @author justburrow
  * @since 2019/11/24
  */
-public interface ContextService<C extends Context<?>> {
+public interface ContextService {
   /**
    * 신규 발급.
    *
    * @return 실행 컨텍스트.
-   *
-   * @throws IllegalStateException 유효한 실행 컨텍스트가 있을 때.
    */
-  C issue() throws IllegalStateException;
+  Context issue();
 
   /**
    * 현재 컨텍스트. 없으면 새로 생성한다.
    *
    * @return 현재 컨텍스트.
    */
-  C get();
+  Context get();
 
   /**
    * 현재 컨텍스트를 삭제한다.
