@@ -1,27 +1,42 @@
 package kr.lul.common.data;
 
-import java.io.Serializable;
 import java.util.UUID;
-
-import static kr.lul.common.util.Arguments.notNull;
 
 /**
  * @author justburrow
- * @since 2019/11/24
+ * @since 2019/12/07
  */
-public class Context implements Serializable {
-  private UUID id;
+public class Context {
+  protected final UUID id;
 
   public Context() {
     this(UUID.randomUUID());
   }
 
   public Context(UUID id) {
-    notNull(id, "id");
+    if (null == id)
+      throw new IllegalArgumentException("contextId is null.");
     this.id = id;
   }
 
   public UUID id() {
     return this.id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    return this.id.equals(((Context) o).id);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.id.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return this.id.toString();
   }
 }
