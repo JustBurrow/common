@@ -4,6 +4,7 @@ import kr.lul.common.util.ValidationException;
 import kr.lul.common.util.Validator;
 
 import java.net.IDN;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.String.format;
@@ -78,7 +79,9 @@ public class EmailValidator implements Validator<CharSequence> {
     else if (this.localMaxLength < local.length())
       throw new ValidationException("email.local", local,
           format("too long email.local : length=%d, max=%d", local.length(), this.localMaxLength));
-    else if (!local.matches(LOCAL_PART_REGEX))
+
+    final Matcher matcher = LOCAL_PART_PATTERN.matcher(local);
+    if (!matcher.matches())
       throw new ValidationException("email.local", local,
           format("illegal email.local pattern : email.local=%s, pattern=%s", local, LOCAL_PART_REGEX));
   }
@@ -93,24 +96,39 @@ public class EmailValidator implements Validator<CharSequence> {
     else if (domain.endsWith("."))
       throw new ValidationException("email.domain", domain,
           "email.domain ends with '.' : email.domain=%s" + domain);
-    else if (!domain.matches(EMAIL_DOMAIN_REGEX))
+
+    final Matcher matcher = EMAIL_DOMAIN_PATTERN.matcher(domain);
+    if (!matcher.matches())
       throw new ValidationException("email.domain", domain,
           format("illegal email.domain pattern : email.domain=%s, pattern=%s", domain, DOMAIN_REGEX));
 
-    final String ascii;
-    try {
-      ascii = IDN.toASCII(domain);
-    } catch (final IllegalArgumentException e) {
-      throw new ValidationException("email.domain", domain,
-          "fail to ascii translate email.domain : email.domain=" + domain, e);
-    }
+    if (!domain.matches("^\\p{ASCII}*$")) {
+      final String ascii;
+      try {
+        ascii = IDN.toASCII(domain);
+      } catch (final IllegalArgumentException e) {
+        throw new ValidationException("email.domain", domain,
+            "fail to ascii translate email.domain : email.domain=" + domain, e);
+      }
 
-    if (this.domainMaxLength < ascii.length())
-      throw new ValidationException("email.domain", domain,
-          format("too long ascii email.domain : ascii.length=%d, max=%d, ascii=%s",
-              ascii.length(), this.domainMaxLength, ascii));
+      if (this.domainMaxLength < ascii.length())
+        throw new ValidationException("email.domain", domain,
+            format("too long ascii email.domain : ascii.length=%d, max=%d, ascii=%s",
+                ascii.length(), this.domainMaxLength, ascii));
+    }
   }
 
+  public int getLocalMaxLength() {
+    return this.localMaxLength;
+  }
+
+  public int getDomainMaxLength() {
+    return this.domainMaxLength;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // kr.lul.common.util.Validator
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Override
   public void validate(final CharSequence email) throws ValidationException {
     if (null == email)
