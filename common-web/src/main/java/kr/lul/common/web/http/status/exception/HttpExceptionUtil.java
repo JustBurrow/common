@@ -1,6 +1,10 @@
 package kr.lul.common.web.http.status.exception;
 
 import kr.lul.common.web.http.status.exception.client.*;
+import kr.lul.common.web.http.status.exception.informationalresponse.Continue;
+import kr.lul.common.web.http.status.exception.informationalresponse.EarlyHints;
+import kr.lul.common.web.http.status.exception.informationalresponse.Processing;
+import kr.lul.common.web.http.status.exception.informationalresponse.SwitchingProtocols;
 
 import static kr.lul.common.util.Arguments.range;
 import static kr.lul.common.web.http.status.HttpStatusCodes.*;
@@ -10,6 +14,143 @@ import static kr.lul.common.web.http.status.HttpStatusCodes.*;
  * @since 2020/01/14
  */
 public abstract class HttpExceptionUtil {
+  /**
+   * HTTP 조건부 응답용 예외 생성.
+   *
+   * @param status 상태 코드.
+   * @param <E>    상세 예외.
+   *
+   * @return 조건부 응답 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http1xxException> E informationalResponse(final int status) {
+    range(status, 100, 199, "status");
+
+    final E ex;
+    switch (status) {
+      case CONTINUE:
+        ex = (E) new Continue();
+        break;
+      case SWITCHING_PROTOCOLS:
+        ex = (E) new SwitchingProtocols();
+        break;
+      case PROCESSING:
+        ex = (E) new Processing();
+        break;
+      case EARLY_HINTS:
+        ex = (E) new EarlyHints();
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 조건부 응답용 예외 생성.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param <E>     상세 예외.
+   *
+   * @return 조건부 응답 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http1xxException> E informationalResponse(final int status, final String message) {
+    range(status, 100, 199, "status");
+
+    final E ex;
+    switch (status) {
+      case CONTINUE:
+        ex = (E) new Continue(message);
+        break;
+      case SWITCHING_PROTOCOLS:
+        ex = (E) new SwitchingProtocols(message);
+        break;
+      case PROCESSING:
+        ex = (E) new Processing(message);
+        break;
+      case EARLY_HINTS:
+        ex = (E) new EarlyHints(message);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 조건부 응답용 예외 생성.
+   *
+   * @param status 상태 코드.
+   * @param cause  에러 원인.
+   * @param <E>    상세 예외.
+   *
+   * @return 조건부 응답 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http1xxException> E informationalResponse(final int status, final Throwable cause) {
+    range(status, 100, 199, "status");
+
+    final E ex;
+    switch (status) {
+      case CONTINUE:
+        ex = (E) new Continue(cause);
+        break;
+      case SWITCHING_PROTOCOLS:
+        ex = (E) new SwitchingProtocols(cause);
+        break;
+      case PROCESSING:
+        ex = (E) new Processing(cause);
+        break;
+      case EARLY_HINTS:
+        ex = (E) new EarlyHints(cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 조건부 응답용 예외 생성.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param cause   예외 원인.
+   * @param <E>     상세 예외.
+   *
+   * @return 조건부 응답 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http1xxException> E informationalResponse(final int status, final String message,
+      final Throwable cause) {
+    range(status, 100, 199, "status");
+
+    final E ex;
+    switch (status) {
+      case CONTINUE:
+        ex = (E) new Continue(message, cause);
+        break;
+      case SWITCHING_PROTOCOLS:
+        ex = (E) new SwitchingProtocols(message, cause);
+        break;
+      case PROCESSING:
+        ex = (E) new Processing(message, cause);
+        break;
+      case EARLY_HINTS:
+        ex = (E) new EarlyHints(message, cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
   /**
    * HTTP 클라이언트 에러 생성.
    *
