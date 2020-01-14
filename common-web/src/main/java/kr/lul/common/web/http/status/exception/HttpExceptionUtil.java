@@ -6,6 +6,7 @@ import kr.lul.common.web.http.status.exception.informationalresponse.EarlyHints;
 import kr.lul.common.web.http.status.exception.informationalresponse.Processing;
 import kr.lul.common.web.http.status.exception.informationalresponse.SwitchingProtocols;
 import kr.lul.common.web.http.status.exception.redirection.*;
+import kr.lul.common.web.http.status.exception.server.*;
 import kr.lul.common.web.http.status.exception.success.OK;
 import kr.lul.common.web.http.status.exception.success.*;
 
@@ -974,6 +975,226 @@ public abstract class HttpExceptionUtil {
         break;
       case UNAVAILABLE_FOR_LEGAL_REASONS:
         ex = (E) new UnavailableForLegalReasons(message, cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 서버 오류.
+   *
+   * @param status 상태 코드.
+   * @param <E>    상세 예외.
+   *
+   * @return 상세 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http5xxException> E server(final int status) {
+    range(status, 500, 599, "status");
+
+    final E ex;
+    switch (status) {
+      case INTERNAL_SERVER_ERROR:
+        ex = (E) new InternalServerError();
+        break;
+      case NOT_IMPLEMENTED:
+        ex = (E) new NotImplemented();
+        break;
+      case BAD_GATEWAY:
+        ex = (E) new BadGateway();
+        break;
+      case SERVICE_UNAVAILABLE:
+        ex = (E) new ServiceUnavailable();
+        break;
+      case GATEWAY_TIMEOUT:
+        ex = (E) new GatewayTimeout();
+        break;
+      case HTTP_VERSION_NOT_SUPPORTED:
+        ex = (E) new HttpVersionNotSupported();
+        break;
+      case VARIANT_ALSO_NEGOTIATES:
+        ex = (E) new VariantAlsoNegotiates();
+        break;
+      case INSUFFICIENT_STORAGE:
+        ex = (E) new InsufficientStorage();
+        break;
+      case LOOP_DETECTED:
+        ex = (E) new LoopDetected();
+        break;
+      case NOT_EXTENDED:
+        ex = (E) new NotExtended();
+        break;
+      case NETWORK_AUTHENTICATION_REQUIRED:
+        ex = (E) new NetworkAuthenticationRequired();
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 서버 오류.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param <E>     상세 예외.
+   *
+   * @return 상세 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http5xxException> E server(final int status, final String message) {
+    range(status, 500, 599, "status");
+
+    final E ex;
+    switch (status) {
+      case INTERNAL_SERVER_ERROR:
+        ex = (E) new InternalServerError(message);
+        break;
+      case NOT_IMPLEMENTED:
+        ex = (E) new NotImplemented(message);
+        break;
+      case BAD_GATEWAY:
+        ex = (E) new BadGateway(message);
+        break;
+      case SERVICE_UNAVAILABLE:
+        ex = (E) new ServiceUnavailable(message);
+        break;
+      case GATEWAY_TIMEOUT:
+        ex = (E) new GatewayTimeout(message);
+        break;
+      case HTTP_VERSION_NOT_SUPPORTED:
+        ex = (E) new HttpVersionNotSupported(message);
+        break;
+      case VARIANT_ALSO_NEGOTIATES:
+        ex = (E) new VariantAlsoNegotiates(message);
+        break;
+      case INSUFFICIENT_STORAGE:
+        ex = (E) new InsufficientStorage(message);
+        break;
+      case LOOP_DETECTED:
+        ex = (E) new LoopDetected(message);
+        break;
+      case NOT_EXTENDED:
+        ex = (E) new NotExtended(message);
+        break;
+      case NETWORK_AUTHENTICATION_REQUIRED:
+        ex = (E) new NetworkAuthenticationRequired(message);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 서버 오류.
+   *
+   * @param status 상태 코드.
+   * @param cause  예외 원인.
+   * @param <E>    상세 예외.
+   *
+   * @return 상세 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http5xxException> E server(final int status, final Throwable cause) {
+    range(status, 500, 599, "status");
+
+    final E ex;
+    switch (status) {
+      case INTERNAL_SERVER_ERROR:
+        ex = (E) new InternalServerError(cause);
+        break;
+      case NOT_IMPLEMENTED:
+        ex = (E) new NotImplemented(cause);
+        break;
+      case BAD_GATEWAY:
+        ex = (E) new BadGateway(cause);
+        break;
+      case SERVICE_UNAVAILABLE:
+        ex = (E) new ServiceUnavailable(cause);
+        break;
+      case GATEWAY_TIMEOUT:
+        ex = (E) new GatewayTimeout(cause);
+        break;
+      case HTTP_VERSION_NOT_SUPPORTED:
+        ex = (E) new HttpVersionNotSupported(cause);
+        break;
+      case VARIANT_ALSO_NEGOTIATES:
+        ex = (E) new VariantAlsoNegotiates(cause);
+        break;
+      case INSUFFICIENT_STORAGE:
+        ex = (E) new InsufficientStorage(cause);
+        break;
+      case LOOP_DETECTED:
+        ex = (E) new LoopDetected(cause);
+        break;
+      case NOT_EXTENDED:
+        ex = (E) new NotExtended(cause);
+        break;
+      case NETWORK_AUTHENTICATION_REQUIRED:
+        ex = (E) new NetworkAuthenticationRequired(cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 서버 오류.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param cause   예외 원인.
+   * @param <E>     상세 예외.
+   *
+   * @return 상세 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http5xxException> E server(final int status, final String message, final Throwable cause) {
+    range(status, 500, 599, "status");
+
+    final E ex;
+    switch (status) {
+      case INTERNAL_SERVER_ERROR:
+        ex = (E) new InternalServerError(message, cause);
+        break;
+      case NOT_IMPLEMENTED:
+        ex = (E) new NotImplemented(message, cause);
+        break;
+      case BAD_GATEWAY:
+        ex = (E) new BadGateway(message, cause);
+        break;
+      case SERVICE_UNAVAILABLE:
+        ex = (E) new ServiceUnavailable(message, cause);
+        break;
+      case GATEWAY_TIMEOUT:
+        ex = (E) new GatewayTimeout(message, cause);
+        break;
+      case HTTP_VERSION_NOT_SUPPORTED:
+        ex = (E) new HttpVersionNotSupported(message, cause);
+        break;
+      case VARIANT_ALSO_NEGOTIATES:
+        ex = (E) new VariantAlsoNegotiates(message, cause);
+        break;
+      case INSUFFICIENT_STORAGE:
+        ex = (E) new InsufficientStorage(message, cause);
+        break;
+      case LOOP_DETECTED:
+        ex = (E) new LoopDetected(message, cause);
+        break;
+      case NOT_EXTENDED:
+        ex = (E) new NotExtended(message, cause);
+        break;
+      case NETWORK_AUTHENTICATION_REQUIRED:
+        ex = (E) new NetworkAuthenticationRequired(message, cause);
         break;
       default:
         throw new IllegalArgumentException("unsupported status code : " + status);
