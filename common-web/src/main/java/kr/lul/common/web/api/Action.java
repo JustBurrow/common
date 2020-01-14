@@ -1,4 +1,4 @@
-package kr.lul.common.web;
+package kr.lul.common.web.api;
 
 public enum Action {
   CREATE("POST"),
@@ -8,7 +8,7 @@ public enum Action {
 
   private final String httpMethod;
 
-  private Action(String httpMethod){
+  private Action(final String httpMethod) {
     this.httpMethod = httpMethod;
   }
 }

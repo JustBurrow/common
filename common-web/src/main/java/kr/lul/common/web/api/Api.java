@@ -1,4 +1,4 @@
-package kr.lul.common.web;
+package kr.lul.common.web.api;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public class Api {
   private final String namespace;
   private final String name;
 
-  public Api(Action action, String namespace, String name) {
+  public Api(final Action action, final String namespace, final String name) {
     notNull(action, "action");
     notNull(namespace, "namespace");
     notNull(name, "name");
@@ -36,13 +36,13 @@ public class Api {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) return true;
     if (!(o instanceof Api)) return false;
-    Api that = (Api) o;
+    final Api that = (Api) o;
     return this.action == that.action
-        && this.namespace.equals(that.namespace)
-        && this.name.equals(that.name);
+               && this.namespace.equals(that.namespace)
+               && this.name.equals(that.name);
   }
 
   @Override

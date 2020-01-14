@@ -1,4 +1,4 @@
-package kr.lul.common.web;
+package kr.lul.common.web.api;
 
 import org.junit.Test;
 import org.slf4j.Logger;
