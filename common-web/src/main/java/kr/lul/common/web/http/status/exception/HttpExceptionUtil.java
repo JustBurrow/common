@@ -5,6 +5,8 @@ import kr.lul.common.web.http.status.exception.informationalresponse.Continue;
 import kr.lul.common.web.http.status.exception.informationalresponse.EarlyHints;
 import kr.lul.common.web.http.status.exception.informationalresponse.Processing;
 import kr.lul.common.web.http.status.exception.informationalresponse.SwitchingProtocols;
+import kr.lul.common.web.http.status.exception.success.OK;
+import kr.lul.common.web.http.status.exception.success.*;
 
 import static kr.lul.common.util.Arguments.range;
 import static kr.lul.common.web.http.status.HttpStatusCodes.*;
@@ -143,6 +145,214 @@ public abstract class HttpExceptionUtil {
         break;
       case EARLY_HINTS:
         ex = (E) new EarlyHints(message, cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 요청 성공 예외.
+   *
+   * @param status 상태 코드.
+   * @param <E>    상세 예외.
+   *
+   * @return 성공 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http2xxException> E success(final int status) {
+    range(status, 200, 299, "status");
+
+    final E ex;
+    switch (status) {
+      case OK:
+        ex = (E) new OK();
+        break;
+      case CREATED:
+        ex = (E) new Created();
+        break;
+      case ACCEPTED:
+        ex = (E) new Accepted();
+        break;
+      case NON_AUTHORITATIVE_INFORMATION:
+        ex = (E) new NonAuthoritativeInformation();
+        break;
+      case NO_CONTENT:
+        ex = (E) new NoContent();
+        break;
+      case RESET_CONTENT:
+        ex = (E) new ResetContent();
+        break;
+      case PARTIAL_CONTENT:
+        ex = (E) new PartialContent();
+        break;
+      case MULTI_STATUS:
+        ex = (E) new MultiStatus();
+        break;
+      case ALREADY_REPORTED:
+        ex = (E) new AlreadyReported();
+        break;
+      case IM_USED:
+        ex = (E) new ImUsed();
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 요청 성공 예외.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param <E>     상세 예외.
+   *
+   * @return 성공 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http2xxException> E success(final int status, final String message) {
+    range(status, 200, 299, "status");
+
+    final E ex;
+    switch (status) {
+      case OK:
+        ex = (E) new OK(message);
+        break;
+      case CREATED:
+        ex = (E) new Created(message);
+        break;
+      case ACCEPTED:
+        ex = (E) new Accepted(message);
+        break;
+      case NON_AUTHORITATIVE_INFORMATION:
+        ex = (E) new NonAuthoritativeInformation(message);
+        break;
+      case NO_CONTENT:
+        ex = (E) new NoContent(message);
+        break;
+      case RESET_CONTENT:
+        ex = (E) new ResetContent(message);
+        break;
+      case PARTIAL_CONTENT:
+        ex = (E) new PartialContent(message);
+        break;
+      case MULTI_STATUS:
+        ex = (E) new MultiStatus(message);
+        break;
+      case ALREADY_REPORTED:
+        ex = (E) new AlreadyReported(message);
+        break;
+      case IM_USED:
+        ex = (E) new ImUsed(message);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 요청 성공 예외.
+   *
+   * @param status 상태 코드.
+   * @param cause  예외 원인.
+   * @param <E>    상세 예외.
+   *
+   * @return 성공 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http2xxException> E success(final int status, final Throwable cause) {
+    range(status, 200, 299, "status");
+
+    final E ex;
+    switch (status) {
+      case OK:
+        ex = (E) new OK(cause);
+        break;
+      case CREATED:
+        ex = (E) new Created(cause);
+        break;
+      case ACCEPTED:
+        ex = (E) new Accepted(cause);
+        break;
+      case NON_AUTHORITATIVE_INFORMATION:
+        ex = (E) new NonAuthoritativeInformation(cause);
+        break;
+      case NO_CONTENT:
+        ex = (E) new NoContent(cause);
+        break;
+      case RESET_CONTENT:
+        ex = (E) new ResetContent(cause);
+        break;
+      case PARTIAL_CONTENT:
+        ex = (E) new PartialContent(cause);
+        break;
+      case MULTI_STATUS:
+        ex = (E) new MultiStatus(cause);
+        break;
+      case ALREADY_REPORTED:
+        ex = (E) new AlreadyReported(cause);
+        break;
+      case IM_USED:
+        ex = (E) new ImUsed(cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 요청 성공 예외.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param cause   예외 원인.
+   * @param <E>     상세 예외.
+   *
+   * @return 성공 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http2xxException> E success(final int status, final String message, final Throwable cause) {
+    range(status, 200, 299, "status");
+
+    final E ex;
+    switch (status) {
+      case OK:
+        ex = (E) new OK(message, cause);
+        break;
+      case CREATED:
+        ex = (E) new Created(message, cause);
+        break;
+      case ACCEPTED:
+        ex = (E) new Accepted(message, cause);
+        break;
+      case NON_AUTHORITATIVE_INFORMATION:
+        ex = (E) new NonAuthoritativeInformation(message, cause);
+        break;
+      case NO_CONTENT:
+        ex = (E) new NoContent(message, cause);
+        break;
+      case RESET_CONTENT:
+        ex = (E) new ResetContent(message, cause);
+        break;
+      case PARTIAL_CONTENT:
+        ex = (E) new PartialContent(message, cause);
+        break;
+      case MULTI_STATUS:
+        ex = (E) new MultiStatus(message, cause);
+        break;
+      case ALREADY_REPORTED:
+        ex = (E) new AlreadyReported(message, cause);
+        break;
+      case IM_USED:
+        ex = (E) new ImUsed(message, cause);
         break;
       default:
         throw new IllegalArgumentException("unsupported status code : " + status);
