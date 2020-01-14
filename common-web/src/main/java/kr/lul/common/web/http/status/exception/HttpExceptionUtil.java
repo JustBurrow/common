@@ -5,6 +5,7 @@ import kr.lul.common.web.http.status.exception.informationalresponse.Continue;
 import kr.lul.common.web.http.status.exception.informationalresponse.EarlyHints;
 import kr.lul.common.web.http.status.exception.informationalresponse.Processing;
 import kr.lul.common.web.http.status.exception.informationalresponse.SwitchingProtocols;
+import kr.lul.common.web.http.status.exception.redirection.*;
 import kr.lul.common.web.http.status.exception.success.OK;
 import kr.lul.common.web.http.status.exception.success.*;
 
@@ -353,6 +354,202 @@ public abstract class HttpExceptionUtil {
         break;
       case IM_USED:
         ex = (E) new ImUsed(message, cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 리다이렉트 예외.
+   *
+   * @param status 상태 코드.
+   * @param <E>    상세 예외.
+   *
+   * @return 리다이렉트 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http3xxException> E redirection(final int status) {
+    range(status, 300, 399, "status");
+
+    final E ex;
+    switch (status) {
+      case MULTIPLE_CHOICES:
+        ex = (E) new MultipleChoices();
+        break;
+      case MOVED_PERMANENTLY:
+        ex = (E) new MovedPermanently();
+        break;
+      case FOUND:
+        ex = (E) new Found();
+        break;
+      case SEE_OTHER:
+        ex = (E) new SeeOther();
+        break;
+      case NOT_MODIFIED:
+        ex = (E) new NotModified();
+        break;
+      case USE_PROXY:
+        ex = (E) new UseProxy();
+        break;
+      case SWITCH_PROXY:
+        ex = (E) new SwitchProxy();
+        break;
+      case TEMPORARY_REDIRECT:
+        ex = (E) new TemporaryRedirect();
+        break;
+      case PERMANENT_REDIRECT:
+        ex = (E) new PermanentRedirect();
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 리다이렉트 예외.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param <E>     상세 예외.
+   *
+   * @return 리다이렉트 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http3xxException> E redirection(final int status, final String message) {
+    range(status, 300, 399, "status");
+
+    final E ex;
+    switch (status) {
+      case MULTIPLE_CHOICES:
+        ex = (E) new MultipleChoices(message);
+        break;
+      case MOVED_PERMANENTLY:
+        ex = (E) new MovedPermanently(message);
+        break;
+      case FOUND:
+        ex = (E) new Found(message);
+        break;
+      case SEE_OTHER:
+        ex = (E) new SeeOther(message);
+        break;
+      case NOT_MODIFIED:
+        ex = (E) new NotModified(message);
+        break;
+      case USE_PROXY:
+        ex = (E) new UseProxy(message);
+        break;
+      case SWITCH_PROXY:
+        ex = (E) new SwitchProxy(message);
+        break;
+      case TEMPORARY_REDIRECT:
+        ex = (E) new TemporaryRedirect(message);
+        break;
+      case PERMANENT_REDIRECT:
+        ex = (E) new PermanentRedirect(message);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 리다이렉트 예외.
+   *
+   * @param status 상태 코드.
+   * @param cause  예외 원인.
+   * @param <E>    상세 예외.
+   *
+   * @return 리다이렉트 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http3xxException> E redirection(final int status, final Throwable cause) {
+    range(status, 300, 399, "status");
+
+    final E ex;
+    switch (status) {
+      case MULTIPLE_CHOICES:
+        ex = (E) new MultipleChoices(cause);
+        break;
+      case MOVED_PERMANENTLY:
+        ex = (E) new MovedPermanently(cause);
+        break;
+      case FOUND:
+        ex = (E) new Found(cause);
+        break;
+      case SEE_OTHER:
+        ex = (E) new SeeOther(cause);
+        break;
+      case NOT_MODIFIED:
+        ex = (E) new NotModified(cause);
+        break;
+      case USE_PROXY:
+        ex = (E) new UseProxy(cause);
+        break;
+      case SWITCH_PROXY:
+        ex = (E) new SwitchProxy(cause);
+        break;
+      case TEMPORARY_REDIRECT:
+        ex = (E) new TemporaryRedirect(cause);
+        break;
+      case PERMANENT_REDIRECT:
+        ex = (E) new PermanentRedirect(cause);
+        break;
+      default:
+        throw new IllegalArgumentException("unsupported status code : " + status);
+    }
+
+    return ex;
+  }
+
+  /**
+   * HTTP 리다이렉트 예외.
+   *
+   * @param status  상태 코드.
+   * @param message 예외 메시지.
+   * @param cause   예외 원인.
+   * @param <E>     상세 예외.
+   *
+   * @return 리다이렉트 예외.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E extends Http3xxException> E redirection(final int status, final String message, final Throwable cause) {
+    range(status, 300, 399, "status");
+
+    final E ex;
+    switch (status) {
+      case MULTIPLE_CHOICES:
+        ex = (E) new MultipleChoices(message, cause);
+        break;
+      case MOVED_PERMANENTLY:
+        ex = (E) new MovedPermanently(message, cause);
+        break;
+      case FOUND:
+        ex = (E) new Found(message, cause);
+        break;
+      case SEE_OTHER:
+        ex = (E) new SeeOther(message, cause);
+        break;
+      case NOT_MODIFIED:
+        ex = (E) new NotModified(message, cause);
+        break;
+      case USE_PROXY:
+        ex = (E) new UseProxy(message, cause);
+        break;
+      case SWITCH_PROXY:
+        ex = (E) new SwitchProxy(message, cause);
+        break;
+      case TEMPORARY_REDIRECT:
+        ex = (E) new TemporaryRedirect(message, cause);
+        break;
+      case PERMANENT_REDIRECT:
+        ex = (E) new PermanentRedirect(message, cause);
         break;
       default:
         throw new IllegalArgumentException("unsupported status code : " + status);
