@@ -48,7 +48,7 @@ public class RegexValidatorTest {
     // THEN
     assertThat(ex)
         .isNotNull()
-        .hasMessageStartingWith("illegal target pattern : target=A");
+        .hasMessageStartingWith("illegal target pattern : target='A'");
   }
 
   @Test
