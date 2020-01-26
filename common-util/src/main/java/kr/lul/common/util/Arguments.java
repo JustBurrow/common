@@ -480,7 +480,7 @@ public abstract class Arguments {
   public static <T> void in(final T target, final Collection<T> collection,
       final String targetName) throws IllegalArgumentException {
     if (null == target) {
-      throw new IllegalArgumentException("target is null.");
+      throw new IllegalArgumentException(name(targetName) + " is null.");
     }
     if (null == collection) {
       throw new IllegalArgumentException("collection is null.");
