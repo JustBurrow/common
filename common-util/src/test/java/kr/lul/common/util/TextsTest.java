@@ -4,10 +4,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 
 import static java.util.concurrent.ThreadLocalRandom.current;
-import static kr.lul.common.util.Texts.doubleQuote;
-import static kr.lul.common.util.Texts.singleQuote;
+import static kr.lul.common.util.Texts.*;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
@@ -20,7 +20,7 @@ public class TextsTest {
   @Test
   public void test_single_quote_with_null() throws Exception {
     // WHEN
-    String actual = singleQuote(null);
+    final String actual = singleQuote(null);
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -31,7 +31,7 @@ public class TextsTest {
   @Test
   public void test_single_quote_with_empty() throws Exception {
     // WHEN
-    String actual = singleQuote("");
+    final String actual = singleQuote("");
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -42,11 +42,11 @@ public class TextsTest {
   @Test
   public void test_single_quote_with_random() throws Exception {
     // GIVEN
-    String expected = random(current().nextInt(1, 10));
+    final String expected = random(current().nextInt(1, 10));
     log.debug("GIVEN - expected={}", expected);
 
     // WHEN
-    String actual = singleQuote(expected);
+    final String actual = singleQuote(expected);
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -60,7 +60,7 @@ public class TextsTest {
   @Test
   public void test_double_quote_with_null() throws Exception {
     // WHEN
-    String actual = doubleQuote(null);
+    final String actual = doubleQuote(null);
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -71,7 +71,7 @@ public class TextsTest {
   @Test
   public void test_double_quote_with_empty() throws Exception {
     // WHEN
-    String actual = doubleQuote("");
+    final String actual = doubleQuote("");
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -82,11 +82,11 @@ public class TextsTest {
   @Test
   public void test_double_quote_with_random() throws Exception {
     // GIVEN
-    String expected = random(current().nextInt(1, 100));
+    final String expected = random(current().nextInt(1, 100));
     log.debug("GIVEN - expected={}", expected);
 
     // WHEN
-    String actual = doubleQuote(expected);
+    final String actual = doubleQuote(expected);
     log.debug("WHEN - actual={}", actual);
 
     // THEN
@@ -95,5 +95,83 @@ public class TextsTest {
         .hasSize(expected.length() + 2)
         .startsWith("\"")
         .endsWith("\"");
+  }
+
+  @Test
+  public void test_head_with_null() throws Exception {
+    assertThatThrownBy(() -> head(null, 1))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("text is null.");
+  }
+
+  @Test
+  public void test_head_with_0_max() throws Exception {
+    assertThatThrownBy(() -> head("abc", 0, false))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("too small max.");
+  }
+
+  @Test
+  public void test_head_with_1_max_and_ellipsis() throws Exception {
+    assertThatThrownBy(() -> head("abc", 1, true))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("too small max.");
+  }
+
+  @Test
+  public void test_head_with_same_max_and_ellipsis() throws Exception {
+    assertThat(head("abcd", 4))
+        .isEqualTo("abcd");
+  }
+
+  @Test
+  public void test_head_with_large_max() throws Exception {
+    // GIVEN
+    final String text = "abcd";
+    final int max = text.length() + 1;
+    log.info("GIVEN - text={}, max={}", text, max);
+
+    // WHEN
+    final String head = head(text, max);
+    log.info("WHEN - head={}", head);
+
+    // THEN
+    assertThat(head)
+        .hasSize(text.length())
+        .isEqualTo(text);
+  }
+
+  @Test
+  public void test_head_with_ellipsis() throws Exception {
+    // GIVEN
+    final String text = "abcd";
+    final int max = text.length() - 1;
+    log.info("GIVEN - text={}, max={}", text, max);
+
+    // WHEN
+    final String head = head(text, max);
+    log.info("WHEN - head={}", head);
+
+    // THEN
+    assertThat(head)
+        .hasSize(max)
+        .isEqualTo("ab…");
+  }
+
+  @Test
+  public void test_head_without_ellipsis() throws Exception {
+    // GIVEN
+    final String text = "abcd";
+    final int max = text.length() - 1;
+    log.info("GIVEN - text={}, max={}", text, max);
+
+    // WHEN
+    final String head = head(text, max, false);
+    log.info("WHEN - head={}", head);
+
+    // THEN
+    assertThat(head)
+        .hasSize(max)
+        .isEqualTo("abc");
   }
 }
