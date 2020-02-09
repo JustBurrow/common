@@ -1,7 +1,6 @@
 package kr.lul.common.util;
 
 import static java.lang.String.format;
-import static kr.lul.common.util.Arguments.notNull;
 
 /**
  * 문자열 유틸리티.
@@ -47,9 +46,11 @@ public abstract class Texts {
    * @return 문자열의 앞부분.
    */
   public static String head(final String text, final int max) {
-    notNull(text, "text");
     if (1 >= max)
       throw new IllegalArgumentException("too small max.");
+
+    if (null == text)
+      return null;
 
     return text.length() <= max
                ? text
@@ -68,13 +69,14 @@ public abstract class Texts {
    * @see #ELLIPSIS_CHARACTER
    */
   public static String head(final String text, final int max, final boolean ellipsis) {
-    notNull(text, "text");
-
     if (ellipsis)
       return head(text, max);
 
     if (1 > max)
       throw new IllegalArgumentException("too small max.");
+
+    if (null == text)
+      return null;
 
     return text.length() <= max
                ? text

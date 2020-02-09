@@ -99,9 +99,8 @@ public class TextsTest {
 
   @Test
   public void test_head_with_null() throws Exception {
-    assertThatThrownBy(() -> head(null, 1))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("text is null.");
+    assertThat(head(null, 10))
+        .isNull();
   }
 
   @Test
