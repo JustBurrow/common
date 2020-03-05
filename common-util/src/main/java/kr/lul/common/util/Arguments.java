@@ -220,6 +220,188 @@ public abstract class Arguments {
   }
 
   /**
+   * @param target 대상.
+   * @param max    최대값(미포함).
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
+   */
+  public static void lt(final int target, final int max) throws IllegalArgumentException {
+    lt(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상.
+   * @param max        최대값(미포함).
+   * @param targetName 대상의 이름.
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
+   */
+  public static void lt(final int target, final int max, final String targetName) throws IllegalArgumentException {
+    if (max <= target) {
+      throw new IllegalArgumentException(format("%s is not less than %d : %d", name(targetName), max, target));
+    }
+  }
+
+  /**
+   * @param target 대상.
+   * @param max    최대값(미포함).
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
+   */
+  public static void lt(final long target, final long max) throws IllegalArgumentException {
+    lt(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상.
+   * @param max        최대값(미포함).
+   * @param targetName 대상의 이름.
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
+   */
+  public static void lt(final long target, final long max, final String targetName) throws IllegalArgumentException {
+    if (max <= target) {
+      throw new IllegalArgumentException(format("%s is not less than %d : %d", name(targetName), max, target));
+    }
+  }
+
+  /**
+   * @param target 대상
+   * @param max    최대값(포함)
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
+   */
+  public static void le(final int target, final int max) throws IllegalArgumentException {
+    le(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param max        최대값(포함)
+   * @param targetName 대상의 이름
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
+   */
+  public static void le(final int target, final int max, final String targetName) throws IllegalArgumentException {
+    if (max < target) {
+      throw new IllegalArgumentException(format("%s is not less than or equal to %d : %d", name(targetName), max, target));
+    }
+  }
+
+  /**
+   * @param target 대상
+   * @param max    최대값(포함)
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
+   */
+  public static void le(final long target, final long max) throws IllegalArgumentException {
+    le(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param max        최대값(포함)
+   * @param targetName 대상의 이름
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
+   */
+  public static void le(final long target, final long max, final String targetName) throws IllegalArgumentException {
+    if (max < target) {
+      throw new IllegalArgumentException(format("%s is not less than or equal to %d : %d", name(targetName), max, target));
+    }
+  }
+
+  /**
+   * @param target 대상
+   * @param min    최소값(미포함)
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static void gt(final int target, final int min) throws IllegalArgumentException {
+    gt(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(미포함)
+   * @param targetName 대상 이름
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static void gt(final int target, final int min, final String targetName) throws IllegalArgumentException {
+    if (min >= target) {
+      throw new IllegalArgumentException(format("%s is not greater than %d : %d", name(targetName), min, target));
+    }
+  }
+
+  /**
+   * @param target 대상
+   * @param min    최소값(미포함)
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static void gt(final long target, final long min) throws IllegalArgumentException {
+    gt(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(미포함)
+   * @param targetName 대상 이름
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static void gt(final long target, final long min, final String targetName) throws IllegalArgumentException {
+    if (min >= target) {
+      throw new IllegalArgumentException(format("%s is not greater than %d : %d", name(targetName), min, target));
+    }
+  }
+
+  /**
+   * @param target 대상
+   * @param min    최소값(포함)
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static void ge(final int target, final int min) throws IllegalArgumentException {
+    ge(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(포함)
+   * @param targetName 대상의 이름
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static void ge(final int target, final int min, final String targetName) throws IllegalArgumentException {
+    if (min > target)
+      throw new IllegalArgumentException(format("%s is not greater than or equal to %d : %d", name(targetName), min, target));
+  }
+
+  /**
+   * @param target 대상
+   * @param min    최소값(포함)
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static void ge(final long target, final long min) throws IllegalArgumentException {
+    ge(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(포함)
+   * @param targetName 대상의 이름
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static void ge(final long target, final long min, final String targetName) throws IllegalArgumentException {
+    if (min > target)
+      throw new IllegalArgumentException(format("%s is not greater than or equal to %d : %d", name(targetName), min, target));
+  }
+
+  /**
    * 숫자가 범위를 벗어나면 실패.
    *
    * @param target 대상.

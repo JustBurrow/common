@@ -34,7 +34,7 @@ public class ArgumentsTest {
   @Test
   public void test_notNull_with_null_and_name() throws Exception {
     // GIVEN
-    String name = randomAlphabetic(10);
+    final String name = randomAlphabetic(10);
     log.debug("GIVEN - name={}", name);
 
     // WHEN & THEN
@@ -56,7 +56,7 @@ public class ArgumentsTest {
   @Test
   public void test_positive_with_negative() throws Exception {
     // GIVEN
-    int number = current().nextInt(Integer.MIN_VALUE, 0);
+    final int number = current().nextInt(Integer.MIN_VALUE, 0);
     log.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
@@ -74,7 +74,7 @@ public class ArgumentsTest {
   @Test
   public void test_positive_with_positive() throws Exception {
     // GIVEN
-    int number = current().nextInt(2, Integer.MAX_VALUE);
+    final int number = current().nextInt(2, Integer.MAX_VALUE);
     log.debug("GIVEN - number={}", number);
 
     // WHEN
@@ -93,7 +93,7 @@ public class ArgumentsTest {
   @Test
   public void test_positive_with_negative_long() throws Exception {
     // GIVEN
-    long number = current().nextLong(Long.MIN_VALUE, 0L);
+    final long number = current().nextLong(Long.MIN_VALUE, 0L);
     log.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
@@ -111,11 +111,120 @@ public class ArgumentsTest {
   @Test
   public void test_positive_with_positive_long() throws Exception {
     // GIVEN
-    long number = current().nextLong(2L, Long.MAX_VALUE);
+    final long number = current().nextLong(2L, Long.MAX_VALUE);
     log.debug("GIVEN - number={}", number);
 
     // WHEN
     positive(number);
+  }
+
+  @Test
+  public void test_lt_with_int() throws Exception {
+    assertThatThrownBy(() -> lt(0, 0))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not less than 0 : 0");
+    assertThatThrownBy(() -> lt(1, 0))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not less than 0 : 1");
+    lt(0, 1);
+    lt(-1, 0);
+  }
+
+  @Test
+  public void test_lt_with_long() throws Exception {
+    assertThatThrownBy(() -> lt(0L, 0L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not less than 0 : 0");
+    lt(0L, 1L);
+    lt(-1L, 0L);
+  }
+
+  @Test
+  public void test_le_with_int() throws Exception {
+    assertThatThrownBy(() -> le(1, 0))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not less than or equal to 0 : 1");
+    le(0, 0);
+    le(0, 1);
+    le(-1, 0);
+  }
+
+  @Test
+  public void test_le_with_long() throws Exception {
+    assertThatThrownBy(() -> le(1L, 0L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not less than or equal to 0 : 1");
+    le(0L, 0L);
+    le(0L, 1L);
+    le(-1L, 0L);
+  }
+
+  @Test
+  public void test_gt_with_int() throws Exception {
+    assertThatThrownBy(() -> gt(0, 0))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than 0 : 0");
+    assertThatThrownBy(() -> gt(0, 1))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than 1 : 0");
+    gt(1, 0);
+    gt(0, -1);
+    gt(1, -1);
+  }
+
+  @Test
+  public void test_gt_with_long() throws Exception {
+    assertThatThrownBy(() -> gt(0L, 0L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than 0 : 0");
+    assertThatThrownBy(() -> gt(0L, 1L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than 1 : 0");
+    gt(1L, 0L);
+    gt(0L, -1L);
+    gt(1L, -1L);
+  }
+
+  @Test
+  public void test_ge_with_int() throws Exception {
+    assertThatThrownBy(() -> ge(0, 1))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to 1 : 0");
+    assertThatThrownBy(() -> ge(-1, 0))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to 0 : -1");
+    assertThatThrownBy(() -> ge(-2, -1))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to -1 : -2");
+    ge(0, 0);
+    ge(1, 0);
+    ge(1, 1);
+    ge(2, 1);
+    ge(0, -1);
+    ge(-1, -1);
+    ge(-1, -2);
+    ge(1, -1);
+  }
+
+  @Test
+  public void test_ge_with_long() throws Exception {
+    assertThatThrownBy(() -> ge(0L, 1L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to 1 : 0");
+    assertThatThrownBy(() -> ge(-1L, 0L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to 0 : -1");
+    assertThatThrownBy(() -> ge(-2L, -1L))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("target is not greater than or equal to -1 : -2");
+    ge(0L, 0L);
+    ge(1L, 0L);
+    ge(1L, 1L);
+    ge(2L, 1L);
+    ge(0L, -1L);
+    ge(-1L, -1L);
+    ge(-1L, -2L);
+    ge(1L, -1L);
   }
 
   @Test
