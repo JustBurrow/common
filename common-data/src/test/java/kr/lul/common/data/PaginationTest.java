@@ -47,18 +47,18 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_with_0_totalCount() throws Exception {
+  public void test_new_with_negative1_totalCount() throws Exception {
     // GIVEN
     final int page = 0;
     final int limit = 10;
-    final long totalCount = 0L;
+    final long totalCount = -1L;
     final List<String> content = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN & THEN
     assertThatThrownBy(() -> new Pagination<>(page, limit, totalCount, content))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("totalCount is not positive : " + totalCount);
+        .hasMessage("totalCount is negative : " + totalCount);
   }
 
   @Test
@@ -77,7 +77,30 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_1st_and_partial_content() throws Exception {
+  public void test_new_with_empty() throws Exception {
+    // GIVEN
+    final int page = 0;
+    final int limit = 10;
+    final long totalCount = 0L;
+    final List<String> content = List.of();
+    log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
+
+    // WHEN
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
+    log.info("WHEN - pagination={}", pagination);
+
+    // THEN
+    assertThat(pagination)
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
+            Page::getCount, Page::getTotalPage,
+            Page::isFirst, Page::isLast, Page::hasBefore, Page::hasNext)
+        .containsSequence(page, limit, totalCount, content,
+            0, 0,
+            true, true, false, false);
+  }
+
+  @Test
+  public void test_new_with_1st_and_partial_content() throws Exception {
     // GIVEN
     final int page = 0;
     final int limit = 10;
@@ -100,7 +123,7 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_1st_and_full_content() throws Exception {
+  public void test_new_with_1st_and_full_content() throws Exception {
     // GIVEN
     final int page = 0;
     final int limit = 10;
@@ -123,7 +146,7 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_1st() throws Exception {
+  public void test_new_with_1st_page() throws Exception {
     // GIVEN
     final int page = 0;
     final int limit = 10;
@@ -146,7 +169,7 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_last() throws Exception {
+  public void test_new_with_last_page() throws Exception {
     // GIVEN
     final int page = 1;
     final int limit = 10;
@@ -169,7 +192,7 @@ public class PaginationTest {
   }
 
   @Test
-  public void test_new_middle_page() throws Exception {
+  public void test_new_with_middle_page() throws Exception {
     // GIVEN
     final int page = 1;
     final int limit = 5;
@@ -189,6 +212,29 @@ public class PaginationTest {
         .containsSequence(page, limit, totalCount, content,
             5, 3,
             false, false, true, true);
+  }
+
+  @Test
+  public void test_new_with_over_totalPage() throws Exception {
+    // GIVEN
+    final int page = Integer.MAX_VALUE;
+    final int limit = 10;
+    final long totalCount = 100L;
+    final List<String> content = List.of();
+    log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
+
+    // WHEN
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
+    log.info("WHEN - pagination={}", pagination);
+
+    // THEN
+    assertThat(pagination)
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
+            Page::getCount, Page::getTotalPage,
+            Page::isFirst, Page::isLast, Page::hasBefore, Page::hasNext)
+        .containsSequence(page, limit, totalCount, content,
+            0, 10,
+            false, false, true, false);
   }
 
   @Test

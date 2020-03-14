@@ -23,7 +23,7 @@ public class Pagination<T> implements Page<T> {
   public Pagination(final int page, final int limit, final long totalCount, final List<T> content) {
     notNegative(page, "page");
     positive(limit, "limit");
-    positive(totalCount, "totalCount");
+    notNegative(totalCount, "totalCount");
     notNull(content, "content");
     if (totalCount < content.size())
       throw new IllegalArgumentException(format("too many data : totalCount=%d, content.size=%d", totalCount, content.size()));

@@ -63,7 +63,7 @@ public interface Page<T> {
    * @return 마지막 페이지이면 {@code true}.
    */
   default boolean isLast() {
-    return getPage() == getTotalPage() - 1;
+    return 0 == getTotalPage() || getPage() == getTotalPage() - 1;
   }
 
   /**
