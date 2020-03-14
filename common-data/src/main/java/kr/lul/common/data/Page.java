@@ -1,6 +1,10 @@
 package kr.lul.common.data;
 
 import java.util.List;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toList;
+import static kr.lul.common.util.Arguments.notNull;
 
 /**
  * {@code org.springframework.data.domain.Slice} 대체 인터페이스.
@@ -74,5 +78,18 @@ public interface Page<T> {
    */
   default boolean hasNext() {
     return getPage() < getTotalPage() - 1;
+  }
+
+  /**
+   * 자료형 변환한 인스턴스를 반환한다.
+   *
+   * @param converter 자료형 변환 함수.
+   * @param <R>       타겟 자료형.
+   *
+   * @return 자료형이 변환된 인스턴스.
+   */
+  default <R> Page<R> map(final Function<? super T, ? extends R> converter) {
+    notNull(converter, "converter");
+    return new Pagination<>(getPage(), getLimit(), getTotalCount(), getContent().stream().map(converter).collect(toList()));
   }
 }

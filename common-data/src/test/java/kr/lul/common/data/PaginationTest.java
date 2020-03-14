@@ -190,4 +190,48 @@ public class PaginationTest {
             5, 3,
             false, false, true, true);
   }
+
+  @Test
+  public void test_map_with_null() throws Exception {
+    // GIVEN
+    final int page = 1;
+    final int limit = 5;
+    final long totalCount = 11L;
+    final List<String> content = List.of("6", "7", "8", "9", "10");
+    log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
+
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
+    log.info("GIVEN - pagination={}", pagination);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> pagination.map(null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("converter is null.");
+  }
+
+  @Test
+  public void test_map() throws Exception {
+    // GIVEN
+    final int page = 1;
+    final int limit = 5;
+    final long totalCount = 11L;
+    final List<String> content = List.of("6", "7", "8", "9", "10");
+    log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
+    log.info("GIVEN - pagination={}", pagination);
+
+    // WHEN
+    final Page<Integer> actual = pagination.map(Integer::parseInt);
+    log.info("WHEN - actual={}", actual);
+
+    // THEN
+    assertThat(actual)
+        .isNotNull()
+        .extracting(Page::getPage, Page::getLimit, Page::getTotalCount, Page::getContent,
+            Page::getCount, Page::getTotalPage,
+            Page::isFirst, Page::isLast, Page::hasBefore, Page::hasNext)
+        .containsSequence(page, limit, totalCount, List.of(6, 7, 8, 9, 10),
+            5, 3,
+            false, false, true, true);
+  }
 }
