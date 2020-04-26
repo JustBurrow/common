@@ -3,6 +3,7 @@ package kr.lul.common.data;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
 import static kr.lul.common.util.Arguments.notNull;
 
 /**
@@ -16,6 +17,10 @@ public class Context {
    * 컨텍스트 ID.
    */
   protected final UUID id;
+
+  public Context() {
+    this(randomUUID());
+  }
 
   public Context(final UUID id) {
     notNull(id, "id");
