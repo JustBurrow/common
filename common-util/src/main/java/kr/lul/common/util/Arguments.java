@@ -2,6 +2,7 @@ package kr.lul.common.util;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import static java.lang.String.format;
@@ -493,6 +494,30 @@ public abstract class Arguments {
     if (null == target) {
       throw new IllegalArgumentException(name(targetName) + " is null.");
     } else if (0 == target.length) {
+      throw new IllegalArgumentException(name(targetName) + " is empty.");
+    }
+  }
+
+  public static <T> void notEmpty(final T[] target) throws IllegalArgumentException {
+    notEmpty(target, DEFAULT_TARGET_NAME);
+  }
+
+  public static <T> void notEmpty(final T[] target, final String targetName) throws IllegalArgumentException {
+    if (null == target) {
+      throw new IllegalArgumentException(name(targetName) + " is null.");
+    } else if (0 == target.length) {
+      throw new IllegalArgumentException(name(targetName) + " is empty.");
+    }
+  }
+
+  public static <T> void notEmpty(final List<T> target) throws IllegalArgumentException {
+    notEmpty(target, DEFAULT_TARGET_NAME);
+  }
+
+  public static <T> void notEmpty(final List<T> target, final String targetName) throws IllegalArgumentException {
+    if (null == target) {
+      throw new IllegalArgumentException(name(targetName) + " is null.");
+    } else if (target.isEmpty()) {
       throw new IllegalArgumentException(name(targetName) + " is empty.");
     }
   }
