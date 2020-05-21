@@ -170,15 +170,17 @@ public class AbbreviateNumberFormat {
   /**
    * 숫자를 생략한 문자열로 변환.
    *
+   * ex) 1234 -&gt; 1K, 1234567 -&gt; 1M
+   *
    * @param number 숫자.
    *
    * @return 생략한 문자열.
    */
   public String abbreviate(final long number) {
     for (final Unit unit : this.units) {
-      if (0L < number && 0L < number / unit.scale)
+      if (0L < number && unit.scale <= number)
         return (number / unit.scale) + unit.label;
-      else if (0 < number / -unit.scale)
+      else if (number <= -unit.scale)
         return (number / unit.scale) + unit.label;
     }
     return Long.toString(number);
