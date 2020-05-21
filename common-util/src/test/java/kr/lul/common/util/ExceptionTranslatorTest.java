@@ -41,7 +41,7 @@ public class ExceptionTranslatorTest {
     // GIVEN
     final Exception cause = new Exception("cause");
     log.info("GIVEN - cause=" + cause);
-    final TryBlock tryBlock = () -> {
+    final TryBlock<Exception> tryBlock = () -> {
       throw cause;
     };
 
@@ -54,12 +54,12 @@ public class ExceptionTranslatorTest {
   @Test
   public void test_translate_with_ValidationException() throws Exception {
     // GIVEN
-    final Runnable runnable = () -> {
+    final TryBlock<ValidationException> tryBlock = () -> {
       throw new ValidationException("test", null);
     };
 
     // WHEN & THEN
-    assertThatThrownBy(() -> translate(runnable::run, RuntimeException::new))
+    assertThatThrownBy(() -> translate(tryBlock::doTry, RuntimeException::new))
         .isInstanceOf(RuntimeException.class)
         .hasCauseInstanceOf(ValidationException.class);
   }

@@ -11,8 +11,14 @@ import static kr.lul.common.util.Arguments.notNull;
  * @since 2020/05/21
  */
 public abstract class ExceptionTranslator {
-  public interface TryBlock {
-    void doTry() throws Throwable;
+  @FunctionalInterface
+  public interface TryBlock<C extends Throwable> {
+    void doTry() throws C;
+  }
+
+  @FunctionalInterface
+  public interface Thrower<C extends Throwable, E extends Throwable> {
+    void doThrow(C cause) throws E;
   }
 
   /**
@@ -26,8 +32,8 @@ public abstract class ExceptionTranslator {
    * @throws E 변환된 예외.
    */
   public static <C extends Throwable, E extends Throwable> void translate(
-      final TryBlock tryBlock,
-      final Function<Throwable, C> thrower) throws E {
+      final TryBlock<C> tryBlock, final Function<C, E> thrower
+  ) throws E {
     notNull(tryBlock, "tryBlock");
     notNull(thrower, "thrower");
 
@@ -35,7 +41,7 @@ public abstract class ExceptionTranslator {
       tryBlock.doTry();
     } catch (final Throwable cause) {
       //noinspection unchecked
-      throw (E) thrower.apply(cause);
+      throw thrower.apply((C) cause);
     }
   }
 
