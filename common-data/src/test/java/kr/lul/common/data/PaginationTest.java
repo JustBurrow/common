@@ -16,8 +16,8 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @author justburrow
  * @since 2020/03/14
  */
-public class PaginationImplTest {
-  protected static final Logger log = getLogger(PaginationImplTest.class);
+public class PaginationTest {
+  protected static final Logger log = getLogger(PaginationTest.class);
 
   @Test
   public void test_new_with_negative1_page() throws Exception {
@@ -29,7 +29,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN & THEN
-    assertThatThrownBy(() -> new PaginationImpl<>(page, limit, totalCount, content))
+    assertThatThrownBy(() -> new Pagination<>(page, limit, totalCount, content))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("page is negative : " + page);
   }
@@ -44,7 +44,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN & THEN
-    assertThatThrownBy(() -> new PaginationImpl<>(page, limit, totalCount, content))
+    assertThatThrownBy(() -> new Pagination<>(page, limit, totalCount, content))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("limit is not positive : " + limit);
   }
@@ -59,7 +59,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN & THEN
-    assertThatThrownBy(() -> new PaginationImpl<>(page, limit, totalCount, content))
+    assertThatThrownBy(() -> new Pagination<>(page, limit, totalCount, content))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("totalCount is negative : " + totalCount);
   }
@@ -74,7 +74,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN & THEN
-    assertThatThrownBy(() -> new PaginationImpl<>(page, limit, totalCount, content))
+    assertThatThrownBy(() -> new Pagination<>(page, limit, totalCount, content))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("too many data");
   }
@@ -89,12 +89,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -112,12 +112,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -135,12 +135,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -158,12 +158,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -181,12 +181,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -204,12 +204,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -227,12 +227,12 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
     assertThat(pagination)
-        .extracting(PaginationImpl::getPage, PaginationImpl::getLimit, PaginationImpl::getTotalCount, PaginationImpl::getContent,
+        .extracting(Pagination::getPage, Pagination::getLimit, Pagination::getTotalCount, Pagination::getContent,
             Pagination::getCount, Pagination::getTotalPage,
             Pagination::isFirst, Pagination::isLast, Pagination::hasPre, Pagination::hasNext)
         .containsSequence(page, limit, totalCount, content,
@@ -249,7 +249,7 @@ public class PaginationImplTest {
     final List<String> content = List.of("6", "7", "8", "9", "10");
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("GIVEN - pagination={}", pagination);
 
     // WHEN & THEN
@@ -266,7 +266,7 @@ public class PaginationImplTest {
     final long totalCount = 11L;
     final List<String> content = List.of("6", "7", "8", "9", "10");
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
-    final PaginationImpl<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("GIVEN - pagination={}", pagination);
 
     // WHEN
@@ -287,7 +287,7 @@ public class PaginationImplTest {
   @Test
   public void test_block_with_page0_and_empty_data() throws Exception {
     // GIVEN
-    final Pagination<String> pagination = new PaginationImpl<>(0, 10, 0L, List.of());
+    final Pagination<String> pagination = new Pagination<>(0, 10, 0L, List.of());
     log.info("GIVEN - pagination={}", pagination);
 
     // WHEN & THEN
@@ -328,7 +328,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final Pagination<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
@@ -370,7 +370,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final Pagination<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
@@ -412,7 +412,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final Pagination<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
@@ -456,7 +456,7 @@ public class PaginationImplTest {
     log.info("GIVEN - page={}, limit={}, totalCount={}, content={}", page, limit, totalCount, content);
 
     // WHEN
-    final Pagination<String> pagination = new PaginationImpl<>(page, limit, totalCount, content);
+    final Pagination<String> pagination = new Pagination<>(page, limit, totalCount, content);
     log.info("WHEN - pagination={}", pagination);
 
     // THEN
