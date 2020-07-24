@@ -31,6 +31,7 @@ public abstract class ExceptionTranslator {
    *
    * @throws E 변환된 예외.
    */
+  @SuppressWarnings("unchecked")
   public static <C extends Throwable, E extends Throwable> void translate(
       final TryBlock<C> tryBlock, final Function<C, E> thrower
   ) throws E {
@@ -40,7 +41,6 @@ public abstract class ExceptionTranslator {
     try {
       tryBlock.doTry();
     } catch (final Throwable cause) {
-      //noinspection unchecked
       throw thrower.apply((C) cause);
     }
   }
