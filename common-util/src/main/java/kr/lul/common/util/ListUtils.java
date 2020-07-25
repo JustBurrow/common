@@ -19,14 +19,16 @@ public abstract class ListUtils {
    * @param toIndex   서브리스트의 끝 인덱스. 미포함.
    * @param <E>       리스트 엘리먼트 타입.
    *
-   * @return 서브리스트
+   * @return 서브리스트. {@code fromIndex == toIndex}이면 빈 리스트. {@code fromIndex}가 원본 리스트의 범위 밖이면 빈 리스트.
    *
    * @see List#subList(int, int)
    */
   public static <E> List<E> subList(final List<E> list, final int fromIndex, final int toIndex) {
     notNull(list, "list");
 
-    return list.subList(fromIndex, Math.min(toIndex, list.size()));
+    return list.size() > fromIndex
+               ? list.subList(fromIndex, Math.min(toIndex, list.size()))
+               : List.of();
   }
 
   public ListUtils() {

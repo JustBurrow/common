@@ -21,6 +21,9 @@ public class ListUtilsTest {
   public void test_subList_with_illegal_args() throws Exception {
     assertThatThrownBy(() -> subList(null, 0, 0))
         .isInstanceOf(IllegalArgumentException.class);
+
+    assertThatThrownBy(() -> subList(List.of("a", "b"), 1, 0))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -32,7 +35,6 @@ public class ListUtilsTest {
     // WHEN
     List<String> subList = subList(list, 0, 0);
     log.info("WHEN - subList={}", subList);
-
     // THEN
     assertThat(subList)
         .containsExactly();
@@ -40,7 +42,6 @@ public class ListUtilsTest {
     // WHEN
     subList = subList(list, 0, 1);
     log.info("WHEN - subList={}", subList);
-
     // THEN
     assertThat(subList)
         .containsExactly("a");
@@ -48,7 +49,6 @@ public class ListUtilsTest {
     // WHEN
     subList = subList(list, 0, 2);
     log.info("WHEN - subList={}", subList);
-
     // THEN
     assertThat(subList)
         .containsExactly("a", "b");
@@ -56,7 +56,6 @@ public class ListUtilsTest {
     // WHEN
     subList = subList(list, 0, 3);
     log.info("WHEN - subList={}", subList);
-
     // THEN
     assertThat(subList)
         .containsExactly("a", "b", "c");
@@ -64,9 +63,71 @@ public class ListUtilsTest {
     // WHEN
     subList = subList(list, 0, 4);
     log.info("WHEN - subList={}", subList);
-
     // THEN
     assertThat(subList)
         .containsExactly("a", "b", "c");
+
+    // WHEN
+    subList = subList(list, 1, 1);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly();
+
+    // WHEN
+    subList = subList(list, 1, 2);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly("b");
+
+    // WHEN
+    subList = subList(list, 1, 3);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly("b", "c");
+
+    // WHEN
+    subList = subList(list, 1, 4);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly("b", "c");
+
+    // WHEN
+    subList = subList(list, 2, 2);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly();
+
+    // WHEN
+    subList = subList(list, 2, 3);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly("c");
+
+    // WHEN
+    subList = subList(list, 2, 4);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly("c");
+
+    // WHEN
+    subList = subList(list, 3, 3);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly();
+
+    // WHEN
+    subList = subList(list, 4, 4);
+    log.info("WHEN - subList={}", subList);
+    // THEN
+    assertThat(subList)
+        .containsExactly();
   }
 }
