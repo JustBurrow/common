@@ -1,43 +1,33 @@
 buildscript {
   repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
   }
 
   dependencies {
-    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE"
-    classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
-    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+"
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.4.4'
+    classpath 'io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE'
   }
 }
 
-apply plugin: "idea"
-apply plugin: "eclipse"
-
-group "kr.lul.common"
-version "0.0.1.SNAPSHOT"
-description """
-범용 Java 유틸리티 모음.
-"""
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 allprojects {
   repositories {
-    mavenCentral()
     mavenLocal()
-    maven {
-      url "https://dl.bintray.com/justburrow/snapshot"
-    }
-    maven {
-      url "https://dl.bintray.com/justburrow/release"
-    }
+    mavenCentral()
   }
+
+  group 'kr.lul.common'
+  version '0.0.1.SNAPSHOT'
 }
 
 subprojects {
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'java'
   apply plugin: 'java-library'
-  apply plugin: "maven-publish"
+  apply plugin: 'maven-publish'
   apply plugin: 'org.springframework.boot'
 
   sourceCompatibility = 11
@@ -49,66 +39,58 @@ subprojects {
     }
 
     dependencies {
-      dependency "org.assertj:assertj-core:3.14.0"
-      dependency "org.apache.commons:commons-lang3:3.9"
+      dependency 'org.apache.commons:commons-lang3:3.12.0'
     }
   }
 
   dependencies {
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "org.assertj:assertj-core"
-    testImplementation "org.apache.commons:commons-lang3"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.apache.commons:commons-lang3'
   }
-
-  def projectGroup = rootProject.group
-  def projectName = project.name
-  def projectVersion = "unspecified" != project.version
-      ? project.version
-      : rootProject.version
-  def isRelease = projectVersion.endsWith("RELEASE")
-  def isSnapshot = projectVersion.endsWith("SNAPSHOT")
-
-  println("""
-      subproject ========================================
-
-      group : $projectGroup
-      name : $projectName
-      version : $projectVersion
-      release : $isRelease
-      snapshot : $isSnapshot
-
-      ===================================================
-      """.stripIndent())
 
   jar.enabled = true
   bootJar.enabled = false
 
-  task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-  }
-
-  task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
-  }
-
-  artifacts {
-    archives sourcesJar, javadocJar
+  java {
+    withJavadocJar()
+    withSourcesJar()
   }
 
   publishing {
     publications {
-      mavenPublication(MavenPublication) {
+      mavenJava(MavenPublication) {
         from components.java
-
-        artifact sourcesJar
-        artifact javadocJar
-
-        groupId projectGroup
-        artifactId projectName
-        version projectVersion
+        versionMapping {
+          usage('java-api') {
+            fromResolutionOf('runtimeClasspath')
+          }
+          usage('java-runtime') {
+            fromResolutionResult()
+          }
+        }
+        pom {
+          url = 'https://github.com/JustBurrow/common'
+          licenses {
+            license {
+              name = 'The Apache License, Version 2.0'
+              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+          developers {
+            developer {
+              id = 'JustBurrow'
+              name = 'Just Burrow'
+              email = 'just.burrow@lul.kr'
+            }
+          }
+        }
       }
+    }
+  }
+
+  javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+      options.addBooleanOption('html5', true)
     }
   }
 }
