@@ -7,6 +7,7 @@ import static java.util.concurrent.ThreadLocalRandom.current;
 import static kr.lul.common.util.Arguments.*;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -69,7 +70,8 @@ public class ArgumentsTest {
 
   @Test
   public void test_positive_with_1() throws Exception {
-    positive(1);
+    assertThat(positive(1))
+        .isEqualTo(1);
   }
 
   @Test
@@ -78,8 +80,9 @@ public class ArgumentsTest {
     final int number = current().nextInt(2, Integer.MAX_VALUE);
     log.debug("GIVEN - number={}", number);
 
-    // WHEN
-    positive(number);
+    // WHEN & THEN
+    assertThat(positive(number))
+        .isEqualTo(number);
   }
 
   @Test
@@ -106,7 +109,8 @@ public class ArgumentsTest {
 
   @Test
   public void test_positive_with_1L() throws Exception {
-    positive(1L);
+    assertThat(positive(1L))
+        .isEqualTo(1L);
   }
 
   @Test
@@ -115,8 +119,9 @@ public class ArgumentsTest {
     final long number = current().nextLong(2L, Long.MAX_VALUE);
     log.debug("GIVEN - number={}", number);
 
-    // WHEN
-    positive(number);
+    // WHEN & THEN
+    assertThat(positive(number))
+        .isEqualTo(number);
   }
 
   @Test
@@ -127,8 +132,10 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> lt(1, 0))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not less than 0 : 1");
-    lt(0, 1);
-    lt(-1, 0);
+    assertThat(lt(0, 1))
+        .isEqualTo(0);
+    assertThat(lt(-1, 0))
+        .isEqualTo(-1);
   }
 
   @Test
@@ -136,8 +143,10 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> lt(0L, 0L))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not less than 0 : 0");
-    lt(0L, 1L);
-    lt(-1L, 0L);
+    assertThat(lt(0L, 1L))
+        .isEqualTo(0L);
+    assertThat(lt(-1L, 0L))
+        .isEqualTo(-1L);
   }
 
   @Test
@@ -145,9 +154,12 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> le(1, 0))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not less than or equal to 0 : 1");
-    le(0, 0);
-    le(0, 1);
-    le(-1, 0);
+    assertThat(le(0, 0))
+        .isEqualTo(0);
+    assertThat(le(0, 1))
+        .isEqualTo(0);
+    assertThat(le(-1, 0))
+        .isEqualTo(-1);
   }
 
   @Test
@@ -155,9 +167,12 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> le(1L, 0L))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not less than or equal to 0 : 1");
-    le(0L, 0L);
-    le(0L, 1L);
-    le(-1L, 0L);
+    assertThat(le(0L, 0L))
+        .isEqualTo(0L);
+    assertThat(le(0L, 1L))
+        .isEqualTo(0L);
+    assertThat(le(-1L, 0L))
+        .isEqualTo(-1L);
   }
 
   @Test
@@ -168,9 +183,12 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> gt(0, 1))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not greater than 1 : 0");
-    gt(1, 0);
-    gt(0, -1);
-    gt(1, -1);
+    assertThat(gt(1, 0))
+        .isEqualTo(1);
+    assertThat(gt(0, -1))
+        .isEqualTo(0);
+    assertThat(gt(1, -1))
+        .isEqualTo(1);
   }
 
   @Test
@@ -181,9 +199,12 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> gt(0L, 1L))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not greater than 1 : 0");
-    gt(1L, 0L);
-    gt(0L, -1L);
-    gt(1L, -1L);
+    assertThat(gt(1L, 0L))
+        .isEqualTo(1L);
+    assertThat(gt(0L, -1L))
+        .isEqualTo(0L);
+    assertThat(gt(1L, -1L))
+        .isEqualTo(1L);
   }
 
   @Test
@@ -197,14 +218,22 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> ge(-2, -1))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not greater than or equal to -1 : -2");
-    ge(0, 0);
-    ge(1, 0);
-    ge(1, 1);
-    ge(2, 1);
-    ge(0, -1);
-    ge(-1, -1);
-    ge(-1, -2);
-    ge(1, -1);
+    assertThat(ge(0, 0))
+        .isEqualTo(0);
+    assertThat(ge(1, 0))
+        .isEqualTo(1);
+    assertThat(ge(1, 1))
+        .isEqualTo(1);
+    assertThat(ge(2, 1))
+        .isEqualTo(2);
+    assertThat(ge(0, -1))
+        .isEqualTo(0);
+    assertThat(ge(-1, -1))
+        .isEqualTo(-1);
+    assertThat(ge(-1, -2))
+        .isEqualTo(-1);
+    assertThat(ge(1, -1))
+        .isEqualTo(1);
   }
 
   @Test
@@ -218,14 +247,22 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> ge(-2L, -1L))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("target is not greater than or equal to -1 : -2");
-    ge(0L, 0L);
-    ge(1L, 0L);
-    ge(1L, 1L);
-    ge(2L, 1L);
-    ge(0L, -1L);
-    ge(-1L, -1L);
-    ge(-1L, -2L);
-    ge(1L, -1L);
+    assertThat(ge(0L, 0L))
+        .isEqualTo(0L);
+    assertThat(ge(1L, 0L))
+        .isEqualTo(1L);
+    assertThat(ge(1L, 1L))
+        .isEqualTo(1L);
+    assertThat(ge(2L, 1L))
+        .isEqualTo(2L);
+    assertThat(ge(0L, -1L))
+        .isEqualTo(0L);
+    assertThat(ge(-1L, -1L))
+        .isEqualTo(-1L);
+    assertThat(ge(-1L, -2L))
+        .isEqualTo(-1L);
+    assertThat(ge(1L, -1L))
+        .isEqualTo(1L);
   }
 
   @Test
@@ -238,7 +275,12 @@ public class ArgumentsTest {
 
   @Test
   public void test_noWhitespace_with_empty_target() throws Exception {
-    noWhitespace("");
+    // GIVEN
+    final String str = "";
+
+    // WHEN & THEN
+    assertThat(noWhitespace(str))
+        .isSameAs(str);
   }
 
   @Test
@@ -282,8 +324,9 @@ public class ArgumentsTest {
       log.info("GIVEN - target={}", target);
     } while (!target.matches("\\S+"));
 
-    // WHEN
-    noWhitespace(target);
+    // WHEN & THEN
+    assertThat(noWhitespace(target))
+        .isSameAs(target);
   }
 
   @Test
@@ -347,13 +390,15 @@ public class ArgumentsTest {
     assertThatThrownBy(() -> instanceOf(str, CharSequence.class, "str"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("str is not instance of " + CharSequence.class.getName());
-    instanceOf(str, String.class);
+    assertThat(instanceOf(str, String.class))
+        .isSameAs(str);
   }
 
   @Test
   public void test_assignable() throws Exception {
     // GIVEN
     final String str = "123";
+    final StringBuilder sb = new StringBuilder(str);
 
     // WHEN & THEN
     assertThatThrownBy(() -> assignable(null, null))
@@ -370,27 +415,33 @@ public class ArgumentsTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("clz is null.");
 
-    assignable(null, String.class);
-    assignable(null, CharSequence.class);
+    assertThat(assignable((String) null, String.class))
+        .isNull();
+    assertThat(assignable((String) null, CharSequence.class))
+        .isNull();
 
-    assignable(str, CharSequence.class);
-    assignable(str, String.class);
+    assertThat(assignable(str, CharSequence.class))
+        .isSameAs(str);
+    assertThat(assignable(str, String.class))
+        .isSameAs(str);
     assertThatThrownBy(() -> assignable(str, StringBuilder.class, "str"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("str is not assignable to " + StringBuilder.class.getName());
 
-    assignable(new StringBuilder(str), CharSequence.class);
-    assertThatThrownBy(() -> assignable(new StringBuilder(str), String.class, "str"))
+    assertThat(assignable(sb, CharSequence.class))
+        .isSameAs(sb);
+    assertThatThrownBy(() -> assignable(sb, String.class, "str"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("str is not assignable to " + String.class.getName());
-    assignable(new StringBuilder(str), StringBuilder.class);
-
+    assertThat(assignable(sb, StringBuilder.class))
+        .isSameAs(sb);
   }
 
   @Test
   public void test_extend() throws Exception {
     // GIVEN
     final String str = "123";
+    final StringBuilder sb = new StringBuilder(str);
 
     // WHEN & THEN
     assertThatThrownBy(() -> extend(null, null))
@@ -406,20 +457,26 @@ public class ArgumentsTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("superClass is null.");
 
-    extend(null, String.class);
-    extend(null, CharSequence.class);
+    assertThat(extend((String) null, String.class))
+        .isNull();
+    assertThat(extend((String) null, CharSequence.class))
+        .isNull();
 
-    extend(str, CharSequence.class);
-    extend(str, String.class);
+    assertThat(extend(str, CharSequence.class))
+        .isSameAs(str);
+    assertThat(extend(str, String.class))
+        .isSameAs(str);
 
     assertThatThrownBy(() -> extend(str, StringBuilder.class, "str"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("str does not extend " + StringBuilder.class.getName());
-    extend(new StringBuilder(str), CharSequence.class);
+    assertThat(extend(sb, CharSequence.class))
+        .isSameAs(sb);
 
-    assertThatThrownBy(() -> extend(new StringBuilder(str), String.class, "str"))
+    assertThatThrownBy(() -> extend(sb, String.class, "str"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageStartingWith("str does not extend " + String.class.getName());
-    extend(new StringBuilder(str), StringBuilder.class);
+    assertThat(extend(sb, StringBuilder.class))
+        .isSameAs(sb);
   }
 }

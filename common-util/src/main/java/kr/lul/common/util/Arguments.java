@@ -37,10 +37,11 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 단정 대상이 {@code null}일 때.
    * @see java.util.Objects#requireNonNull(Object)
    */
-  public static void notNull(final Object target) throws IllegalArgumentException {
-    if (null == target) {
+  public static <T> T notNull(final T target) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is null.");
-    }
+
+    return target;
   }
 
   /**
@@ -52,10 +53,11 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 단정 대상이 {@code null}일 때.
    * @see java.util.Objects#requireNonNull(Object, String)
    */
-  public static void notNull(final Object target, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static <T> T notNull(final T target, final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    }
+
+    return target;
   }
 
   /**
@@ -65,10 +67,12 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
-  public static void positive(final int target) throws IllegalArgumentException {
+  public static int positive(final int target) throws IllegalArgumentException {
     if (0 >= target) {
       throw new IllegalArgumentException(format("%s is not positive : %d", DEFAULT_TARGET_NAME, target));
     }
+
+    return target;
   }
 
   /**
@@ -79,10 +83,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
-  public static void positive(final int target, final String targetName) throws IllegalArgumentException {
-    if (0 >= target) {
+  public static int positive(final int target, final String targetName) throws IllegalArgumentException {
+    if (0 >= target)
       throw new IllegalArgumentException(format("%s is not positive : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -92,10 +97,12 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
-  public static void positive(final long target) throws IllegalArgumentException {
+  public static long positive(final long target) throws IllegalArgumentException {
     if (0 >= target) {
       throw new IllegalArgumentException(format("%s is not positive : %d", DEFAULT_TARGET_NAME, target));
     }
+
+    return target;
   }
 
   /**
@@ -106,10 +113,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
-  public static void positive(final long target, final String targetName) throws IllegalArgumentException {
-    if (0 >= target) {
+  public static long positive(final long target, final String targetName) throws IllegalArgumentException {
+    if (0 >= target)
       throw new IllegalArgumentException(format("%s is not positive : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -119,10 +127,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
-  public static void notNegative(final int target) throws IllegalArgumentException {
-    if (0 > target) {
+  public static int notNegative(final int target) throws IllegalArgumentException {
+    if (0 > target)
       throw new IllegalArgumentException(format("%s is negative : %d", DEFAULT_TARGET_NAME, target));
-    }
+
+    return target;
   }
 
   /**
@@ -133,10 +142,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
-  public static void notNegative(final int target, final String targetName) throws IllegalArgumentException {
-    if (0 > target) {
+  public static int notNegative(final int target, final String targetName) throws IllegalArgumentException {
+    if (0 > target)
       throw new IllegalArgumentException(format("%s is negative : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -146,10 +156,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
-  public static void notNegative(final long target) throws IllegalArgumentException {
-    if (0 > target) {
+  public static long notNegative(final long target) throws IllegalArgumentException {
+    if (0 > target)
       throw new IllegalArgumentException(format("%s is negative : %d", DEFAULT_TARGET_NAME, target));
-    }
+
+    return target;
   }
 
   /**
@@ -160,10 +171,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
-  public static void notNegative(final long target, final String targetName) throws IllegalArgumentException {
-    if (0 > target) {
+  public static long notNegative(final long target, final String targetName) throws IllegalArgumentException {
+    if (0 > target)
       throw new IllegalArgumentException(format("%s is negative : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -173,10 +185,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
-  public static void notPositive(final int target) throws IllegalArgumentException {
-    if (0 < target) {
+  public static int notPositive(final int target) throws IllegalArgumentException {
+    if (0 < target)
       throw new IllegalArgumentException(format("%s is positive : %d", DEFAULT_TARGET_NAME, target));
-    }
+
+    return target;
   }
 
   /**
@@ -187,10 +200,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
-  public static void notPositive(final int target, final String targetName) throws IllegalArgumentException {
-    if (0 < target) {
+  public static int notPositive(final int target, final String targetName) throws IllegalArgumentException {
+    if (0 < target)
       throw new IllegalArgumentException(format("%s is positive : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -200,10 +214,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
-  public static void notPositive(final long target) throws IllegalArgumentException {
-    if (0 < target) {
+  public static long notPositive(final long target) throws IllegalArgumentException {
+    if (0 < target)
       throw new IllegalArgumentException(format("%s is positive : %d", DEFAULT_TARGET_NAME, target));
-    }
+
+    return target;
   }
 
   /**
@@ -214,10 +229,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
-  public static void notPositive(final long target, final String targetName) throws IllegalArgumentException {
-    if (0 < target) {
+  public static long notPositive(final long target, final String targetName) throws IllegalArgumentException {
+    if (0 < target)
       throw new IllegalArgumentException(format("%s is positive : %d", name(targetName), target));
-    }
+
+    return target;
   }
 
   /**
@@ -226,8 +242,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
-  public static void lt(final int target, final int max) throws IllegalArgumentException {
-    lt(target, max, DEFAULT_TARGET_NAME);
+  public static int lt(final int target, final int max) throws IllegalArgumentException {
+    return lt(target, max, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -237,10 +253,12 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
-  public static void lt(final int target, final int max, final String targetName) throws IllegalArgumentException {
+  public static int lt(final int target, final int max, final String targetName) throws IllegalArgumentException {
     if (max <= target) {
       throw new IllegalArgumentException(format("%s is not less than %d : %d", name(targetName), max, target));
     }
+
+    return target;
   }
 
   /**
@@ -249,8 +267,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
-  public static void lt(final long target, final long max) throws IllegalArgumentException {
-    lt(target, max, DEFAULT_TARGET_NAME);
+  public static long lt(final long target, final long max) throws IllegalArgumentException {
+    return lt(target, max, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -260,10 +278,12 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
-  public static void lt(final long target, final long max, final String targetName) throws IllegalArgumentException {
+  public static long lt(final long target, final long max, final String targetName) throws IllegalArgumentException {
     if (max <= target) {
       throw new IllegalArgumentException(format("%s is not less than %d : %d", name(targetName), max, target));
     }
+
+    return target;
   }
 
   /**
@@ -272,8 +292,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
-  public static void le(final int target, final int max) throws IllegalArgumentException {
-    le(target, max, DEFAULT_TARGET_NAME);
+  public static int le(final int target, final int max) throws IllegalArgumentException {
+    return le(target, max, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -283,10 +303,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
-  public static void le(final int target, final int max, final String targetName) throws IllegalArgumentException {
-    if (max < target) {
+  public static int le(final int target, final int max, final String targetName) throws IllegalArgumentException {
+    if (max < target)
       throw new IllegalArgumentException(format("%s is not less than or equal to %d : %d", name(targetName), max, target));
-    }
+
+    return target;
   }
 
   /**
@@ -295,8 +316,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
-  public static void le(final long target, final long max) throws IllegalArgumentException {
-    le(target, max, DEFAULT_TARGET_NAME);
+  public static long le(final long target, final long max) throws IllegalArgumentException {
+    return le(target, max, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -306,10 +327,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
-  public static void le(final long target, final long max, final String targetName) throws IllegalArgumentException {
-    if (max < target) {
+  public static long le(final long target, final long max, final String targetName) throws IllegalArgumentException {
+    if (max < target)
       throw new IllegalArgumentException(format("%s is not less than or equal to %d : %d", name(targetName), max, target));
-    }
+
+    return target;
   }
 
   /**
@@ -318,8 +340,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
-  public static void gt(final int target, final int min) throws IllegalArgumentException {
-    gt(target, min, DEFAULT_TARGET_NAME);
+  public static int gt(final int target, final int min) throws IllegalArgumentException {
+    return gt(target, min, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -329,10 +351,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
-  public static void gt(final int target, final int min, final String targetName) throws IllegalArgumentException {
-    if (min >= target) {
+  public static int gt(final int target, final int min, final String targetName) throws IllegalArgumentException {
+    if (min >= target)
       throw new IllegalArgumentException(format("%s is not greater than %d : %d", name(targetName), min, target));
-    }
+
+    return target;
   }
 
   /**
@@ -341,8 +364,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
-  public static void gt(final long target, final long min) throws IllegalArgumentException {
-    gt(target, min, DEFAULT_TARGET_NAME);
+  public static long gt(final long target, final long min) throws IllegalArgumentException {
+    return gt(target, min, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -352,10 +375,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
-  public static void gt(final long target, final long min, final String targetName) throws IllegalArgumentException {
-    if (min >= target) {
+  public static long gt(final long target, final long min, final String targetName) throws IllegalArgumentException {
+    if (min >= target)
       throw new IllegalArgumentException(format("%s is not greater than %d : %d", name(targetName), min, target));
-    }
+
+    return target;
   }
 
   /**
@@ -364,8 +388,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
-  public static void ge(final int target, final int min) throws IllegalArgumentException {
-    ge(target, min, DEFAULT_TARGET_NAME);
+  public static int ge(final int target, final int min) throws IllegalArgumentException {
+    return ge(target, min, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -375,9 +399,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
-  public static void ge(final int target, final int min, final String targetName) throws IllegalArgumentException {
+  public static int ge(final int target, final int min, final String targetName) throws IllegalArgumentException {
     if (min > target)
       throw new IllegalArgumentException(format("%s is not greater than or equal to %d : %d", name(targetName), min, target));
+
+    return target;
   }
 
   /**
@@ -386,8 +412,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
-  public static void ge(final long target, final long min) throws IllegalArgumentException {
-    ge(target, min, DEFAULT_TARGET_NAME);
+  public static long ge(final long target, final long min) throws IllegalArgumentException {
+    return ge(target, min, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -397,9 +423,11 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
-  public static void ge(final long target, final long min, final String targetName) throws IllegalArgumentException {
+  public static long ge(final long target, final long min, final String targetName) throws IllegalArgumentException {
     if (min > target)
       throw new IllegalArgumentException(format("%s is not greater than or equal to %d : %d", name(targetName), min, target));
+
+    return target;
   }
 
   /**
@@ -411,8 +439,8 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
    */
-  public static void range(final int target, final int min, final int max) throws IllegalArgumentException {
-    range(target, min, max, DEFAULT_TARGET_NAME);
+  public static int range(final int target, final int min, final int max) throws IllegalArgumentException {
+    return range(target, min, max, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -425,7 +453,7 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
    */
-  public static void range(final int target, final int min, final int max, final String targetName) {
+  public static int range(final int target, final int min, final int max, final String targetName) {
     if (min > max)
       throw new IllegalArgumentException(format("min is greater than max : min=%d, max=%d", min, max));
     else if (min > target)
@@ -434,6 +462,8 @@ public abstract class Arguments {
     else if (max < target)
       throw new IllegalArgumentException(
           format("%s is greater than max : %s=%d, max=%d", name(targetName), name(targetName), target, max));
+
+    return target;
   }
 
   /**
@@ -443,12 +473,13 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 {@code null} 이거나 빈 문자열일 때.
    */
-  public static void notEmpty(final String target) throws IllegalArgumentException {
-    if (null == target) {
+  public static String notEmpty(final String target) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is null.");
-    } else if (target.isEmpty()) {
+    else if (target.isEmpty())
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is empty.");
-    }
+
+    return target;
   }
 
   /**
@@ -459,12 +490,13 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 단정 대상이 {@code null} 이거나 빈 문자열일 때.
    */
-  public static void notEmpty(final String target, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static String notEmpty(final String target, final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    } else if (target.isEmpty()) {
+    else if (target.isEmpty())
       throw new IllegalArgumentException(name(targetName) + " is empty.");
-    }
+
+    return target;
   }
 
   /**
@@ -474,12 +506,13 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 {@code null}이거나 길이가 0일 때.
    */
-  public static void notEmpty(final byte[] target) throws IllegalArgumentException {
-    if (null == target) {
+  public static byte[] notEmpty(final byte[] target) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is null.");
-    } else if (0 == target.length) {
+    else if (0 == target.length)
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is empty.");
-    }
+
+    return target;
   }
 
   /**
@@ -490,52 +523,56 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 대상이 {@code null}이거나 길이가 0일 때.
    */
-  public static void notEmpty(final byte[] target, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static byte[] notEmpty(final byte[] target, final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    } else if (0 == target.length) {
+    else if (0 == target.length)
       throw new IllegalArgumentException(name(targetName) + " is empty.");
-    }
+
+    return target;
   }
 
-  public static <T> void notEmpty(final T[] target) throws IllegalArgumentException {
-    notEmpty(target, DEFAULT_TARGET_NAME);
+  public static <T> T[] notEmpty(final T[] target) throws IllegalArgumentException {
+    return notEmpty(target, DEFAULT_TARGET_NAME);
   }
 
-  public static <T> void notEmpty(final T[] target, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static <T> T[] notEmpty(final T[] target, final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    } else if (0 == target.length) {
+    else if (0 == target.length)
       throw new IllegalArgumentException(name(targetName) + " is empty.");
-    }
+
+    return target;
   }
 
-  public static <T> void notEmpty(final List<T> target) throws IllegalArgumentException {
-    notEmpty(target, DEFAULT_TARGET_NAME);
+  public static <T> List<T> notEmpty(final List<T> target) throws IllegalArgumentException {
+    return notEmpty(target, DEFAULT_TARGET_NAME);
   }
 
-  public static <T> void notEmpty(final List<T> target, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static <T> List<T> notEmpty(final List<T> target, final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    } else if (target.isEmpty()) {
+    else if (target.isEmpty())
       throw new IllegalArgumentException(name(targetName) + " is empty.");
-    }
+
+    return target;
   }
 
-  public static void noWhitespace(final String target) throws IllegalArgumentException {
-    noWhitespace(target, DEFAULT_TARGET_NAME);
+  public static String noWhitespace(final String target) throws IllegalArgumentException {
+    return noWhitespace(target, DEFAULT_TARGET_NAME);
   }
 
-  public static void noWhitespace(final String target, final String name) throws IllegalArgumentException {
+  public static String noWhitespace(final String target, final String name) throws IllegalArgumentException {
     if (null == target)
       throw new IllegalArgumentException(name(name) + " is null.");
     if (null == name)
       throw new IllegalArgumentException("name is null.");
     else if (name.isEmpty())
       throw new IllegalArgumentException("name is empty.");
-
-    if (!target.matches("\\S*"))
+    else if (!target.matches("\\S*"))
       throw new IllegalArgumentException(format("%s contains whitespace character(s) : '%s'", name(name), target));
+
+    return target;
   }
 
   /**
@@ -547,19 +584,18 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 단정 대상 문자열이 지정한 패턴이 아닐 때.
    * @see String#matches(String)
    */
-  public static void matches(final String target, final String pattern) throws IllegalArgumentException {
-    if (null == target) {
+  public static String matches(final String target, final String pattern) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is null.");
-    }
-    if (null == pattern) {
+    else if (null == pattern)
       throw new IllegalArgumentException("pattern is null.");
-    }
 
     try {
-      if (!target.matches(pattern)) {
+      if (!target.matches(pattern))
         throw new IllegalArgumentException(format("%s does not match : pattern='%s', target='%s'",
             DEFAULT_TARGET_NAME, pattern, target));
-      }
+
+      return target;
     } catch (final PatternSyntaxException e) {
       throw new IllegalArgumentException(format("illegal pattern : pattern='%s'", pattern), e);
     }
@@ -575,19 +611,19 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 단정 대상 문자열이 지정한 패턴이 아닐 때.
    * @see String#matches(String)
    */
-  public static void matches(final String target, final String pattern, final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+  public static String matches(final String target, final String pattern,
+      final String targetName) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    }
-    if (null == pattern) {
+    else if (null == pattern)
       throw new IllegalArgumentException("pattern is null.");
-    }
 
     try {
-      if (!target.matches(pattern)) {
+      if (!target.matches(pattern))
         throw new IllegalArgumentException(format("%s does not match : pattern='%s', target='%s'",
             name(targetName), pattern, target));
-      }
+
+      return target;
     } catch (final PatternSyntaxException e) {
       throw new IllegalArgumentException(format("illegal pattern : pattern='%s'", pattern), e);
     }
@@ -599,8 +635,8 @@ public abstract class Arguments {
    * @param target 검증 대상.
    * @param comp   검증 기준
    */
-  public static void ae(final Instant target, final Instant comp) {
-    ae(target, comp, DEFAULT_TARGET_NAME);
+  public static Instant ae(final Instant target, final Instant comp) {
+    return ae(target, comp, DEFAULT_TARGET_NAME);
   }
 
   /**
@@ -610,18 +646,17 @@ public abstract class Arguments {
    * @param comp       검증 기준
    * @param targetName 검증 대상의 이름.
    */
-  public static void ae(final Instant target, final Instant comp, final String targetName) {
-    if (null == target) {
+  public static Instant ae(final Instant target, final Instant comp, final String targetName) {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    }
-    if (null == comp) {
+    else if (null == comp)
       throw new IllegalArgumentException("comp is null.");
-    }
 
-    if (target.isBefore(comp)) {
+    if (target.isBefore(comp))
       throw new IllegalArgumentException(format("%s is not after or equal to compare : compare=%s, target=%s",
           name(targetName), comp, target));
-    }
+
+    return target;
   }
 
   /**
@@ -630,8 +665,8 @@ public abstract class Arguments {
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
    */
-  public static void instanceOf(final Object target, final Class<?> clz) {
-    instanceOf(target, clz, null);
+  public static <T> T instanceOf(final T target, final Class<?> clz) {
+    return instanceOf(target, clz, null);
   }
 
   /**
@@ -641,11 +676,11 @@ public abstract class Arguments {
    * @param clz        기대하는 클래스.
    * @param targetName 검사 대상의 이름.
    */
-  public static void instanceOf(final Object target, final Class<?> clz, final String targetName) {
+  public static <T> T instanceOf(final T target, final Class<?> clz, final String targetName) {
     if (null == clz) {
       throw new IllegalArgumentException("clz is null.");
     } else if (null == target || target.getClass().equals(clz)) {
-      return;
+      return target;
     }
 
     throw new IllegalArgumentException(format("%s is not instance of %s", name(targetName), clz.getName()));
@@ -657,8 +692,8 @@ public abstract class Arguments {
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
    */
-  public static void assignable(final Object target, final Class<?> clz) {
-    assignable(target, clz, null);
+  public static <T> T assignable(final T target, final Class<?> clz) {
+    return assignable(target, clz, null);
   }
 
   /**
@@ -668,13 +703,15 @@ public abstract class Arguments {
    * @param clz        기대하는 클래스.
    * @param targetName 대상의 이름.
    */
-  public static void assignable(final Object target, final Class<?> clz, final String targetName) {
+  public static <T> T assignable(final T target, final Class<?> clz, final String targetName) {
     if (null == clz)
       throw new IllegalArgumentException("clz is null.");
     else if (null == target)
-      return;
+      return null;
     else if (!clz.isAssignableFrom(target.getClass()))
       throw new IllegalArgumentException(name(targetName) + " is not assignable to " + clz.getName());
+
+    return target;
   }
 
   /**
@@ -685,8 +722,8 @@ public abstract class Arguments {
    *
    * @see #assignable(Object, Class, String) alias
    */
-  public static void extend(final Object target, final Class<?> superClass) {
-    extend(target, superClass, null);
+  public static <T> T extend(final T target, final Class<?> superClass) {
+    return extend(target, superClass, null);
   }
 
   /**
@@ -698,13 +735,15 @@ public abstract class Arguments {
    *
    * @see #assignable(Object, Class, String) alias
    */
-  public static void extend(final Object target, final Class<?> superClass, final String targetName) {
+  public static <T> T extend(final T target, final Class<?> superClass, final String targetName) {
     if (null == superClass)
       throw new IllegalArgumentException("superClass is null.");
     else if (null == target)
-      return;
+      return null;
     else if (!superClass.isAssignableFrom(target.getClass()))
       throw new IllegalArgumentException(name(targetName) + " does not extend " + superClass.getName());
+
+    return target;
   }
 
   /**
@@ -716,18 +755,16 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 시험 대상이 컬렉션에 포함되어있지 않을 때.
    */
-  public static <T> void in(final T target, final Collection<T> collection) throws IllegalArgumentException {
-    if (null == target) {
+  public static <T> T in(final T target, final Collection<T> collection) throws IllegalArgumentException {
+    if (null == target)
       throw new IllegalArgumentException("target is null.");
-    }
-    if (null == collection) {
+    else if (null == collection)
       throw new IllegalArgumentException("collection is null.");
-    }
-
-    if (!collection.contains(target)) {
+    else if (!collection.contains(target))
       throw new IllegalArgumentException(format("%s is not in collection : target=%s, collection=%s",
           DEFAULT_TARGET_NAME, target, collection));
-    }
+
+    return target;
   }
 
   /**
@@ -740,19 +777,17 @@ public abstract class Arguments {
    *
    * @throws IllegalArgumentException 시험 대상이 컬렉션에 포함되어있지 않을 때.
    */
-  public static <T> void in(final T target, final Collection<T> collection,
+  public static <T> T in(final T target, final Collection<T> collection,
       final String targetName) throws IllegalArgumentException {
-    if (null == target) {
+    if (null == target)
       throw new IllegalArgumentException(name(targetName) + " is null.");
-    }
-    if (null == collection) {
+    else if (null == collection)
       throw new IllegalArgumentException("collection is null.");
-    }
-
-    if (!collection.contains(target)) {
+    else if (!collection.contains(target))
       throw new IllegalArgumentException(format("%s is not in collection : target=%s, collection=%s",
           name(targetName), target, collection));
-    }
+
+    return target;
   }
 
   protected Arguments() {
