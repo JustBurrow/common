@@ -33,6 +33,9 @@ public abstract class Arguments {
    * 단정 대상이 {@code null}이면 실패.
    *
    * @param target 단정 대상.
+   * @param <T>    타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 {@code null}일 때.
    * @see java.util.Objects#requireNonNull(Object)
@@ -49,6 +52,9 @@ public abstract class Arguments {
    *
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
+   * @param <T>        타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 {@code null}일 때.
    * @see java.util.Objects#requireNonNull(Object, String)
@@ -64,6 +70,8 @@ public abstract class Arguments {
    * 단정 대상이 0 보다 작거나 같으면 실패.
    *
    * @param target 단정 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
@@ -81,6 +89,8 @@ public abstract class Arguments {
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
   public static int positive(final int target, final String targetName) throws IllegalArgumentException {
@@ -94,6 +104,8 @@ public abstract class Arguments {
    * 단정 대상이 0 보다 작거나 같으면 실패.
    *
    * @param target 단정 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
@@ -111,6 +123,8 @@ public abstract class Arguments {
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 0보다 작거나 같을 때.
    */
   public static long positive(final long target, final String targetName) throws IllegalArgumentException {
@@ -124,6 +138,8 @@ public abstract class Arguments {
    * 단정 대상이 0 보다 작으면 실패.
    *
    * @param target 단정 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
@@ -140,6 +156,8 @@ public abstract class Arguments {
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
   public static int notNegative(final int target, final String targetName) throws IllegalArgumentException {
@@ -153,6 +171,8 @@ public abstract class Arguments {
    * 단정 대상이 0 보다 작으면 실패.
    *
    * @param target 단정 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
@@ -169,6 +189,8 @@ public abstract class Arguments {
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 0보다 작을 때.
    */
   public static long notNegative(final long target, final String targetName) throws IllegalArgumentException {
@@ -182,6 +204,8 @@ public abstract class Arguments {
    * 대상이 0 보다 크면 실패.
    *
    * @param target 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
@@ -198,6 +222,8 @@ public abstract class Arguments {
    * @param target     대상.
    * @param targetName 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
   public static int notPositive(final int target, final String targetName) throws IllegalArgumentException {
@@ -211,6 +237,8 @@ public abstract class Arguments {
    * 대상이 0 보다 크면 실패.
    *
    * @param target 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
@@ -227,6 +255,8 @@ public abstract class Arguments {
    * @param target     대상.
    * @param targetName 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 0보다 클 때.
    */
   public static long notPositive(final long target, final String targetName) throws IllegalArgumentException {
@@ -240,6 +270,8 @@ public abstract class Arguments {
    * @param target 대상.
    * @param max    최대값(미포함).
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
   public static int lt(final int target, final int max) throws IllegalArgumentException {
@@ -250,6 +282,8 @@ public abstract class Arguments {
    * @param target     대상.
    * @param max        최대값(미포함).
    * @param targetName 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
@@ -265,6 +299,8 @@ public abstract class Arguments {
    * @param target 대상.
    * @param max    최대값(미포함).
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
   public static long lt(final long target, final long max) throws IllegalArgumentException {
@@ -275,6 +311,8 @@ public abstract class Arguments {
    * @param target     대상.
    * @param max        최대값(미포함).
    * @param targetName 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최대값보다 크거나 같을 때.
    */
@@ -290,6 +328,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param max    최대값(포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
   public static int le(final int target, final int max) throws IllegalArgumentException {
@@ -300,6 +340,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param max        최대값(포함)
    * @param targetName 대상의 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
@@ -314,6 +356,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param max    최대값(포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
   public static long le(final long target, final long max) throws IllegalArgumentException {
@@ -324,6 +368,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param max        최대값(포함)
    * @param targetName 대상의 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최대값보다 큰 경우.
    */
@@ -338,6 +384,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param min    최소값(미포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
   public static int gt(final int target, final int min) throws IllegalArgumentException {
@@ -348,6 +396,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param min        최소값(미포함)
    * @param targetName 대상 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
@@ -362,6 +412,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param min    최소값(미포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
   public static long gt(final long target, final long min) throws IllegalArgumentException {
@@ -372,6 +424,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param min        최소값(미포함)
    * @param targetName 대상 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
@@ -386,6 +440,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param min    최소값(포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
   public static int ge(final int target, final int min) throws IllegalArgumentException {
@@ -396,6 +452,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param min        최소값(포함)
    * @param targetName 대상의 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
@@ -410,6 +468,8 @@ public abstract class Arguments {
    * @param target 대상
    * @param min    최소값(포함)
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
   public static long ge(final long target, final long min) throws IllegalArgumentException {
@@ -420,6 +480,8 @@ public abstract class Arguments {
    * @param target     대상
    * @param min        최소값(포함)
    * @param targetName 대상의 이름
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
@@ -437,6 +499,8 @@ public abstract class Arguments {
    * @param min    최소값(포함).
    * @param max    최대값(포함).
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
    */
   public static int range(final int target, final int min, final int max) throws IllegalArgumentException {
@@ -450,6 +514,8 @@ public abstract class Arguments {
    * @param min        최소값(포함).
    * @param max        최대값(포함).
    * @param targetName 대상 이름.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
    */
@@ -471,6 +537,8 @@ public abstract class Arguments {
    *
    * @param target 단정 대상.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 {@code null} 이거나 빈 문자열일 때.
    */
   public static String notEmpty(final String target) throws IllegalArgumentException {
@@ -488,6 +556,8 @@ public abstract class Arguments {
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상이 {@code null} 이거나 빈 문자열일 때.
    */
   public static String notEmpty(final String target, final String targetName) throws IllegalArgumentException {
@@ -503,6 +573,8 @@ public abstract class Arguments {
    * 대상 배열이 {@code null}이거나 길이가 0이면 실패.
    *
    * @param target 단정 대상.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 {@code null}이거나 길이가 0일 때.
    */
@@ -520,6 +592,8 @@ public abstract class Arguments {
    *
    * @param target     단정 대상.
    * @param targetName 단정 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 대상이 {@code null}이거나 길이가 0일 때.
    */
@@ -581,6 +655,8 @@ public abstract class Arguments {
    * @param target  단정 대상.
    * @param pattern 비교할 정규 표현식.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상 문자열이 지정한 패턴이 아닐 때.
    * @see String#matches(String)
    */
@@ -608,6 +684,8 @@ public abstract class Arguments {
    * @param pattern    비교할 정규 표현식.
    * @param targetName 단정 대상의 이름.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws IllegalArgumentException 단정 대상 문자열이 지정한 패턴이 아닐 때.
    * @see String#matches(String)
    */
@@ -634,6 +712,8 @@ public abstract class Arguments {
    *
    * @param target 검증 대상.
    * @param comp   검증 기준
+   *
+   * @return {@code target} 인스턴스.
    */
   public static Instant ae(final Instant target, final Instant comp) {
     return ae(target, comp, DEFAULT_TARGET_NAME);
@@ -645,6 +725,8 @@ public abstract class Arguments {
    * @param target     검증 대상.
    * @param comp       검증 기준
    * @param targetName 검증 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    */
   public static Instant ae(final Instant target, final Instant comp, final String targetName) {
     if (null == target)
@@ -664,6 +746,9 @@ public abstract class Arguments {
    *
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
+   * @param <T>    타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
    */
   public static <T> T instanceOf(final T target, final Class<?> clz) {
     return instanceOf(target, clz, null);
@@ -672,9 +757,12 @@ public abstract class Arguments {
   /**
    * 대상의 인스턴스의 클래스가 기대치와 영확히 일치하는지 검사한다.
    *
+   * @param <T>        타겟 타입.
    * @param target     검사 대상.
    * @param clz        기대하는 클래스.
    * @param targetName 검사 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    */
   public static <T> T instanceOf(final T target, final Class<?> clz, final String targetName) {
     if (null == clz) {
@@ -689,8 +777,11 @@ public abstract class Arguments {
   /**
    * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
    *
+   * @param <T>    타겟 타입.
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
+   *
+   * @return {@code target} 인스턴스.
    */
   public static <T> T assignable(final T target, final Class<?> clz) {
     return assignable(target, clz, null);
@@ -699,9 +790,12 @@ public abstract class Arguments {
   /**
    * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
    *
+   * @param <T>        타겟 타입.
    * @param target     검사 대상.
    * @param clz        기대하는 클래스.
    * @param targetName 대상의 이름.
+   *
+   * @return {@code target} 인스턴스.
    */
   public static <T> T assignable(final T target, final Class<?> clz, final String targetName) {
     if (null == clz)
@@ -719,6 +813,9 @@ public abstract class Arguments {
    *
    * @param target     검사 대상.
    * @param superClass 기대하는 클래스.
+   * @param <T>        타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @see #assignable(Object, Class, String) alias
    */
@@ -732,6 +829,9 @@ public abstract class Arguments {
    * @param target     검사 대상.
    * @param superClass 기대하는 클래스.
    * @param targetName 대상의 이름.
+   * @param <T>        타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @see #assignable(Object, Class, String) alias
    */
@@ -752,6 +852,8 @@ public abstract class Arguments {
    * @param target     시험 대상.
    * @param collection 컬렉션.
    * @param <T>        대상의 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 시험 대상이 컬렉션에 포함되어있지 않을 때.
    */
@@ -774,6 +876,8 @@ public abstract class Arguments {
    * @param collection 컬렉션.
    * @param targetName 시험 대상의 이름.
    * @param <T>        대상의 타입.
+   *
+   * @return {@code target} 인스턴스.
    *
    * @throws IllegalArgumentException 시험 대상이 컬렉션에 포함되어있지 않을 때.
    */
