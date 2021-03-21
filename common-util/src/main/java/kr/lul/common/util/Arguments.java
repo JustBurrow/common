@@ -625,23 +625,23 @@ public abstract class Arguments {
   }
 
   /**
-   * 대상의 클래스를 검사한다.
+   * 대상의 인스턴스의 클래스가 기대치와 영확히 일치하는지 검사한다.
    *
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
    */
-  public static void typeOf(final Object target, final Class clz) {
-    typeOf(target, clz, null);
+  public static void instanceOf(final Object target, final Class<?> clz) {
+    instanceOf(target, clz, null);
   }
 
   /**
-   * 대상의 클래스를 검사한다.
+   * 대상의 인스턴스의 클래스가 기대치와 영확히 일치하는지 검사한다.
    *
    * @param target     검사 대상.
    * @param clz        기대하는 클래스.
    * @param targetName 검사 대상의 이름.
    */
-  public static void typeOf(final Object target, final Class clz, final String targetName) {
+  public static void instanceOf(final Object target, final Class<?> clz, final String targetName) {
     if (null == clz) {
       throw new IllegalArgumentException("clz is null.");
     } else if (null == target || target.getClass().equals(clz)) {
@@ -649,6 +649,62 @@ public abstract class Arguments {
     }
 
     throw new IllegalArgumentException(format("%s is not instance of %s", name(targetName), clz.getName()));
+  }
+
+  /**
+   * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
+   *
+   * @param target 검사 대상.
+   * @param clz    기대하는 클래스.
+   */
+  public static void assignable(final Object target, final Class<?> clz) {
+    assignable(target, clz, null);
+  }
+
+  /**
+   * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
+   *
+   * @param target     검사 대상.
+   * @param clz        기대하는 클래스.
+   * @param targetName 대상의 이름.
+   */
+  public static void assignable(final Object target, final Class<?> clz, final String targetName) {
+    if (null == clz)
+      throw new IllegalArgumentException("clz is null.");
+    else if (null == target)
+      return;
+    else if (!clz.isAssignableFrom(target.getClass()))
+      throw new IllegalArgumentException(name(targetName) + " is not assignable to " + clz.getName());
+  }
+
+  /**
+   * 대상 인스턴스가 기대하는 클래스 혹은 기대 클래스를 상속한 클래스의 인스턴스인지 검사한다.
+   *
+   * @param target     검사 대상.
+   * @param superClass 기대하는 클래스.
+   *
+   * @see #assignable(Object, Class, String) alias
+   */
+  public static void extend(final Object target, final Class<?> superClass) {
+    extend(target, superClass, null);
+  }
+
+  /**
+   * 대상 인스턴스가 기대하는 클래스 혹은 기대 클래스를 상속한 클래스의 인스턴스인지 검사한다.
+   *
+   * @param target     검사 대상.
+   * @param superClass 기대하는 클래스.
+   * @param targetName 대상의 이름.
+   *
+   * @see #assignable(Object, Class, String) alias
+   */
+  public static void extend(final Object target, final Class<?> superClass, final String targetName) {
+    if (null == superClass)
+      throw new IllegalArgumentException("superClass is null.");
+    else if (null == target)
+      return;
+    else if (!superClass.isAssignableFrom(target.getClass()))
+      throw new IllegalArgumentException(name(targetName) + " does not extend " + superClass.getName());
   }
 
   /**

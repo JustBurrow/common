@@ -14,6 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @author justburrow
  * @since 2019/11/04
  */
+@SuppressWarnings({"ObviousNullCheck", "ConstantConditions"})
 public class ArgumentsTest {
   private static final Logger log = getLogger(ArgumentsTest.class);
 
@@ -335,5 +336,90 @@ public class ArgumentsTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasNoCause()
         .hasMessage("target contains whitespace character(s) : '" + target + "'");
+  }
+
+  @Test
+  public void test_instanceOf() {
+    // GIVEN
+    final String str = "abc";
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> instanceOf(str, CharSequence.class, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("str is not instance of " + CharSequence.class.getName());
+    instanceOf(str, String.class);
+  }
+
+  @Test
+  public void test_assignable() throws Exception {
+    // GIVEN
+    final String str = "123";
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> assignable(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("clz is null.");
+    assertThatThrownBy(() -> assignable(str, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("clz is null.");
+
+    assertThatThrownBy(() -> assignable(null, null, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("clz is null.");
+    assertThatThrownBy(() -> assignable(str, null, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("clz is null.");
+
+    assignable(null, String.class);
+    assignable(null, CharSequence.class);
+
+    assignable(str, CharSequence.class);
+    assignable(str, String.class);
+    assertThatThrownBy(() -> assignable(str, StringBuilder.class, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("str is not assignable to " + StringBuilder.class.getName());
+
+    assignable(new StringBuilder(str), CharSequence.class);
+    assertThatThrownBy(() -> assignable(new StringBuilder(str), String.class, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("str is not assignable to " + String.class.getName());
+    assignable(new StringBuilder(str), StringBuilder.class);
+
+  }
+
+  @Test
+  public void test_extend() throws Exception {
+    // GIVEN
+    final String str = "123";
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> extend(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("superClass is null.");
+    assertThatThrownBy(() -> extend(null, null, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("superClass is null.");
+    assertThatThrownBy(() -> extend(str, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("superClass is null.");
+    assertThatThrownBy(() -> extend(str, null, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("superClass is null.");
+
+    extend(null, String.class);
+    extend(null, CharSequence.class);
+
+    extend(str, CharSequence.class);
+    extend(str, String.class);
+
+    assertThatThrownBy(() -> extend(str, StringBuilder.class, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("str does not extend " + StringBuilder.class.getName());
+    extend(new StringBuilder(str), CharSequence.class);
+
+    assertThatThrownBy(() -> extend(new StringBuilder(str), String.class, "str"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("str does not extend " + String.class.getName());
+    extend(new StringBuilder(str), StringBuilder.class);
   }
 }
