@@ -10,4 +10,5 @@ rootProject.name = "common"
 
 include "common-util",
     'common-data',
-    "common-web"
+    'common-web',
+    'common-logging'
