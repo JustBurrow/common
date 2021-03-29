@@ -89,6 +89,12 @@ public abstract class TestUtils {
                .orElse(null);
   }
 
+  public static int count(ListAppender<ILoggingEvent> appender, Predicate<ILoggingEvent> predicate) {
+    return (int) notNull(appender, "appender").list.stream()
+                     .filter(notNull(predicate, "predicate"))
+                     .count();
+  }
+
   public TestUtils() {
     throw new UnsupportedOperationException();
   }

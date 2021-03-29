@@ -1,6 +1,5 @@
 package kr.lul.common.logging;
 
-import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,9 @@ import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
+import static ch.qos.logback.classic.Level.*;
 import static kr.lul.common.logging.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,7 +20,7 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2021/03/26
  */
 class TestUtilsTest {
-  private static final Logger log = getLogger(TestUtilsTest.class);
+  private static final Logger LOGGER = getLogger(TestUtilsTest.class);
 
   @Test
   void test_addListAppender_with_null() {
@@ -44,6 +45,7 @@ class TestUtilsTest {
     }
 
     void foo2() {
+      log.info("#foo2");
       log.info("#foo2");
     }
   }
@@ -70,7 +72,7 @@ class TestUtilsTest {
     // THEN
     assertThat(appender1.list
                    .stream()
-                   .filter(it -> it.getLevel() == Level.WARN && it.getMessage().equals("#foo"))
+                   .filter(it -> it.getLevel() == WARN && it.getMessage().equals("#foo"))
                    .findFirst()
                    .orElse(null)
     )
@@ -78,7 +80,7 @@ class TestUtilsTest {
 
     assertThat(appender2.list
                    .stream()
-                   .filter(it -> it.getLevel() == Level.WARN && it.getMessage().equals("#foo"))
+                   .filter(it -> it.getLevel() == WARN && it.getMessage().equals("#foo"))
                    .findFirst()
                    .orElse(null)
     )
@@ -99,7 +101,7 @@ class TestUtilsTest {
     // THEN
     assertThat(appender1.list
                    .stream()
-                   .filter(it -> it.getLevel() == Level.WARN && it.getMessage().equals("#foo"))
+                   .filter(it -> it.getLevel() == WARN && it.getMessage().equals("#foo"))
                    .findFirst()
                    .orElse(null)
     )
@@ -107,7 +109,7 @@ class TestUtilsTest {
 
     assertThat(appender2.list
                    .stream()
-                   .filter(it -> it.getLevel() == Level.WARN && it.getMessage().equals("#foo"))
+                   .filter(it -> it.getLevel() == WARN && it.getMessage().equals("#foo"))
                    .findFirst()
                    .orElse(null)
     )
@@ -134,11 +136,11 @@ class TestUtilsTest {
     ListAppender<ILoggingEvent> appender = addListAppender(A.class);
     a.foo();
     List<ILoggingEvent> expected = Collections.unmodifiableList(appender.list);
-    log.info("[GIVEN] expected={}, expected.size={}", expected, expected.size());
+    LOGGER.info("[GIVEN] expected={}, expected.size={}", expected, expected.size());
 
     // WHEN
     boolean b = removeAppender(A.class, appender);
-    log.info("[WHEN] b={}", b);
+    LOGGER.info("[WHEN] b={}", b);
 
     a.foo();
 
@@ -169,7 +171,7 @@ class TestUtilsTest {
         .hasSize(1);
     assertThat(bAppender.list.get(0))
         .extracting(ILoggingEvent::getLevel, ILoggingEvent::getMessage)
-        .containsSequence(Level.WARN, "#bar");
+        .containsSequence(WARN, "#bar");
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -194,10 +196,10 @@ class TestUtilsTest {
     a.foo2();
 
     // WHEN
-    ILoggingEvent l1 = findFirst(appender, it -> it.getLevel() == Level.TRACE);
-    ILoggingEvent l2 = findFirst(appender, it -> it.getLevel() == Level.INFO);
-    ILoggingEvent l3 = findFirst(appender, it -> it.getLevel() == Level.WARN);
-    log.info("WHEN - l1={}, l2={}, l3={}", l1, l2, l3);
+    ILoggingEvent l1 = findFirst(appender, it -> it.getLevel() == TRACE);
+    ILoggingEvent l2 = findFirst(appender, it -> it.getLevel() == INFO);
+    ILoggingEvent l3 = findFirst(appender, it -> it.getLevel() == WARN);
+    LOGGER.info("WHEN - l1={}, l2={}, l3={}", l1, l2, l3);
 
     // THEN
     assertThat(l1)
@@ -210,5 +212,46 @@ class TestUtilsTest {
         .isNotNull()
         .extracting(ILoggingEvent::getMessage)
         .isEqualTo("#foo");
+  }
+
+  @Test
+  void test_count_with_null() {
+    assertThatThrownBy(() -> count(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("appender is null.");
+    assertThatThrownBy(() -> count(null, it -> true))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("appender is null.");
+    assertThatThrownBy(() -> count(new ListAppender<>(), null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("predicate is null.");
+  }
+
+  @Test
+  void test_count() {
+    // GIVEN
+    int count = ThreadLocalRandom.current().nextInt(100, 1000);
+    LOGGER.info("[GIVEN] count={}", count);
+    A a = new A();
+    ListAppender<ILoggingEvent> appender = addListAppender(A.class);
+
+    for (int i = 0; i < count; i++) {
+      a.foo();
+      a.foo2();
+    }
+
+    // WHEN
+    int wCnt = count(appender, it -> WARN == it.getLevel());
+    int iCnt = count(appender, it -> INFO == it.getLevel());
+    int tCnt = count(appender, it -> TRACE == it.getLevel());
+    LOGGER.info("[WHEN] wCnt={}, iCnt={}, tCnt={}", wCnt, iCnt, tCnt);
+
+    // THEN
+    assertThat(wCnt)
+        .isEqualTo(count);
+    assertThat(iCnt)
+        .isEqualTo(count * 2);
+    assertThat(tCnt)
+        .isEqualTo(0);
   }
 }
