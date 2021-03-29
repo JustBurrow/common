@@ -78,6 +78,8 @@ public abstract class ScopeFunctions {
    * @param <T>   컨텍스트 오브젝트 타입.
    * @param <R>   블록 리턴 타입.
    *
+   * @return 컨텍스트 오브젝트.
+   *
    * @see <a href="https://kotlinlang.org/docs/scope-functions.html#let">let</a>
    */
   public static <T, R> R let(final T it, Function<T, R> block) {
@@ -151,6 +153,8 @@ public abstract class ScopeFunctions {
    * @param it    컨텍스트 오브젝트.
    * @param block 블록.
    * @param <T>   컨텍스트 오브젝트 타입.
+   *
+   * @return 컨텍스트 오브젝트.
    *
    * @see <a href="https://kotlinlang.org/docs/scope-functions.html#also">also</a>
    */
