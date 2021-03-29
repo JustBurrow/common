@@ -85,6 +85,10 @@ class TestUtilsTest {
                    .orElse(null)
     )
         .isNotNull();
+
+    // CLEANUP
+    removeAppender(A.class, appender1);
+    removeAppender(A.class, appender2);
   }
 
   @Test
@@ -114,6 +118,10 @@ class TestUtilsTest {
                    .orElse(null)
     )
         .isNull();
+
+    // CLEANUP
+    removeAppender(B.class, appender1);
+    removeAppender(B.class, appender2);
   }
 
   @Test
@@ -149,6 +157,9 @@ class TestUtilsTest {
         .isTrue();
     assertThat(appender.list)
         .containsExactlyElementsOf(expected);
+
+    // CLEANUP
+    removeAppender(A.class, appender);
   }
 
   @Test
@@ -172,6 +183,10 @@ class TestUtilsTest {
     assertThat(bAppender.list.get(0))
         .extracting(ILoggingEvent::getLevel, ILoggingEvent::getMessage)
         .containsSequence(WARN, "#bar");
+
+    // CLEANUP
+    removeAppender(A.class, aAppender);
+    removeAppender(B.class, bAppender);
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -212,6 +227,9 @@ class TestUtilsTest {
         .isNotNull()
         .extracting(ILoggingEvent::getMessage)
         .isEqualTo("#foo");
+
+    // CLEANUP
+    removeAppender(A.class, appender);
   }
 
   @Test
@@ -253,5 +271,8 @@ class TestUtilsTest {
         .isEqualTo(count * 2);
     assertThat(tCnt)
         .isEqualTo(0);
+
+    // CLEANUP
+    removeAppender(A.class, appender);
   }
 }
