@@ -1,6 +1,6 @@
 package kr.lul.common.web.api;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import static java.util.concurrent.ThreadLocalRandom.current;

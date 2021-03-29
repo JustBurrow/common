@@ -2,8 +2,8 @@ package kr.lul.common.util.validator;
 
 import kr.lul.common.util.ValidationException;
 import kr.lul.common.util.Validator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.time.Instant;
@@ -21,7 +21,7 @@ public class LessThanValidatorTest {
   private Instant upperBound;
   private Validator<Instant> validator;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.upperBound = Instant.now();
     log.info("SETUP - upperBound={}", this.upperBound);

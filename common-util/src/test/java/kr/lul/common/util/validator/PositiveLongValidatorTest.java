@@ -1,8 +1,8 @@
 package kr.lul.common.util.validator;
 
 import kr.lul.common.util.ValidationException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,7 +17,7 @@ public class PositiveLongValidatorTest {
 
   private PositiveLongValidator validator;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.validator = new PositiveLongValidator();
   }

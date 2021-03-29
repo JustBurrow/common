@@ -1,8 +1,8 @@
 package kr.lul.common.util.parser;
 
 import kr.lul.common.util.ParseException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ public class BigDecimalParserTest {
 
   private final ThreadLocalRandom random = ThreadLocalRandom.current();
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.parser = new BigDecimalParser();
   }

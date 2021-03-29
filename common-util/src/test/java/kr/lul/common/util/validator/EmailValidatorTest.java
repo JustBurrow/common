@@ -1,8 +1,8 @@
 package kr.lul.common.util.validator;
 
 import kr.lul.common.util.ValidationException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class EmailValidatorTest {
 
   private EmailValidator validator;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.validator = new EmailValidator();
     log.info("SETUP - regex={}", LOCAL_PART_REGEX);

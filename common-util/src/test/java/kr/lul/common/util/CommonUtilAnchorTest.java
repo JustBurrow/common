@@ -1,7 +1,7 @@
 package kr.lul.common.util;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;

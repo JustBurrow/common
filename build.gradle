@@ -45,13 +45,13 @@ subprojects {
   }
 
   dependencies {
-    testImplementation 'junit:junit'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.apache.commons:commons-lang3'
   }
 
   jar.enabled = true
   bootJar.enabled = false
+  test.useJUnitPlatform()
 
   java {
     withJavadocJar()

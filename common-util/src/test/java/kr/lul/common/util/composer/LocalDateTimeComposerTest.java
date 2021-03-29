@@ -1,7 +1,7 @@
 package kr.lul.common.util.composer;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class LocalDateTimeComposerTest {
 
   private LocalDateTimeComposer composer;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.composer = new LocalDateTimeComposer();
   }

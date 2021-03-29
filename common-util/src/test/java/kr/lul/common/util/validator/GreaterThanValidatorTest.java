@@ -2,7 +2,7 @@ package kr.lul.common.util.validator;
 
 import kr.lul.common.util.ValidationException;
 import kr.lul.common.util.Validator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.time.Instant;

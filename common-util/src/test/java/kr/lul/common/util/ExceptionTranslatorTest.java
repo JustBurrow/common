@@ -1,6 +1,6 @@
 package kr.lul.common.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import static kr.lul.common.util.ExceptionTranslator.TryBlock;

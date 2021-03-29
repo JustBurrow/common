@@ -3,8 +3,8 @@ package kr.lul.common.util.validator;
 import kr.lul.common.util.ContinuousRange;
 import kr.lul.common.util.Range;
 import kr.lul.common.util.ValidationException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,7 +22,7 @@ public class RangeValidatorTest {
   private Range<Integer> range;
   private RangeValidator<Integer> validator;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     this.range = new ContinuousRange<>(this.min, this.max);
     log.info("SETUP - range={}", this.range);
