@@ -1,6 +1,7 @@
 package kr.lul.common.util;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
@@ -69,8 +70,42 @@ class TemporalUtilsTest {
     assertThat(actual.getEpochSecond())
         .isEqualTo(this.instant.getEpochSecond());
     assertThat(actual.getNano())
-        .isLessThanOrEqualTo(this.instant.getNano())
-        .isEqualTo(Instant.ofEpochMilli(this.instant.toEpochMilli()).getNano());
+        .isEqualTo(Instant.ofEpochMilli(this.instant.toEpochMilli() + 1L).getNano());
+  }
+
+  @Test
+  void test_millisecondPrecision_with_0_cut() {
+    // GIVEN
+    Instant instant = Instant.now().with(NANO_OF_SECOND, 123_000_000L);
+    LOGGER.info("[GIVEN] instant={}", instant);
+
+    // WHEN
+    Instant actual = millisecondsPrecision(instant);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual.toEpochMilli())
+        .isEqualTo(instant.toEpochMilli());
+    assertThat(actual.getNano() % 1_000_000L)
+        .isZero();
+  }
+
+  @Test
+  @DisplayName("2021-04-02T13:31:50.028826Z -> 2021-04-02T13:31:50.029Z")
+  void test_millisecondPrecision_cases() {
+    // GIVEN
+    Instant instant = Instant.parse("2021-04-02T13:31:50.028826Z");
+    LOGGER.info("[GIVEN] instant={}", instant);
+
+    // WHEN
+    Instant actual = millisecondsPrecision(instant);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual.getEpochSecond())
+        .isEqualTo(instant.getEpochSecond());
+    assertThat(actual.getNano())
+        .isEqualTo(29_000_000L);
   }
 
   @Test
@@ -93,6 +128,25 @@ class TemporalUtilsTest {
     assertThat(actual.getEpochSecond())
         .isEqualTo(this.instant.getEpochSecond());
     assertThat(actual.getNano())
-        .isEqualTo((this.instant.getNano() / 1000L) * 1000L);
+        .isEqualTo((this.instant.getNano() / 1000L + 1L) * 1000L);
+  }
+
+  @Test
+  void test_microPrecision_with_0_cut() {
+    // GIVEN
+    Instant instant = Instant.now().with(NANO_OF_SECOND, 123_456_000L);
+    LOGGER.info("[GIVEN] instant={}", instant);
+
+    // WHEN
+    Instant actual = microPrecision(instant);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual.getEpochSecond())
+        .isEqualTo(instant.getEpochSecond());
+    assertThat(actual.getNano())
+        .isEqualTo(instant.getNano());
+    assertThat(actual.getNano() % 1000L)
+        .isZero();
   }
 }

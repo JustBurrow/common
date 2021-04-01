@@ -30,8 +30,15 @@ public abstract class TemporalUtils {
    * @return 밀리초 단위 정밀도로 조정한 시각.
    */
   public static Instant millisecondsPrecision(Instant instant) {
-    return Instant.ofEpochMilli(
-        notNull(instant, "instant").toEpochMilli());
+    final long sec = notNull(instant, "instant")
+                         .getEpochSecond();
+    final long n = instant.getNano();
+    final long cut = n % 1_000_000L;
+
+    final long nano = (0L == cut)
+                          ? n
+                          : n - cut + 1_000_000L;
+    return Instant.ofEpochSecond(sec, nano);
   }
 
   /**
@@ -44,7 +51,12 @@ public abstract class TemporalUtils {
   public static Instant microPrecision(Instant instant) {
     final long sec = notNull(instant, "instant")
                          .getEpochSecond();
-    final long nano = instant.getNano() - instant.getNano() % 1000L;
+    final long n = instant.getNano();
+    final long cut = n % 1000L;
+
+    final long nano = (0L == cut)
+                          ? n
+                          : n - cut + 1000L;
 
     return Instant.ofEpochSecond(sec, nano);
   }
