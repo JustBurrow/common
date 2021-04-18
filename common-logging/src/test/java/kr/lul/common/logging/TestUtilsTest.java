@@ -61,7 +61,7 @@ class TestUtilsTest {
   @Test
   void test_addListAppender() {
     // GIVEN
-    var a = new A();
+    A a = new A();
 
     // WHEN
     ListAppender<ILoggingEvent> appender1 = addListAppender(A.class);
@@ -94,7 +94,7 @@ class TestUtilsTest {
   @Test
   void test_addListAppender_with_other_logger() {
     // GIVEN
-    var a = new A();
+    A a = new A();
 
     // WHEN
     ListAppender<ILoggingEvent> appender1 = addListAppender(B.class);
@@ -140,7 +140,7 @@ class TestUtilsTest {
   @Test
   void test_removeAppender() throws Exception {
     // GIVEN
-    var a = new A();
+    A a = new A();
     ListAppender<ILoggingEvent> appender = addListAppender(A.class);
     a.foo();
     List<ILoggingEvent> expected = Collections.unmodifiableList(appender.list);
@@ -165,11 +165,11 @@ class TestUtilsTest {
   @Test
   void test_removeAppender_with_other_class() {
     // GIVEN
-    var a = new A();
+    A a = new A();
     ListAppender<ILoggingEvent> aAppender = addListAppender(A.class);
     a.foo();
 
-    var b = new B();
+    B b = new B();
     ListAppender<ILoggingEvent> bAppender = addListAppender(B.class);
 
     // WHEN & THEN

@@ -1,5 +1,6 @@
 package kr.lul.common.logging;
 
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.read.ListAppender;
@@ -35,10 +36,10 @@ public abstract class TestUtils {
    * @return 로거에 추가한 어펜더.
    */
   public static ListAppender<ILoggingEvent> addListAppender(final String name) {
-    final var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name);
+    final Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name);
     //noinspection SynchronizationOnLocalVariableOrMethodParameter
     synchronized (logger) {
-      final var appender = new ListAppender<ILoggingEvent>();
+      final ListAppender<ILoggingEvent> appender = new ListAppender<>();
 
       appender.start();
       logger.addAppender(appender);
@@ -70,7 +71,7 @@ public abstract class TestUtils {
   public static boolean removeAppender(final String name, final Appender<ILoggingEvent> appender) {
     notNull(appender, "appender");
 
-    final var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name);
+    final Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name);
     return logger.detachAppender(appender);
   }
 

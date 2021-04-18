@@ -30,7 +30,7 @@ class StructTest {
   @Test
   void test_new_with_map() {
     // GIVEN
-    var properties = Map.<String, Object>of("a", 1);
+    Map<String, Object> properties = Map.of("a", 1);
     LOGGER.info("[GIVEN] properties={}", properties);
 
     // WHEN
@@ -46,7 +46,7 @@ class StructTest {
   @Test
   void test_toMap_with_prefix() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
@@ -69,7 +69,7 @@ class StructTest {
   @Test
   void test_toMap_with_predicate() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
@@ -92,7 +92,7 @@ class StructTest {
   @Test
   void test_filter_with_prefix() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
@@ -121,7 +121,7 @@ class StructTest {
   @Test
   void test_filter_with_predicate() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
@@ -150,7 +150,7 @@ class StructTest {
   @Test
   void test_filterKey_with_predicate() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
@@ -179,7 +179,7 @@ class StructTest {
   @Test
   void test_subStruct_with_prefix() {
     // GIVEN
-    var properties = linkedMapOf(
+    Map<String, Object> properties = linkedMapOf(
         "a1", 1,
         "a2", true,
         "b1", new Object());
