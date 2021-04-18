@@ -31,7 +31,6 @@ subprojects {
   apply plugin: 'org.springframework.boot'
 
   sourceCompatibility = 11
-  targetCompatibility = 11
 
   dependencyManagement {
     imports {
@@ -51,15 +50,18 @@ subprojects {
 
   bootJar.enabled = false
   jar.enabled = true
+
   java {
     withJavadocJar()
     withSourcesJar()
   }
+
   javadoc {
     if (JavaVersion.current().isJava9Compatible()) {
       options.addBooleanOption('html5', true)
     }
   }
+
   publishing {
     publications {
       mavenJava(MavenPublication) {
@@ -91,5 +93,16 @@ subprojects {
       }
     }
   }
-  test.useJUnitPlatform()
+
+  publishToMavenLocal {
+    dependsOn clean
+    dependsOn test
+
+    test.mustRunAfter clean
+  }
+
+  test {
+    enabled = true
+    useJUnitPlatform()
+  }
 }
