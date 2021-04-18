@@ -49,15 +49,17 @@ subprojects {
     testImplementation 'org.apache.commons:commons-lang3'
   }
 
-  jar.enabled = true
   bootJar.enabled = false
-  test.useJUnitPlatform()
-
+  jar.enabled = true
   java {
     withJavadocJar()
     withSourcesJar()
   }
-
+  javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+      options.addBooleanOption('html5', true)
+    }
+  }
   publishing {
     publications {
       mavenJava(MavenPublication) {
@@ -89,10 +91,5 @@ subprojects {
       }
     }
   }
-
-  javadoc {
-    if (JavaVersion.current().isJava9Compatible()) {
-      options.addBooleanOption('html5', true)
-    }
-  }
+  test.useJUnitPlatform()
 }

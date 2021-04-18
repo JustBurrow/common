@@ -1,5 +1,5 @@
 dependencies {
-  implementation project(':common-util')
+  api project(':common-util')
 
-  implementation 'ch.qos.logback:logback-classic'
+  api 'ch.qos.logback:logback-classic'
 }
