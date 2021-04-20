@@ -1,6 +1,7 @@
 package kr.lul.common.util;
 
 import static java.lang.String.format;
+import static kr.lul.common.util.Arguments.notNull;
 
 /**
  * 문자열 유틸리티.
@@ -81,6 +82,17 @@ public abstract class Texts {
     return text.length() <= max
                ? text
                : text.substring(0, max);
+  }
+
+  /**
+   * 유니코드 문자의 갯수를 센다.
+   *
+   * @param text 문자열
+   *
+   * @return 유니코드 문자 갯수.
+   */
+  public static int count(final String text) {
+    return notNull(text, "text").codePointCount(0, text.length());
   }
 
   protected Texts() {
