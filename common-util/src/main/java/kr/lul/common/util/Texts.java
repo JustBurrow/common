@@ -1,6 +1,7 @@
 package kr.lul.common.util;
 
 import static java.lang.String.format;
+import static kr.lul.common.util.Arguments.notEmpty;
 import static kr.lul.common.util.Arguments.notNull;
 
 /**
@@ -82,6 +83,34 @@ public abstract class Texts {
     return text.length() <= max
                ? text
                : text.substring(0, max);
+  }
+
+  /**
+   * 문자열이 {@code null}이면 기본 문자열을 반환한다.
+   *
+   * @param text        문자열.
+   * @param defaultText 기본 문자열. non-null.
+   *
+   * @return {@code text} 혹은 기본 문자열.
+   */
+  public static String ifNull(String text, String defaultText) {
+    return null != text
+               ? text
+               : notNull(defaultText, "defaultText");
+  }
+
+  /**
+   * 문자열이 {@code null} 이거나 빈 문자열이면 기본 문자열을 반환한다.
+   *
+   * @param text        문자열.
+   * @param defaultText 기본 문자열. non-null, non-empty.
+   *
+   * @return {@code text} 혹은 기본 문자열.
+   */
+  public static String ifEmpty(String text, String defaultText) {
+    return null != text && !text.isEmpty()
+               ? text
+               : notEmpty(defaultText, "defaultText");
   }
 
   /**

@@ -204,4 +204,41 @@ public class TextsTest {
           .isEqualTo(1);
     }
   }
+
+  @Test
+  void test_IfNull() {
+    assertThat(ifNull(null, "default"))
+        .isEqualTo("default");
+    assertThat(ifNull("", "default"))
+        .isEqualTo("");
+    assertThat(ifNull("abc", "default"))
+        .isEqualTo("abc");
+
+    assertThatThrownBy(() -> ifNull(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("defaultText is null.");
+  }
+
+  @Test
+  void test_IfEmpty() {
+    assertThat(ifEmpty(null, "default"))
+        .isEqualTo("default");
+    assertThat(ifEmpty("", "default"))
+        .isEqualTo("default");
+    assertThat(ifEmpty("abc", "default"))
+        .isEqualTo("abc");
+
+    assertThatThrownBy(() -> ifEmpty(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("defaultText is null.");
+    assertThatThrownBy(() -> ifEmpty(null, ""))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("defaultText is empty.");
+    assertThatThrownBy(() -> ifEmpty("", null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("defaultText is null.");
+    assertThatThrownBy(() -> ifEmpty("", ""))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("defaultText is empty.");
+  }
 }
