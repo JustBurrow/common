@@ -746,29 +746,30 @@ public abstract class Arguments {
    *
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
-   * @param <T>    타겟 타입.
+   * @param <T>    기대하는 타입.
    *
    * @return {@code target} 인스턴스.
    */
-  public static <T> T instanceOf(final T target, final Class<?> clz) {
+  public static <T> T instanceOf(final Object target, final Class<T> clz) {
     return instanceOf(target, clz, null);
   }
 
   /**
    * 대상의 인스턴스의 클래스가 기대치와 영확히 일치하는지 검사한다.
    *
-   * @param <T>        타겟 타입.
+   * @param <T>        기대하는 타입.
    * @param target     검사 대상.
    * @param clz        기대하는 클래스.
    * @param targetName 검사 대상의 이름.
    *
    * @return {@code target} 인스턴스.
    */
-  public static <T> T instanceOf(final T target, final Class<?> clz, final String targetName) {
+  public static <T> T instanceOf(final Object target, final Class<T> clz, final String targetName) {
     if (null == clz) {
       throw new IllegalArgumentException("clz is null.");
     } else if (null == target || target.getClass().equals(clz)) {
-      return target;
+      //noinspection unchecked
+      return (T) target;
     }
 
     throw new IllegalArgumentException(format("%s is not instance of %s", name(targetName), clz.getName()));
@@ -777,27 +778,27 @@ public abstract class Arguments {
   /**
    * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
    *
-   * @param <T>    타겟 타입.
+   * @param <T>    기대하는 타입.
    * @param target 검사 대상.
    * @param clz    기대하는 클래스.
    *
    * @return {@code target} 인스턴스.
    */
-  public static <T> T assignable(final T target, final Class<?> clz) {
+  public static <T> T assignable(final Object target, final Class<T> clz) {
     return assignable(target, clz, null);
   }
 
   /**
    * 대상 인스턴스를 기대 클래스의 변수에 할당할 수 있는지 검사한다.
    *
-   * @param <T>        타겟 타입.
+   * @param <T>        기대하는 타입.
    * @param target     검사 대상.
    * @param clz        기대하는 클래스.
    * @param targetName 대상의 이름.
    *
    * @return {@code target} 인스턴스.
    */
-  public static <T> T assignable(final T target, final Class<?> clz, final String targetName) {
+  public static <T> T assignable(final Object target, final Class<T> clz, final String targetName) {
     if (null == clz)
       throw new IllegalArgumentException("clz is null.");
     else if (null == target)
@@ -805,7 +806,8 @@ public abstract class Arguments {
     else if (!clz.isAssignableFrom(target.getClass()))
       throw new IllegalArgumentException(name(targetName) + " is not assignable to " + clz.getName());
 
-    return target;
+    //noinspection unchecked
+    return (T) target;
   }
 
   /**
