@@ -22,12 +22,13 @@ public class RangeValidator<T extends Comparable<T>> extends AbstractTargetNameD
   }
 
   @Override
-  public void validate(T target) throws ValidationException {
+  public T validate(T target) throws ValidationException {
     try {
-      if (!this.range.isInclude(target)) {
+      if (!this.range.isInclude(target))
         throw new ValidationException(this.targetName, target,
             format("%s is out of range : %s=%s, range=%s", this.targetName, this.targetName, target, this.range));
-      }
+
+      return target;
     } catch (IllegalArgumentException e) {
       throw new ValidationException(this.targetName, target, e);
     }

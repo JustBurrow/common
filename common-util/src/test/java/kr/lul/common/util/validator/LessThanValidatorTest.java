@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 
 import java.time.Instant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -16,7 +17,7 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2019/11/16
  */
 public class LessThanValidatorTest {
-  private static final Logger log = getLogger(LessThanValidatorTest.class);
+  private static final Logger LOGGER = getLogger(LessThanValidatorTest.class);
 
   private Instant upperBound;
   private Validator<Instant> validator;
@@ -24,10 +25,10 @@ public class LessThanValidatorTest {
   @BeforeEach
   public void setUp() throws Exception {
     this.upperBound = Instant.now();
-    log.info("SETUP - upperBound={}", this.upperBound);
+    LOGGER.info("SETUP - upperBound={}", this.upperBound);
 
     this.validator = new LessThanValidator<>("instant", this.upperBound);
-    log.info("SETUP - validator={}", this.validator);
+    LOGGER.info("SETUP - validator={}", this.validator);
   }
 
   @Test
@@ -41,10 +42,15 @@ public class LessThanValidatorTest {
   public void test_validate_with_older_instant() throws Exception {
     // GIVEN
     Instant target = this.upperBound.minusNanos(1L);
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN
-    this.validator.validate(target);
+    Instant actual = this.validator.validate(target);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual)
+        .isSameAs(target);
   }
 
   @Test
@@ -73,7 +79,7 @@ public class LessThanValidatorTest {
   public void test_validate_with_newer_instant() throws Exception {
     // GIVEN
     Instant target = this.upperBound.plusNanos(1L);
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> this.validator.validate(target))

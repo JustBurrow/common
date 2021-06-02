@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 
 import java.time.Instant;
 
-import static java.lang.Thread.sleep;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -16,31 +16,37 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2019/11/16
  */
 public class GreaterThanValidatorTest {
-  private static final Logger log = getLogger(GreaterThanValidatorTest.class);
+  private static final Logger LOGGER = getLogger(GreaterThanValidatorTest.class);
 
   @Test
   public void test_validate_with_newer_instant() throws Exception {
     // GIVEN
     Instant before = Instant.now();
-    log.info("GIVEN - before={}", before);
+    LOGGER.info("GIVEN - before={}", before);
     Validator<Instant> validator = new GreaterThanValidator<>("before", before);
-    log.info("GIVEN - validator={}", validator);
+    LOGGER.info("GIVEN - validator={}", validator);
 
-    sleep(1L);
+    Instant target = before.plusNanos(1L);
+    LOGGER.info("[GIVEN] target={}", target);
 
-    // WHEN & THEN
-    validator.validate(Instant.now());
+    // WHEN
+    Instant actual = validator.validate(target);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual)
+        .isSameAs(target);
   }
 
   @Test
   public void test_validate_with_older_instant() throws Exception {
     // GIVEN
     Instant lowerBound = Instant.now();
-    log.info("GIVEN - lowerBound={}", lowerBound);
+    LOGGER.info("GIVEN - lowerBound={}", lowerBound);
     Validator<Instant> validator = new GreaterThanValidator<>("instant", lowerBound);
-    log.info("GIVEN - validator={}", validator);
+    LOGGER.info("GIVEN - validator={}", validator);
     Instant target = lowerBound.minusNanos(1L);
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> validator.validate(target))
@@ -54,9 +60,9 @@ public class GreaterThanValidatorTest {
   public void test_validate_with_same_instant() throws Exception {
     // GIVEN
     Instant lowerBound = Instant.now();
-    log.info("GIVEN - lowerBound={}", lowerBound);
+    LOGGER.info("GIVEN - lowerBound={}", lowerBound);
     Validator<Instant> validator = new GreaterThanValidator<>("instant", lowerBound);
-    log.info("GIVEN - validator={}", validator);
+    LOGGER.info("GIVEN - validator={}", validator);
 
     // WHEN & THEN
     assertThatThrownBy(() -> validator.validate(lowerBound))
@@ -70,11 +76,11 @@ public class GreaterThanValidatorTest {
   public void test_validate_with_equal_instant() throws Exception {
     // GIVEN
     Instant lowerBound = Instant.now();
-    log.info("GIVEN - lowerBound={}", lowerBound);
+    LOGGER.info("GIVEN - lowerBound={}", lowerBound);
     Validator<Instant> validator = new GreaterThanValidator<>("instant", lowerBound);
-    log.info("GIVEN - validator={}", validator);
+    LOGGER.info("GIVEN - validator={}", validator);
     Instant target = Instant.ofEpochSecond(lowerBound.getEpochSecond(), lowerBound.getNano());
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> validator.validate(target))
@@ -88,7 +94,7 @@ public class GreaterThanValidatorTest {
   public void test_validate_with_null_instant() throws Exception {
     // GIVEN
     Validator<Instant> validator = new GreaterThanValidator<>("instant", Instant.now());
-    log.info("GIVEN - validator={}", validator);
+    LOGGER.info("GIVEN - validator={}", validator);
 
     // WHEN & THEN
     assertThatThrownBy(() -> validator.validate(null))

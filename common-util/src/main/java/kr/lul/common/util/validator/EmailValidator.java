@@ -130,7 +130,7 @@ public class EmailValidator implements Validator<CharSequence> {
   // kr.lul.common.util.Validator
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Override
-  public void validate(final CharSequence email) throws ValidationException {
+  public CharSequence validate(final CharSequence email) throws ValidationException {
     if (null == email)
       throw new ValidationException("email", null, "email is null.");
     else if (0 == email.length())
@@ -146,5 +146,7 @@ public class EmailValidator implements Validator<CharSequence> {
 
     validateLocal(localPart);
     validateDomain(domainPart);
+
+    return email;
   }
 }

@@ -7,18 +7,18 @@ import static java.lang.String.format;
 
 /**
  * @author justburrow
- * @since 2019/11/16
+ * @since 2021/06/02
  */
-public class PositiveLongValidator extends AbstractTargetNameDefinedValidator<Long> {
-  public PositiveLongValidator() {
+public class PositiveIntValidator extends AbstractTargetNameDefinedValidator<Integer> {
+  public PositiveIntValidator() {
     this("number");
   }
 
-  public PositiveLongValidator(String targetName) {
+  public PositiveIntValidator(String targetName) {
     super(targetName);
   }
 
-  public long validate(long target) throws ValidationException {
+  public int validate(int target) throws ValidationException {
     if (0L >= target)
       throw new ValidationException(this.targetName, target,
           format("%s is not positive : %d", this.targetName, target));
@@ -27,10 +27,10 @@ public class PositiveLongValidator extends AbstractTargetNameDefinedValidator<Lo
   }
 
   @Override
-  public Long validate(Long target) throws ValidationException {
+  public Integer validate(Integer target) throws ValidationException {
     if (null == target)
       throw new ValidationException(this.targetName, target, format("%s is null.", this.targetName));
 
-    return validate((long) target);
+    return validate((int) target);
   }
 }

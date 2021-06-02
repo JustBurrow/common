@@ -14,7 +14,9 @@ public interface Validator<T> {
    *
    * @param target 검증할 대상.
    *
+   * @return {@code target} 인스턴스.
+   *
    * @throws ValidationException 대상에 문제가 있을 때.
    */
-  void validate(T target) throws ValidationException;
+  T validate(T target) throws ValidationException;
 }

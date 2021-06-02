@@ -11,10 +11,9 @@ public abstract class AbstractTargetNameDefinedValidator<T> implements Validator
   protected final String targetName;
 
   public AbstractTargetNameDefinedValidator(String targetName) {
-    notEmpty(targetName, "target");
-    noWhitespace(targetName, "target");
+    notEmpty(targetName, "targetName");
 
-    this.targetName = targetName;
+    this.targetName = noWhitespace(targetName, "targetName");
   }
 
   public String getTargetName() {

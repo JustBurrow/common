@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -34,6 +35,37 @@ public class PositiveLongValidatorTest {
     assertThatThrownBy(() -> this.validator.validate(-1L))
         .isInstanceOf(ValidationException.class)
         .hasMessageContaining("is not positive");
+  }
+
+  @Test
+  public void test_validate_with_positive_1L() {
+    // WHEN
+    assertThat(this.validator.validate(1L))
+        .isEqualTo(1L);
+  }
+
+  @Test
+  void test_validate_with_0() {
+    assertThatThrownBy(() -> this.validator.validate(Long.valueOf(0L)))
+        .isInstanceOf(ValidationException.class)
+        .hasMessage("number is not positive : 0");
+  }
+
+  @Test
+  void test_validate_with_negative_1() {
+    assertThatThrownBy(() -> this.validator.validate(Long.valueOf(-1L)))
+        .isInstanceOf(ValidationException.class)
+        .hasMessage("number is not positive : -1");
+  }
+
+  @Test
+  void test_validate_with_1() {
+    // GIVEN
+    Long l = 1L;
+
+    // WHEN & THEN
+    assertThat(this.validator.validate(l))
+        .isSameAs(l);
   }
 
   @Test

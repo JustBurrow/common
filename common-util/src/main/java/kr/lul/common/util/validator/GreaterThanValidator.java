@@ -21,7 +21,7 @@ public class GreaterThanValidator<C extends Comparable<C>> extends AbstractTarge
   }
 
   @Override
-  public void validate(C target) throws ValidationException {
+  public C validate(C target) throws ValidationException {
     if (null == target)
       throw new ValidationException(this.targetName, target, this.targetName + " is null.");
 
@@ -29,6 +29,8 @@ public class GreaterThanValidator<C extends Comparable<C>> extends AbstractTarge
       throw new ValidationException(this.targetName, target,
           format("%s is not greater than lower bound : %s=%s, lowerBound=%s",
               this.targetName, this.targetName, target, this.lowerBound));
+
+    return target;
   }
 
   @Override

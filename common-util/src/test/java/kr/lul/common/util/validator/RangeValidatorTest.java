@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -15,7 +16,7 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2019/11/19
  */
 public class RangeValidatorTest {
-  private static final Logger log = getLogger(RangeValidatorTest.class);
+  private static final Logger LOGGER = getLogger(RangeValidatorTest.class);
 
   private int min = 0;
   private int max = 10;
@@ -25,9 +26,9 @@ public class RangeValidatorTest {
   @BeforeEach
   public void setUp() throws Exception {
     this.range = new ContinuousRange<>(this.min, this.max);
-    log.info("SETUP - range={}", this.range);
+    LOGGER.info("SETUP - range={}", this.range);
     this.validator = new RangeValidator<>("number", this.range);
-    log.info("SETUP - validator={}", this.validator);
+    LOGGER.info("SETUP - validator={}", this.validator);
   }
 
   @Test
@@ -45,7 +46,7 @@ public class RangeValidatorTest {
         .isInstanceOf(ValidationException.class)
         .hasNoCause()
         .hasMessageStartingWith("number is out of range")
-        .hasMessageContaining("number=" + (this.min - 1))
+        .hasMessageContaining("number=" + ( this.min - 1 ))
         .hasMessageContaining("range=" + this.range)
         .extracting("targetName", "target")
         .containsSequence("number", this.min - 1);
@@ -53,7 +54,13 @@ public class RangeValidatorTest {
 
   @Test
   public void test_validate_with_min() throws Exception {
-    this.validator.validate(this.min);
+    // WHEN
+    Integer actual = this.validator.validate(this.min);
+    LOGGER.info("[WHEN] actual={}", actual);
+
+    // THEN
+    assertThat(actual)
+        .isSameAs(this.min);
   }
 
   @Test
@@ -74,7 +81,7 @@ public class RangeValidatorTest {
         .isInstanceOf(ValidationException.class)
         .hasNoCause()
         .hasMessageStartingWith("number is out of range")
-        .hasMessageContaining("number=" + (this.max + 1))
+        .hasMessageContaining("number=" + ( this.max + 1 ))
         .hasMessageContaining("range=" + this.range)
         .extracting("targetName", "target")
         .containsSequence("number", this.max + 1);

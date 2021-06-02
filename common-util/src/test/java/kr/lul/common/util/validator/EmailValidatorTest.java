@@ -17,14 +17,14 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2020/01/04
  */
 public class EmailValidatorTest {
-  private static final Logger log = getLogger(EmailValidatorTest.class);
+  private static final Logger LOGGER = getLogger(EmailValidatorTest.class);
 
   private EmailValidator validator;
 
   @BeforeEach
   public void setUp() throws Exception {
     this.validator = new EmailValidator();
-    log.info("SETUP - regex={}", LOCAL_PART_REGEX);
+    LOGGER.info("SETUP - regex={}", LOCAL_PART_REGEX);
   }
 
   @Test
@@ -48,12 +48,11 @@ public class EmailValidatorTest {
         "θσερ.εχαμπλε.ψομ"
     }) {
       // GIVEN
-      log.info("GIVEN - email={}", email);
+      LOGGER.info("GIVEN - email={}", email);
 
       // WHEN
-      final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-          ValidationException.class);
-      log.info("WHEN - ex=" + ex, ex);
+      final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+      LOGGER.info("WHEN - ex=" + ex, ex);
 
       // THEN
       assertThat(ex)
@@ -66,12 +65,11 @@ public class EmailValidatorTest {
   public void test_validate_with_empty_local_part() throws Exception {
     // GIVEN
     final String email = "@bc";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-        ValidationException.class);
-    log.info("WHEN - ex=" + ex, ex);
+    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+    LOGGER.info("WHEN - ex=" + ex, ex);
 
     // THEN
     assertThat(ex)
@@ -82,15 +80,17 @@ public class EmailValidatorTest {
   public void test_validate_with_max_length_local_part_email() throws Exception {
     // GIVEN
     final int max = this.validator.getLocalMaxLength();
-    log.info("GIVEN - max={}", max);
+    LOGGER.info("GIVEN - max={}", max);
     final String email = randomAlphabetic(max) + "@example.com";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    this.validator.validate(email);
+    CharSequence actual = this.validator.validate(email);
+    LOGGER.info("[WHEN] actual={}", actual);
 
     // THEN
-    log.info("THEN - OK");
+    assertThat(actual)
+        .isSameAs(email);
   }
 
   @Test
@@ -98,14 +98,13 @@ public class EmailValidatorTest {
     // GIVEN
     final int max = this.validator.getLocalMaxLength();
     final int length = max + 1;
-    log.info("GIVEN - length={}", length);
+    LOGGER.info("GIVEN - length={}", length);
     final String email = randomAlphabetic(length) + "@example.com";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-        ValidationException.class);
-    log.info("WHEN - ex=" + ex, ex);
+    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+    LOGGER.info("WHEN - ex=" + ex, ex);
 
     // THEN
     assertThat(ex)
@@ -148,18 +147,17 @@ public class EmailValidatorTest {
         "validation@hibernate.com@@@"
     )) {
       // GIVEN
-      log.info("GIVEN - email={}", email);
+      LOGGER.info("GIVEN - email={}", email);
 
       // WHEN
-      final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-          ValidationException.class);
-      log.info("WHEN - ex=" + ex, ex);
+      final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+      LOGGER.info("WHEN - ex=" + ex, ex);
 
       // THEN
       assertThat(ex)
           .isNotNull()
           .hasMessageStartingWith("illegal email.local pattern");
-      log.info("THEN - OK.\n\n\n");
+      LOGGER.info("THEN - OK.\n\n\n");
     }
   }
 
@@ -167,12 +165,11 @@ public class EmailValidatorTest {
   public void test_validate_with_empty_domain_part() throws Exception {
     // GIVEN
     final String email = "abcd@";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-        ValidationException.class);
-    log.info("WHEN - ex=" + ex, ex);
+    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+    LOGGER.info("WHEN - ex=" + ex, ex);
 
     // THEN
     assertThat(ex)
@@ -184,15 +181,14 @@ public class EmailValidatorTest {
   public void test_validate_with_too_long_domain_email() throws Exception {
     // GIVEN
     final int max = this.validator.getDomainMaxLength();
-    log.info("GIVEN - max={}", max);
+    LOGGER.info("GIVEN - max={}", max);
     final int length = max + 1;
     final String email = "abc@" + randomAlphabetic(length - ".com".length()) + ".com";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
-        ValidationException.class);
-    log.info("WHEN - ex=" + ex, ex);
+    final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email), ValidationException.class);
+    LOGGER.info("WHEN - ex=" + ex, ex);
 
     // THEN
     assertThat(ex)
@@ -206,15 +202,16 @@ public class EmailValidatorTest {
   public void test_validate_with_max_length_domain_email() throws Exception {
     // GIVEN
     final int max = this.validator.getDomainMaxLength();
-    log.info("GIVEN - max={}", max);
+    LOGGER.info("GIVEN - max={}", max);
     final String email = "abc@" + randomAlphabetic(max - ".com".length()) + ".com";
-    log.info("GIVEN - email={}", email);
+    LOGGER.info("GIVEN - email={}", email);
 
     // WHEN
-    this.validator.validate(email);
+    CharSequence actual = this.validator.validate(email);
+    LOGGER.info("[WHEN] actual={}", actual);
 
     // THEN
-    log.info("THEN - OK");
+    LOGGER.info("THEN - OK");
   }
 
   @Test
@@ -225,18 +222,18 @@ public class EmailValidatorTest {
         "abc@d..ef.ghi"
     }) {
       // GIVEN
-      log.info("GIVEN - email={}", email);
+      LOGGER.info("GIVEN - email={}", email);
 
       // WHEN
       final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
           ValidationException.class);
-      log.info("WHEN - ex=" + ex, ex);
+      LOGGER.info("WHEN - ex=" + ex, ex);
 
       // THEN
       assertThat(ex)
           .isNotNull()
           .hasMessageStartingWith("illegal email.domain pattern");
-      log.info("THEN - OK.\n\n\n");
+      LOGGER.info("THEN - OK.\n\n\n");
     }
   }
 
@@ -281,17 +278,17 @@ public class EmailValidatorTest {
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@hibernate.org"
     )) {
       // GIVEN
-      log.info("GIVEN - email={}", email);
+      LOGGER.info("GIVEN - email={}", email);
 
       // WHEN
       final ValidationException ex = catchThrowableOfType(() -> this.validator.validate(email),
           ValidationException.class);
-      log.info("WHEN - ex=" + ex, ex);
+      LOGGER.info("WHEN - ex=" + ex, ex);
 
       // THEN
       assertThat(ex)
           .isNull();
-      log.info("THEN - OK.\n\n\n");
+      LOGGER.info("THEN - OK.\n\n\n");
     }
   }
 }

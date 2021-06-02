@@ -66,7 +66,7 @@ public class RegexValidator extends AbstractTargetNameDefinedValidator<String> {
   // kr.lul.common.util.Validator
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Override
-  public void validate(final String target) throws ValidationException {
+  public String validate(final String target) throws ValidationException {
     try {
       notNull(target, this.targetName);
 
@@ -74,6 +74,8 @@ public class RegexValidator extends AbstractTargetNameDefinedValidator<String> {
       if (!matcher.matches())
         throw new ValidationException(this.targetName, target, format("illegal %s pattern : %s=%s, pattern=%s",
             this.targetName, this.targetName, singleQuote(target), this.pattern));
+
+      return target;
     } catch (final IllegalArgumentException e) {
       throw new ValidationException(this.targetName, target, e);
     }
@@ -85,10 +87,10 @@ public class RegexValidator extends AbstractTargetNameDefinedValidator<String> {
   @Override
   public String toString() {
     return new StringBuilder(RegexValidator.class.getSimpleName())
-               .append("{targetName=").append(singleQuote(this.targetName))
-               .append("regex=").append(singleQuote(this.regex))
-               .append(", pattern=").append(this.pattern)
-               .append(", flags=").append(this.flags)
-               .append('}').toString();
+        .append("{targetName=").append(singleQuote(this.targetName))
+        .append("regex=").append(singleQuote(this.regex))
+        .append(", pattern=").append(this.pattern)
+        .append(", flags=").append(this.flags)
+        .append('}').toString();
   }
 }
