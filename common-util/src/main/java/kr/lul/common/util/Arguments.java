@@ -25,8 +25,8 @@ public abstract class Arguments {
    */
   private static String name(final String targetName) {
     return null == targetName || targetName.isEmpty()
-               ? DEFAULT_TARGET_NAME
-               : targetName;
+        ? DEFAULT_TARGET_NAME
+        : targetName;
   }
 
   /**
@@ -64,6 +64,34 @@ public abstract class Arguments {
       throw new IllegalArgumentException(name(targetName) + " is null.");
 
     return target;
+  }
+
+  public static boolean isTrue(boolean b) throws IllegalArgumentException {
+    if (b)
+      return true;
+
+    throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is not true.");
+  }
+
+  public static boolean isTrue(boolean b, String targetName) throws IllegalArgumentException {
+    if (b)
+      return true;
+
+    throw new IllegalArgumentException(format("%s is not true.", name(targetName)));
+  }
+
+  public static boolean isFalse(boolean b) throws IllegalArgumentException {
+    if (b)
+      throw new IllegalArgumentException(DEFAULT_TARGET_NAME + " is not false.");
+
+    return false;
+  }
+
+  public static boolean isFalse(boolean b, String targetName) throws IllegalArgumentException {
+    if (b)
+      throw new IllegalArgumentException(name(targetName) + " is not false.");
+
+    return false;
   }
 
   /**
