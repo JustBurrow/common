@@ -3,6 +3,8 @@ package kr.lul.common.util;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
+import java.time.Instant;
+
 import static java.util.concurrent.ThreadLocalRandom.current;
 import static kr.lul.common.util.Arguments.*;
 import static org.apache.commons.lang3.RandomStringUtils.random;
@@ -15,9 +17,9 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @author justburrow
  * @since 2019/11/04
  */
-@SuppressWarnings({"ObviousNullCheck", "ConstantConditions"})
+@SuppressWarnings({ "ObviousNullCheck", "ConstantConditions" })
 public class ArgumentsTest {
-  private static final Logger log = getLogger(ArgumentsTest.class);
+  private static final Logger LOGGER = getLogger(ArgumentsTest.class);
 
   @Test
   public void test_notNull_with_null() throws Exception {
@@ -37,7 +39,7 @@ public class ArgumentsTest {
   public void test_notNull_with_null_and_name() throws Exception {
     // GIVEN
     final String name = randomAlphabetic(10);
-    log.debug("GIVEN - name={}", name);
+    LOGGER.debug("GIVEN - name={}", name);
 
     // WHEN & THEN
     assertThatThrownBy(() -> notNull(null, name))
@@ -59,7 +61,7 @@ public class ArgumentsTest {
   public void test_positive_with_negative() throws Exception {
     // GIVEN
     final int number = current().nextInt(Integer.MIN_VALUE, 0);
-    log.debug("GIVEN - number={}", number);
+    LOGGER.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThatThrownBy(() -> positive(number))
@@ -78,7 +80,7 @@ public class ArgumentsTest {
   public void test_positive_with_positive() throws Exception {
     // GIVEN
     final int number = current().nextInt(2, Integer.MAX_VALUE);
-    log.debug("GIVEN - number={}", number);
+    LOGGER.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThat(positive(number))
@@ -98,7 +100,7 @@ public class ArgumentsTest {
   public void test_positive_with_negative_long() throws Exception {
     // GIVEN
     final long number = current().nextLong(Long.MIN_VALUE, 0L);
-    log.debug("GIVEN - number={}", number);
+    LOGGER.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThatThrownBy(() -> positive(number))
@@ -117,7 +119,7 @@ public class ArgumentsTest {
   public void test_positive_with_positive_long() throws Exception {
     // GIVEN
     final long number = current().nextLong(2L, Long.MAX_VALUE);
-    log.debug("GIVEN - number={}", number);
+    LOGGER.debug("GIVEN - number={}", number);
 
     // WHEN & THEN
     assertThat(positive(number))
@@ -150,6 +152,39 @@ public class ArgumentsTest {
   }
 
   @Test
+  void test_lt_with_Instant() {
+    // GIVEN
+    Instant now = Instant.now();
+    Instant copy = Instant.ofEpochSecond(now.getEpochSecond(), now.getNano());
+    Instant before = now.minusNanos(1L);
+    Instant after = now.plusNanos(1L);
+    LOGGER.info("[GIVEN] now={}, copy={}, before={}, after={}", now, copy, before, after);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> lt(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> lt(now, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> lt(null, copy))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+
+    assertThatThrownBy(() -> lt(now, now))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not less than");
+    assertThatThrownBy(() -> lt(now, copy))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not less than");
+    assertThatThrownBy(() -> lt(now, before))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not less than");
+    assertThat(lt(now, after))
+        .isSameAs(now);
+  }
+
+  @Test
   public void test_le_with_int() throws Exception {
     assertThatThrownBy(() -> le(1, 0))
         .isInstanceOf(IllegalArgumentException.class)
@@ -173,6 +208,36 @@ public class ArgumentsTest {
         .isEqualTo(0L);
     assertThat(le(-1L, 0L))
         .isEqualTo(-1L);
+  }
+
+  @Test
+  void test_le_with_Instant() {
+    // GIVEN
+    Instant now = Instant.now();
+    Instant copy = Instant.ofEpochSecond(now.getEpochSecond(), now.getNano());
+    Instant before = now.minusNanos(1L);
+    Instant after = now.plusNanos(1L);
+    LOGGER.info("[GIVEN] now={}, copy={}, before={}, after={}", now, copy, before, after);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> le(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> le(now, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> le(null, copy))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThat(le(now, now))
+        .isSameAs(now);
+    assertThat(le(now, copy))
+        .isSameAs(now);
+    assertThatThrownBy(() -> le(now, before))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not less than or equal to");
+    assertThat(le(now, after))
+        .isSameAs(now);
   }
 
   @Test
@@ -205,6 +270,38 @@ public class ArgumentsTest {
         .isEqualTo(0L);
     assertThat(gt(1L, -1L))
         .isEqualTo(1L);
+  }
+
+  @Test
+  void test_gt_with_Instant() {
+    // GIVEN
+    Instant now = Instant.now();
+    Instant copy = Instant.ofEpochSecond(now.getEpochSecond(), now.getNano());
+    Instant before = now.minusNanos(1L);
+    Instant after = now.plusNanos(1L);
+    LOGGER.info("[GIVEN] now={}, copy={}, before={}, after={}", now, copy, before, after);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> gt(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> gt(now, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> gt(null, now))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> gt(now, now))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not greater than");
+    assertThatThrownBy(() -> gt(now, copy))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not greater than");
+    assertThat(gt(now, before))
+        .isSameAs(now);
+    assertThatThrownBy(() -> gt(now, after))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not greater than");
   }
 
   @Test
@@ -266,6 +363,36 @@ public class ArgumentsTest {
   }
 
   @Test
+  void test_ge_with_Instant() {
+    // GIVEN
+    final Instant now = Instant.now();
+    final Instant copy = Instant.ofEpochSecond(now.getEpochSecond(), now.getNano());
+    final Instant before = now.minusNanos(1L);
+    final Instant after = now.plusNanos(1L);
+    LOGGER.info("[GIVEN] now={}, copy={}, before={}, after={}", now, copy, before, after);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> ge(null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> ge(now, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThatThrownBy(() -> ge(null, now))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null");
+    assertThat(ge(now, now))
+        .isAfterOrEqualTo(now);
+    assertThat(ge(now, copy))
+        .isSameAs(now);
+    assertThat(ge(now, before))
+        .isSameAs(now);
+    assertThatThrownBy(() -> ge(now, after))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is not greater than or equal to");
+  }
+
+  @Test
   public void test_noWhitespace_with_null_target() throws Exception {
     assertThatThrownBy(() -> noWhitespace(null))
         .isInstanceOf(IllegalArgumentException.class)
@@ -321,7 +448,7 @@ public class ArgumentsTest {
     String target;
     do {
       target = random(current().nextInt(1, 10));
-      log.info("GIVEN - target={}", target);
+      LOGGER.info("GIVEN - target={}", target);
     } while (!target.matches("\\S+"));
 
     // WHEN & THEN
@@ -333,7 +460,7 @@ public class ArgumentsTest {
   public void test_noWhitespace_with_single_space_contained_target() throws Exception {
     // GIVEN
     final String target = random(current().nextInt(1, 5)) + " " + random(current().nextInt(1, 5));
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> noWhitespace(target))
@@ -346,7 +473,7 @@ public class ArgumentsTest {
   public void test_noWhitespace_with_single_tab_contained_target() throws Exception {
     // GIVEN
     final String target = random(current().nextInt(1, 5)) + "\t" + random(current().nextInt(1, 5));
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> noWhitespace(target))
@@ -359,7 +486,7 @@ public class ArgumentsTest {
   public void test_noWhitespace_with_single_newLine_contained_target() throws Exception {
     // GIVEN
     final String target = random(current().nextInt(1, 5)) + "\n" + random(current().nextInt(1, 5));
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> noWhitespace(target))
@@ -372,7 +499,7 @@ public class ArgumentsTest {
   public void test_noWhitespace_with_single_carriageReturn_contained_target() throws Exception {
     // GIVEN
     final String target = random(current().nextInt(1, 5)) + "\r" + random(current().nextInt(1, 5));
-    log.info("GIVEN - target={}", target);
+    LOGGER.info("GIVEN - target={}", target);
 
     // WHEN & THEN
     assertThatThrownBy(() -> noWhitespace(target))

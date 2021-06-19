@@ -352,6 +352,17 @@ public abstract class Arguments {
     return target;
   }
 
+  public static <C extends Comparable<C>> C lt(C target, C max) throws IllegalArgumentException {
+    return lt(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  public static <C extends Comparable<C>> C lt(C target, C max, String targetName) throws IllegalArgumentException {
+    if (0 <= notNull(target, "target").compareTo(notNull(max, "max")))
+      throw new IllegalArgumentException(format("%s is not less than %s : %s", name(targetName), max, target));
+
+    return target;
+  }
+
   /**
    * @param target 대상
    * @param max    최대값(포함)
@@ -404,6 +415,36 @@ public abstract class Arguments {
   public static long le(final long target, final long max, final String targetName) throws IllegalArgumentException {
     if (max < target)
       throw new IllegalArgumentException(format("%s is not less than or equal to %d : %d", name(targetName), max, target));
+
+    return target;
+  }
+
+  /**
+   * @param target 대상
+   * @param max    최대값(포함)
+   * @param <C>    대상 타입
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 클 때.
+   */
+  public static <C extends Comparable<C>> C le(C target, C max) throws IllegalArgumentException {
+    return le(target, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param max        최대값(포함)
+   * @param targetName 대상 이름
+   * @param <C>        대상 타입
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최대값보다 클 때.
+   */
+  public static <C extends Comparable<C>> C le(C target, C max, String targetName) throws IllegalArgumentException {
+    if (0 < notNull(target, "target").compareTo(notNull(max, "max")))
+      throw new IllegalArgumentException(format("%s is not less than or equal to %s : %s", name(targetName), max, target));
 
     return target;
   }
@@ -466,6 +507,36 @@ public abstract class Arguments {
 
   /**
    * @param target 대상
+   * @param min    최소값(미포함)
+   * @param <C>    대상 타입
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static <C extends Comparable<C>> C gt(C target, C min) throws IllegalArgumentException {
+    return gt(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(미포함)
+   * @param targetName 대상 이름
+   * @param <C>        대상 타입
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
+   */
+  public static <C extends Comparable<C>> C gt(C target, C min, String targetName) {
+    if (0 >= notNull(target, "target").compareTo(notNull(min, "min")))
+      throw new IllegalArgumentException(format("%s is not greater than %s : %s", name(targetName), min, target));
+
+    return target;
+  }
+
+  /**
+   * @param target 대상
    * @param min    최소값(포함)
    *
    * @return {@code target} 인스턴스.
@@ -516,6 +587,39 @@ public abstract class Arguments {
   public static long ge(final long target, final long min, final String targetName) throws IllegalArgumentException {
     if (min > target)
       throw new IllegalArgumentException(format("%s is not greater than or equal to %d : %d", name(targetName), min, target));
+
+    return target;
+  }
+
+  /**
+   * @param target 대상
+   * @param min    최소값(포함)
+   * @param <C>    대상 타입.
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static <C extends Comparable<C>> C ge(C target, C min) throws IllegalArgumentException {
+    return ge(target, min, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * @param target     대상
+   * @param min        최소값(포함)
+   * @param targetName 대상 이름.
+   * @param <C>        대상 타입.
+   *
+   * @return 대상
+   *
+   * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
+   */
+  public static <C extends Comparable<C>> C ge(C target, C min, String targetName) {
+    notNull(target, "target");
+    notNull(min, "min");
+
+    if (0 > notNull(target, "target").compareTo(notNull(min, "min")))
+      throw new IllegalArgumentException(format("%s is not greater than or equal to %s : :%s", name(targetName), min, target));
 
     return target;
   }

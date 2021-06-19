@@ -43,6 +43,6 @@ public class OffsetTimeComposerTest {
     // Then
     assertThat(actual)
         .isNotEmpty()
-        .isEqualTo(( "" + offsetTime ).replaceAll("0\\+", "+"));
+        .isEqualTo(( "" + offsetTime ).replaceAll("0+\\+", "+"));
   }
 }
