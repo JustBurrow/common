@@ -1,7 +1,6 @@
 package kr.lul.common.util;
 
 import java.time.Instant;
-import java.time.temporal.TemporalField;
 
 import static kr.lul.common.util.Arguments.notNull;
 
@@ -10,9 +9,7 @@ import static kr.lul.common.util.Arguments.notNull;
  *
  * @author justburrow
  * @since 2021/04/01
- * @deprecated {@link java.time.temporal.Temporal#with(TemporalField, long)}를 사용.
  */
-@Deprecated
 public abstract class TemporalUtils {
   /**
    * 초 단위 미만을 버린다.
