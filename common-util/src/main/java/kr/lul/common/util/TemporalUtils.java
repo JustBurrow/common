@@ -17,7 +17,7 @@ public abstract class TemporalUtils {
   /**
    * generic {@link TemporalAdjuster}.
    */
-  interface Adjuster extends TemporalAdjuster {
+  public interface Adjuster extends TemporalAdjuster {
     @Override
     default Temporal adjustInto(Temporal temporal) {
       return adjust(temporal);
