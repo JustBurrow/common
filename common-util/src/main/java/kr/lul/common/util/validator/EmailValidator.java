@@ -65,7 +65,7 @@ public class EmailValidator implements Validator<CharSequence> {
     this(DEFAULT_LOCAL_MAX_LENGTH, DEFAULT_DOMAIN_MAX_LENGTH);
   }
 
-  private EmailValidator(final int localMaxLength, final int domainMaxLength) {
+  public EmailValidator(final int localMaxLength, final int domainMaxLength) {
     positive(localMaxLength, "localMaxLength");
     positive(domainMaxLength, "domainMaxLength");
 

@@ -53,7 +53,7 @@ public class GreaterThanValidatorTest {
         .isInstanceOf(ValidationException.class)
         .hasMessageStartingWith("instant is not greater than lower bound")
         .hasMessageContaining("instant=" + target.toString())
-        .hasMessageContaining("lowerBound=" + lowerBound.toString());
+        .hasMessageContaining("lowerBound=" + lowerBound);
   }
 
   @Test
@@ -69,7 +69,7 @@ public class GreaterThanValidatorTest {
         .isInstanceOf(ValidationException.class)
         .hasMessageStartingWith("instant is not greater than lower bound")
         .hasMessageContaining("instant=" + lowerBound.toString())
-        .hasMessageContaining("lowerBound=" + lowerBound.toString());
+        .hasMessageContaining("lowerBound=" + lowerBound);
   }
 
   @Test
@@ -86,8 +86,8 @@ public class GreaterThanValidatorTest {
     assertThatThrownBy(() -> validator.validate(target))
         .isInstanceOf(ValidationException.class)
         .hasMessageStartingWith("instant is not greater than lower bound")
-        .hasMessageContaining("instant=" + lowerBound.toString())
-        .hasMessageContaining("lowerBound=" + lowerBound.toString());
+        .hasMessageContaining("instant=" + lowerBound)
+        .hasMessageContaining("lowerBound=" + lowerBound);
   }
 
   @Test

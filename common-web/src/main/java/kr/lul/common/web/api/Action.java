@@ -8,7 +8,7 @@ public enum Action {
 
   private final String httpMethod;
 
-  private Action(final String httpMethod) {
+  Action(final String httpMethod) {
     this.httpMethod = httpMethod;
   }
 }

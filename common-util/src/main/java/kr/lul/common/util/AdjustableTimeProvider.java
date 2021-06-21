@@ -94,7 +94,7 @@ public class AdjustableTimeProvider implements TimeProvider {
 
       @Override
       public String toString() {
-        return format("diff : %dseconds", seconds);
+        return format("diff : %d seconds", seconds);
       }
     };
   }

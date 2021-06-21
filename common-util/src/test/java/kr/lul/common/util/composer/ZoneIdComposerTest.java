@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -26,7 +26,7 @@ public class ZoneIdComposerTest {
    */
   public static ZoneId[] zoneIds(int length) {
     ThreadLocalRandom random = ThreadLocalRandom.current();
-    List<String> zoneIds = ZoneId.SHORT_IDS.values().stream().collect(toList());
+    List<String> zoneIds = new ArrayList<>(ZoneId.SHORT_IDS.values());
 
     ZoneId[] array = new ZoneId[length];
     for (int i = 0; i < length; i++) {
