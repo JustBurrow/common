@@ -1,7 +1,10 @@
 package kr.lul.common.util;
 
-import java.time.Instant;
+import java.time.DateTimeException;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
 
+import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static kr.lul.common.util.Arguments.notNull;
 
 /**
@@ -12,54 +15,52 @@ import static kr.lul.common.util.Arguments.notNull;
  */
 public abstract class TemporalUtils {
   /**
-   * 초 단위 미만을 버린다.
-   *
-   * @param instant 시각.
-   *
-   * @return 초 단위 정밀도로 조정한 시각.
+   * generic {@link TemporalAdjuster}.
    */
-  public static Instant secondPrecision(Instant instant) {
-    return Instant.ofEpochSecond(notNull(instant, "instant").getEpochSecond());
+  interface Adjuster extends TemporalAdjuster {
+    @Override
+    default Temporal adjustInto(Temporal temporal) {
+      return adjust(temporal);
+    }
+
+    <T extends Temporal> T adjust(T temporal);
   }
 
   /**
-   * 밀리초 단위 미만을 버린다.
-   *
-   * @param instant 시각.
-   *
-   * @return 밀리초 단위 정밀도로 조정한 시각.
+   * milli second 단위 이상만 남긴 시각 정보를 반환한다.
    */
-  public static Instant millisecondsPrecision(Instant instant) {
-    final long sec = notNull(instant, "instant")
-                         .getEpochSecond();
-    final long n = instant.getNano();
-    final long cut = n % 1_000_000L;
-
-    final long nano = (0L == cut)
-                          ? n
-                          : n - cut + 1_000_000L;
-    return Instant.ofEpochSecond(sec, nano);
-  }
+  public static final Adjuster LEAVE_MILLISECONDS = new Adjuster() {
+    @Override
+    public <T extends Temporal> T adjust(T temporal) {
+      try {
+        final long nano = notNull(temporal, "temporal")
+            .getLong(NANO_OF_SECOND);
+        final long cut = nano % 1_000_000L;
+        //noinspection unchecked
+        return (T) temporal.with(NANO_OF_SECOND, nano - cut);
+      } catch (DateTimeException e) {
+        return temporal;
+      }
+    }
+  };
 
   /**
-   * 마이크로 초 단위 미만을 버린다.
-   *
-   * @param instant 시각.
-   *
-   * @return 마이크로 초 단위 정밀도로 조정한 시각.
+   * micro second 단위 이상만 남긴 시각 정보를 반환한다.
    */
-  public static Instant microPrecision(Instant instant) {
-    final long sec = notNull(instant, "instant")
-                         .getEpochSecond();
-    final long n = instant.getNano();
-    final long cut = n % 1000L;
-
-    final long nano = (0L == cut)
-                          ? n
-                          : n - cut + 1000L;
-
-    return Instant.ofEpochSecond(sec, nano);
-  }
+  public static final Adjuster LEAVE_MICROSECONDS = new Adjuster() {
+    @Override
+    public <T extends Temporal> T adjust(T temporal) {
+      try {
+        final long nano = notNull(temporal, "temporal")
+            .getLong(NANO_OF_SECOND);
+        final long cut = nano % 1_000L;
+        //noinspection unchecked
+        return (T) temporal.with(NANO_OF_SECOND, nano - cut);
+      } catch (DateTimeException e) {
+        return temporal;
+      }
+    }
+  };
 
   public TemporalUtils() {
     throw new UnsupportedOperationException();
