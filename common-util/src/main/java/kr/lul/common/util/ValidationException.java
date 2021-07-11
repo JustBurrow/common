@@ -24,7 +24,7 @@ public class ValidationException extends RuntimeException {
   }
 
   public ValidationException(String targetName, Object target) {
-    this(TARGET_UNDEFINED, target, "unknown reason.");
+    this(targetName, target, "unknown reason.");
   }
 
   public ValidationException(String targetName, Object target, String message) {
