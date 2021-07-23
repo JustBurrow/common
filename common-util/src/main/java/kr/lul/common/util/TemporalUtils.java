@@ -27,9 +27,9 @@ public abstract class TemporalUtils {
   }
 
   /**
-   * milli second 단위 이상만 남긴 시각 정보를 반환한다.
+   * milli second 단위까지만 남은 시각 정보를 반환한다.
    */
-  public static final Adjuster LEAVE_MILLISECONDS = new Adjuster() {
+  public static final Adjuster MILLISECONDS_ADJUSTER = new Adjuster() {
     @Override
     public <T extends Temporal> T adjust(T temporal) {
       try {
@@ -45,9 +45,9 @@ public abstract class TemporalUtils {
   };
 
   /**
-   * micro second 단위 이상만 남긴 시각 정보를 반환한다.
+   * micro second 단위까지만 남은 시각 정보를 반환한다.
    */
-  public static final Adjuster LEAVE_MICROSECONDS = new Adjuster() {
+  public static final Adjuster MICROSECONDS_ADJUSTER = new Adjuster() {
     @Override
     public <T extends Temporal> T adjust(T temporal) {
       try {

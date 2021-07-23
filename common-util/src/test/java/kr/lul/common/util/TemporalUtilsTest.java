@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import java.time.*;
 
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
-import static kr.lul.common.util.TemporalUtils.LEAVE_MICROSECONDS;
-import static kr.lul.common.util.TemporalUtils.LEAVE_MILLISECONDS;
+import static kr.lul.common.util.TemporalUtils.MICROSECONDS_ADJUSTER;
+import static kr.lul.common.util.TemporalUtils.MILLISECONDS_ADJUSTER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -23,20 +23,20 @@ class TemporalUtilsTest {
   private Instant instant;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     this.instant = Instant.now().with(NANO_OF_SECOND, 123_456_789L);
     LOGGER.info("[SETUP] instant={}", this.instant);
   }
 
   @Test
-  void test_LEAVE_MILLISECONDS_with_null() {
-    assertThatThrownBy(() -> LEAVE_MILLISECONDS.adjustInto(null))
+  public void test_MILLISECONDS_ADJUSTER_with_null() {
+    assertThatThrownBy(() -> MILLISECONDS_ADJUSTER.adjustInto(null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("temporal is null.");
   }
 
   @Test
-  void test_LEAVE_MILLISECONDS() {
+  public void test_MILLISECONDS_ADJUSTER() {
     // GIVEN
     final Instant instant = Instant.now()
         .with(NANO_OF_SECOND, 123_456_789L);
@@ -54,12 +54,12 @@ class TemporalUtilsTest {
     final long expected = 123_000_000L;
 
     // WHEN
-    final Instant instant2 = LEAVE_MILLISECONDS.adjust(instant);
-    final ZonedDateTime zdt2 = LEAVE_MILLISECONDS.adjust(zdt);
-    final OffsetDateTime odt2 = LEAVE_MILLISECONDS.adjust(odt);
-    final LocalDateTime ldt2 = LEAVE_MILLISECONDS.adjust(ldt);
-    final LocalDate ld2 = LEAVE_MILLISECONDS.adjust(ld);
-    final LocalTime lt2 = LEAVE_MILLISECONDS.adjust(lt);
+    final Instant instant2 = MILLISECONDS_ADJUSTER.adjust(instant);
+    final ZonedDateTime zdt2 = MILLISECONDS_ADJUSTER.adjust(zdt);
+    final OffsetDateTime odt2 = MILLISECONDS_ADJUSTER.adjust(odt);
+    final LocalDateTime ldt2 = MILLISECONDS_ADJUSTER.adjust(ldt);
+    final LocalDate ld2 = MILLISECONDS_ADJUSTER.adjust(ld);
+    final LocalTime lt2 = MILLISECONDS_ADJUSTER.adjust(lt);
     LOGGER.info("[GIVEN] instant2={}, zdt2={}, odt2={}, ldt2={}, ld2={}, lt2={}",
         instant2, zdt2, odt2, ldt2, ld2, lt2);
 
@@ -112,14 +112,14 @@ class TemporalUtilsTest {
   }
 
   @Test
-  void test_LEAVE_MICROSECONDS_with_null() {
-    assertThatThrownBy(() -> LEAVE_MICROSECONDS.adjustInto(null))
+  public void test_MICROSECONDS_ADJUSTER_with_null() {
+    assertThatThrownBy(() -> MICROSECONDS_ADJUSTER.adjustInto(null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("temporal is null.");
   }
 
   @Test
-  void test_LEAVE_MICROSECONDS() {
+  public void test_MICROSECONDS_ADJUSTER() {
     // GIVEN
     final Instant instant = Instant.now()
         .with(NANO_OF_SECOND, 123_456_789L);
@@ -137,12 +137,12 @@ class TemporalUtilsTest {
     final long expected = 123_456_000L;
 
     // WHEN
-    final Instant instant2 = LEAVE_MICROSECONDS.adjust(instant);
-    final ZonedDateTime zdt2 = LEAVE_MICROSECONDS.adjust(zdt);
-    final OffsetDateTime odt2 = LEAVE_MICROSECONDS.adjust(odt);
-    final LocalDateTime ldt2 = LEAVE_MICROSECONDS.adjust(ldt);
-    final LocalDate ld2 = LEAVE_MICROSECONDS.adjust(ld);
-    final LocalTime lt2 = LEAVE_MICROSECONDS.adjust(lt);
+    final Instant instant2 = MICROSECONDS_ADJUSTER.adjust(instant);
+    final ZonedDateTime zdt2 = MICROSECONDS_ADJUSTER.adjust(zdt);
+    final OffsetDateTime odt2 = MICROSECONDS_ADJUSTER.adjust(odt);
+    final LocalDateTime ldt2 = MICROSECONDS_ADJUSTER.adjust(ldt);
+    final LocalDate ld2 = MICROSECONDS_ADJUSTER.adjust(ld);
+    final LocalTime lt2 = MICROSECONDS_ADJUSTER.adjust(lt);
     LOGGER.info("[GIVEN] instant2={}, zdt2={}, odt2={}, ldt2={}, ld2={}, lt2={}",
         instant2, zdt2, odt2, ldt2, ld2, lt2);
 
