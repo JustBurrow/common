@@ -393,6 +393,47 @@ public class ArgumentsTest {
   }
 
   @Test
+  void test_range_with_Comparable() {
+    // GIVEN
+    final Instant target = Instant.now();
+    LOGGER.info("[GIVEN] target={}", target);
+
+    // WHEN & THEN
+    assertThatThrownBy(() -> range(null, null, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("is null.");
+    assertThatThrownBy(() -> range(null, target.minusSeconds(10), target.plusSeconds(10)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("target is null.");
+    assertThatThrownBy(() -> range(target, null, target.plusSeconds(10)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("min is null.");
+    assertThatThrownBy(() -> range(target, target.minusSeconds(10), null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("max is null.");
+    assertThatThrownBy(() -> range(target, target.plusNanos(1), target.minusNanos(1)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("min is not less than or equal to");
+
+    range(target,
+        Instant.ofEpochSecond(target.getEpochSecond(), target.getNano()),
+        Instant.ofEpochSecond(target.getEpochSecond(), target.getNano()));
+    range(target,
+        target.minusNanos(1),
+        Instant.ofEpochSecond(target.getEpochSecond(), target.getNano()));
+    range(target,
+        Instant.ofEpochSecond(target.getEpochSecond(), target.getNano()),
+        target.plusNanos(1));
+
+    assertThatThrownBy(() -> range(target, target.plusNanos(1), target.plusNanos(2)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("target is not greater than or equal to");
+    assertThatThrownBy(() -> range(target, target.minusNanos(2), target.minusNanos(1)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageStartingWith("target is not less than or equal to");
+  }
+
+  @Test
   public void test_noWhitespace_with_null_target() throws Exception {
     assertThatThrownBy(() -> noWhitespace(null))
         .isInstanceOf(IllegalArgumentException.class)

@@ -30,7 +30,7 @@ public class EnumUtilsTest {
   public void test_random() {
     // GIVEN
     final int count = 10_000_000;
-    final double margin = 0.003;
+    final double margin = 0.005;
     final Map<ChronoUnit, Integer> result = stream(ChronoUnit.values())
         .collect(toMap(unit -> unit, unit -> 0));
     LOGGER.info("[GIVEN] count={}, margin={}, result={}", count, margin, result);

@@ -662,6 +662,50 @@ public abstract class Arguments {
   }
 
   /**
+   * 숫자가 범위를 벗어나면 실패.
+   *
+   * @param target 대상.
+   * @param min    최소값(포함).
+   * @param max    최대값(포함).
+   * @param <C>    타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
+   *
+   * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
+   */
+  public static <C extends Comparable<C>> C range(C target, C min, C max) throws IllegalArgumentException {
+    return range(target, min, max, DEFAULT_TARGET_NAME);
+  }
+
+  /**
+   * 숫자가 범위를 벗어나면 실패.
+   *
+   * @param target     대상.
+   * @param min        최소값(포함).
+   * @param max        최대값(포함).
+   * @param targetName 대상 이름.
+   * @param <C>        타겟 타입.
+   *
+   * @return {@code target} 인스턴스.
+   *
+   * @throws IllegalArgumentException 대상이 범위를 벗어날 때.
+   */
+  public static <C extends Comparable<C>> C range(C target, C min, C max, String targetName) throws IllegalArgumentException {
+    if (null == target)
+      throw new IllegalArgumentException(name(targetName) + " is null.");
+    else if (null == min)
+      throw new IllegalArgumentException("min is null.");
+    else if (null == max)
+      throw new IllegalArgumentException("max is null.");
+
+    le(min, max, "min");
+    ge(target, min, name(targetName));
+    le(target, max, name(targetName));
+
+    return target;
+  }
+
+  /**
    * 단정 대상이 {@code null} 이거나 빈 문자열이면 실패.
    *
    * @param target 단정 대상.
