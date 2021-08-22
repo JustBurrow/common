@@ -357,7 +357,7 @@ public abstract class Arguments {
   }
 
   public static <C extends Comparable<C>> C lt(C target, C max, String targetName) throws IllegalArgumentException {
-    if (0 <= notNull(target, "target").compareTo(notNull(max, "max")))
+    if (0 <= notNull(target, targetName).compareTo(notNull(max, "max")))
       throw new IllegalArgumentException(format("%s is not less than %s : %s", name(targetName), max, target));
 
     return target;
@@ -443,7 +443,7 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 대상이 최대값보다 클 때.
    */
   public static <C extends Comparable<C>> C le(C target, C max, String targetName) throws IllegalArgumentException {
-    if (0 < notNull(target, "target").compareTo(notNull(max, "max")))
+    if (0 < notNull(target, targetName).compareTo(notNull(max, "max")))
       throw new IllegalArgumentException(format("%s is not less than or equal to %s : %s", name(targetName), max, target));
 
     return target;
@@ -529,7 +529,7 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 대상이 최소값보다 작거나 같을 때.
    */
   public static <C extends Comparable<C>> C gt(C target, C min, String targetName) {
-    if (0 >= notNull(target, "target").compareTo(notNull(min, "min")))
+    if (0 >= notNull(target, targetName).compareTo(notNull(min, "min")))
       throw new IllegalArgumentException(format("%s is not greater than %s : %s", name(targetName), min, target));
 
     return target;
@@ -615,10 +615,7 @@ public abstract class Arguments {
    * @throws IllegalArgumentException 대상이 최소값보다 작을 때.
    */
   public static <C extends Comparable<C>> C ge(C target, C min, String targetName) {
-    notNull(target, "target");
-    notNull(min, "min");
-
-    if (0 > notNull(target, "target").compareTo(notNull(min, "min")))
+    if (0 > notNull(target, targetName).compareTo(notNull(min, "min")))
       throw new IllegalArgumentException(format("%s is not greater than or equal to %s : :%s", name(targetName), min, target));
 
     return target;
